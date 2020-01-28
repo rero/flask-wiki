@@ -1,0 +1,49 @@
+<!--
+  This file is part of Flask-Wiki
+  Copyright (C) 2020 RERO
+
+  Flask-Wiki is free software; you can redistribute it and/or modify
+  it under the terms of the Revised BSD License; see LICENSE file for
+  more details
+-->
+
+{% extends config.get('WIKI_BASE_TEMPLATE') %}
+{% set active_page = "files" %}
+
+{% block content %}
+<div class="wiki-files">
+    <div data-delay="1500" class="toast">
+
+        <div class="toast-header text-primary font-weight-bold">
+            Markdown
+        </div>
+        <div class="toast-body">
+            {{ _('Copied in you clipboard') }}
+        </div>
+    </div>
+
+    {% if can_edit_wiki %}
+    <form class="float-right" method="post" enctype="multipart/form-data">
+        <div class="custom-file">
+            <button class="btn btn-outline-primary btn-sm">{{ _('Upload a file') }}</button>
+            <input class="custom-file-input" type="file" name="file" accept="image/*" />
+        </div>
+    </form>
+    {% endif %}
+
+    <h1>{{ _('List of Uploaded Files') }}</h1>
+    {% for file in files %}
+    <figure class="figure ml-4">
+        <img src="{{ url_for('uploaded_files', filename=file) }}" class="figure-img img-fluid rounded img-thumbnail"
+            alt="{{ file }}" />
+        <figcaption class="figure-caption text-center">
+            <a href="{{ url_for('uploaded_files', filename=file) }}">{{ file }}</a>
+            <button data-name="{{ file }}"
+                data-link="{{ url_for('uploaded_files', filename=file) }}" class="copy-md-code btn btn-sm btn-outline-primary">
+                <i class="fa fa-clipboard"></i>
+            </button>
+        </figcaption>
+    </figure>
+    {% endfor %}
+</div>
+{% endblock %}

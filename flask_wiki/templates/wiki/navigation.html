@@ -1,0 +1,26 @@
+<!--
+  This file is part of Flask-Wiki
+  Copyright (C) 2020 RERO
+
+  Flask-Wiki is free software; you can redistribute it and/or modify
+  it under the terms of the Revised BSD License; see LICENSE file for
+  more details
+-->
+
+<nav class="navbar navbar-expand navbar-light bg-light row mb-4">
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link" href="{{ url_for('wiki.index') }}">{{ _('Home') }}</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{{ url_for('wiki.files') }}">{{ _('Files') }}</a>
+    </li>
+  </ul>
+  <form class="form-inline ml-auto" action="{{ url_for('wiki.search') }}">
+    <input class="form-control mr-sm-2" type="search" value="{{ query }}" name="q" placeholder="{{ _('Search') }}"
+      aria-label="{{ _('Search') }}" />
+    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">
+      {{ _('Search') }}
+    </button>
+  </form>
+</nav>

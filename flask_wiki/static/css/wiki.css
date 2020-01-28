@@ -1,0 +1,41 @@
+/*
+  This file is part of Flask-Wiki
+  Copyright (C) 2020 RERO
+
+  Flask-Wiki is free software; you can redistribute it and/or modify
+  it under the terms of the Revised BSD License; see LICENSE file for
+  more details.
+*/
+
+.wiki-page .toc ul {
+  padding-left: 1em;
+}
+
+.wiki-editor form.editor textarea {
+  height: 400px;
+}
+
+.wiki-files {
+  position: relative;
+}
+.wiki-files .toast {
+  position: absolute;
+  top: 50px;
+  left: 0;
+}
+.wiki-files figure img {
+  max-width: 200px;
+  max-height: 200px;
+}
+.wiki-files form .custom-file {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+.wiki-files form input[type='file'] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}

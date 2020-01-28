@@ -1,0 +1,64 @@
+<!--
+  This file is part of Flask-Wiki
+  Copyright (C) 2020 RERO
+
+  Flask-Wiki is free software; you can redistribute it and/or modify
+  it under the terms of the Revised BSD License; see LICENSE file for
+  more details
+-->
+
+{% from 'bootstrap/utils.html' import render_messages %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% block head %}
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  {% block styles %}
+  <!-- Bootstrap CSS -->
+  {{ bootstrap.load_css() }}
+  <!--font awsome -->
+  <link href="{{ url_for('wiki.static', filename='css/font-awesome.min.css') }}" rel="stylesheet" />
+  <link href="{{ url_for('wiki.static', filename='css/wiki.css') }}" rel="stylesheet" />
+  {% endblock %}
+
+  <title>{{ _('Flask-Wiki') }}</title>
+  {% endblock %}
+</head>
+
+<body>
+  <nav class="navbar navbar-expand navbar-light bg-light">
+    <a class="navbar-brand" href="#">{{ _('Flask-Wiki') }}</a>
+  </nav>
+
+  <div class="container py-4">
+    {{ render_messages(dismissible=True, dismiss_animate=True) }}
+    {% block navigation %} {%- include "wiki/navigation.html" %} {% endblock %}
+    {% block content %} {% endblock %}
+  </div>
+
+  <footer class="container py-5">
+    <div class="row">
+      <div class="col-md-6">
+        <small class="d-block mb-3 text-muted">RERO &copy; 2020</small>
+      </div>
+      <div class="col-md-6">
+        {% for language in g._wiki.languages -%}
+        <a class="ml-2" href="">{{ language }}</a>
+        {%- endfor %}
+      </div>
+    </div>
+  </footer>
+
+  {% block scripts %}
+  <!-- Optional JavaScript -->
+  {{ bootstrap.load_js() }}
+  <script type="text/javascript" src="{{ url_for('wiki.static', filename='js/wiki.js') }}"></script>
+  {% endblock %}
+</body>
+
+</html>

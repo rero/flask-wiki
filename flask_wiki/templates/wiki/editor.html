@@ -1,0 +1,56 @@
+<!--
+  This file is part of Flask-Wiki
+  Copyright (C) 2020 RERO
+
+  Flask-Wiki is free software; you can redistribute it and/or modify
+  it under the terms of the Revised BSD License; see LICENSE file for
+  more details
+-->
+
+{% from 'bootstrap/form.html' import render_form_row %}
+
+{% extends config.get('WIKI_BASE_TEMPLATE') %}
+{% set active_page = "editor" %}
+
+{% block content %}
+<div class="wiki-editor">
+  <ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" data-toggle="tab" id="edit-tab" href="#edit" role="tab" aria-controls="home"
+        aria-selected="true">{{ _('Edit') }}</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" id="preview-tab" href="#preview" role="tab"
+        data-preview-url="{{ url_for('wiki.preview') }}" aria-controls="profile"
+        aria-selected="false">{{ _('Preview') }}</a>
+    </li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane fade show active" id="edit" role="tabpanel" aria-labelledby="home-tab">
+      <form class="editor" method="post">
+
+        {{ form.csrf_token() }}
+        {{ render_form_row([form.title, form.tags]) }}
+        {{ render_form_row([form.body]) }}
+        <button class="btn btn-sm btn-outline-primary" type="submit">{{ _('Save') }}</button>
+        {%- set pathes = path | edit_path_list -%}
+        {%- if pathes %}
+        <div class="btn-group">
+          <button type="button" class="btn btn-outline-primary btn-sm">{{ _('Edit in') }}</button>
+          <button type="button" class="btn btn-outline-primary btn-sm dropdown-toggle dropdown-toggle-split"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          </button>
+          <div class="dropdown-menu">
+            {%- for path in pathes %}
+            <a class="dropdown-item" href="{{ url_for('wiki.edit', url=path.path) }}">{{ path.ln | translate_ln }}</a>
+            {%- endfor -%}
+          </div>
+        </div>
+        {%- endif -%}
+      </form>
+    </div>
+    <div class="tab-pane fade" id="preview" role="tabpanel" aria-labelledby="profile-tab"></div>
+  </div>
+</div>
+
+{% endblock %}

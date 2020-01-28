@@ -1,0 +1,131 @@
+# German translations for Flask-Admin.
+# Copyright (C) 2020 ORGANIZATION
+# This file is distributed under the same license as the Flask-Admin
+# project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Flask-Admin VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2020-02-05 08:37+0100\n"
+"PO-Revision-Date: 2020-01-30 11:47+0100\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+#: flask_wiki/forms.py:19
+msgid "title"
+msgstr ""
+
+#: flask_wiki/forms.py:20
+msgid "body"
+msgstr ""
+
+#: flask_wiki/forms.py:21
+msgid "tags"
+msgstr ""
+
+#: flask_wiki/views.py:133
+msgid "Saved"
+msgstr ""
+
+#: flask_wiki/views.py:155
+msgid "No file part"
+msgstr ""
+
+#: flask_wiki/views.py:161
+msgid "No selected file"
+msgstr ""
+
+#: flask_wiki/views.py:168
+msgid "File already exists"
+msgstr ""
+
+#: flask_wiki/views.py:172
+msgid "You do not have the permission to add files."
+msgstr ""
+
+#: flask_wiki/templates/wiki/403.html:19
+msgid "Forbidden"
+msgstr ""
+
+#: flask_wiki/templates/wiki/403.html:20
+msgid "You are not allowed to see this page."
+msgstr ""
+
+#: flask_wiki/templates/wiki/404.html:19
+msgid "Page does not exists."
+msgstr ""
+
+#: flask_wiki/templates/wiki/404.html:20
+msgid "You did not create any content for this page yet."
+msgstr ""
+
+#: flask_wiki/templates/wiki/404.html:23
+msgid "Create a new page"
+msgstr ""
+
+#: flask_wiki/templates/wiki/base.html:29
+#: flask_wiki/templates/wiki/base.html:35
+msgid "Flask-Wiki"
+msgstr ""
+
+#: flask_wiki/templates/wiki/editor.html:20
+msgid "Edit"
+msgstr ""
+
+#: flask_wiki/templates/wiki/editor.html:25
+msgid "Preview"
+msgstr ""
+
+#: flask_wiki/templates/wiki/editor.html:35
+msgid "Save"
+msgstr "German"
+
+#: flask_wiki/templates/wiki/editor.html:38
+msgid "Edit in"
+msgstr ""
+
+#: flask_wiki/templates/wiki/files.html:20
+msgid "Copied in you clipboard"
+msgstr ""
+
+#: flask_wiki/templates/wiki/files.html:26
+msgid "Upload a file"
+msgstr ""
+
+#: flask_wiki/templates/wiki/files.html:31
+msgid "List of Uploaded Files"
+msgstr ""
+
+#: flask_wiki/templates/wiki/navigation.html:13
+msgid "Home"
+msgstr ""
+
+#: flask_wiki/templates/wiki/navigation.html:16
+msgid "Files"
+msgstr ""
+
+#: flask_wiki/templates/wiki/navigation.html:20
+#: flask_wiki/templates/wiki/navigation.html:21
+#: flask_wiki/templates/wiki/navigation.html:23
+msgid "Search"
+msgstr ""
+
+#: flask_wiki/templates/wiki/page.html:27
+msgid "Table of Content"
+msgstr ""
+
+#: flask_wiki/templates/wiki/search.html:16
+msgid "results"
+msgstr ""
+
+#~ msgid "MarkDown Demo"
+#~ msgstr ""
+

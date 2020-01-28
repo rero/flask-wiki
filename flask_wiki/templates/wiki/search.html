@@ -1,0 +1,31 @@
+<!--
+  This file is part of Flask-Wiki
+  Copyright (C) 2020 RERO
+
+  Flask-Wiki is free software; you can redistribute it and/or modify
+  it under the terms of the Revised BSD License; see LICENSE file for
+  more details
+-->
+
+{% from 'bootstrap/form.html' import render_form_row %}
+
+{% extends config.get('WIKI_BASE_TEMPLATE') %}
+{% set active_page = "search" %}
+
+{% block content %}
+{{ results | length }} {{ _('results') }}
+
+<ul class="list-group list-group-flush">
+  {%- for result in results -%}
+  <li class="list-group-item ">
+    <a class="mr-2" href="{{ url_for('wiki.page', url=result.url) }}">
+      {{ result.title }}
+    </a>
+    {% for tag in result.tags.split(',') %}
+    <span class="badge badge-primary">{{ tag }}</span>
+    {% endfor %}
+  </li>
+  {%- endfor -%}
+</ul>
+
+{% endblock %}

@@ -1,0 +1,21 @@
+<!--
+  This file is part of Flask-Wiki
+  Copyright (C) 2020 RERO
+
+  Flask-Wiki is free software; you can redistribute it and/or modify
+  it under the terms of the Revised BSD License; see LICENSE file for
+  more details
+-->
+
+{% extends config.get('WIKI_BASE_TEMPLATE') %}
+{% block title -%}
+Wiki page not found!
+{% endblock title %}
+
+{% block navigation %}
+{% endblock %}
+
+{% block content %}
+<h1>{{ _('Forbidden') }}</h1>
+<p>{{ _('You are not allowed to see this page.') }}</p>
+{% endblock %}

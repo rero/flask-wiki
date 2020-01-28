@@ -1,0 +1,31 @@
+<!--
+  This file is part of Flask-Wiki
+  Copyright (C) 2020 RERO
+
+  Flask-Wiki is free software; you can redistribute it and/or modify
+  it under the terms of the Revised BSD License; see LICENSE file for
+  more details
+-->
+
+{% extends config.get('WIKI_BASE_TEMPLATE') %}
+{% set active_page = "page" %}
+
+{% block content %}
+<div class="row mt-4 wiki-page">
+    <div class="col-md-8">
+        {% if can_edit_wiki %}
+        <a class="btn btn-outline-primary btn-sm float-right" href="{{ url_for('wiki.edit', url=page.url) }}">Edit</a>
+        {% endif %}
+        <h5>{{page.title}}</h5>
+        {% for tag in page.tags.split(',') %}
+        <span class="badge badge-primary">{{ tag }}</span>
+        {% endfor %}
+        <hr>
+        {{ page }}
+    </div>
+    <div class="col-md-4">
+        <h5>{{ _('Table of Content') }}</h5>
+        {{ page.toc }}
+    </div>
+</div>
+{% endblock %}

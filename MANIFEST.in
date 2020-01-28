@@ -1,0 +1,31 @@
+# -*- coding: utf-8 -*-
+#
+# This file is part of Flask-Wiki
+# Copyright (C) 2020 RERO
+#
+# Flask-Wiki is free software; you can redistribute it and/or modify
+# it under the terms
+
+
+# added by check_manifest.py
+exclude *.lock
+include LICENSE
+include Pipfile
+include babel.cfg
+recursive-exclude examples *.DS_Store
+recursive-include examples *.md
+recursive-include examples *.png
+recursive-include examples *.py
+recursive-exclude flask_wiki *.DS_Store
+recursive-include flask_wiki *.css
+recursive-include flask_wiki *.eot
+recursive-include flask_wiki *.html
+recursive-include flask_wiki *.js
+recursive-include flask_wiki *.less
+recursive-include flask_wiki *.otf
+recursive-include flask_wiki *.po
+recursive-include flask_wiki *.scss
+recursive-include flask_wiki *.svg
+recursive-include flask_wiki *.ttf
+recursive-include flask_wiki *.woff
+recursive-include flask_wiki *.woff2

@@ -1,0 +1,26 @@
+<!--
+  This file is part of Flask-Wiki
+  Copyright (C) 2020 RERO
+
+  Flask-Wiki is free software; you can redistribute it and/or modify
+  it under the terms of the Revised BSD License; see LICENSE file for
+  more details
+-->
+
+{% extends config.get('WIKI_BASE_TEMPLATE') %}
+{% block title -%}
+Wiki page not found!
+{% endblock title %}
+
+{% block navigation %}
+{% endblock %}
+
+{% block content %}
+<h1>{{ _('Page does not exists.') }}</h1>
+<p>{{ _('You did not create any content for this page yet.') }}</p>
+<p>
+  <a href="{{ url_for('wiki.edit', url=request.path | prune_url) }}" class="btn btn-outline-primary btn-sm">
+    {{ _('Create a new page') }}
+  </a>
+</p>
+{% endblock %}
