@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Flask-Admin VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-04-02 14:09+0200\n"
+"POT-Creation-Date: 2020-04-02 16:29+0200\n"
 "PO-Revision-Date: 2020-01-30 11:47+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -41,7 +41,7 @@ msgstr "Pas de champ 'file'"
 
 #: flask_wiki/views.py:167
 msgid "No selected file"
-msgstr "Aucun fichier sélectionnés"
+msgstr "Aucun fichier sélectionné"
 
 #: flask_wiki/views.py:174
 msgid "File already exists"
@@ -49,7 +49,7 @@ msgstr "Le fichier existe déjà"
 
 #: flask_wiki/views.py:178
 msgid "You do not have the permission to add files."
-msgstr "Vous n'avez pas la permission d'ajouter des fichers."
+msgstr "Vous n'avez pas la permission d'ajouter des fichiers."
 
 #: flask_wiki/templates/wiki/403.html:19
 msgid "Forbidden"
@@ -60,7 +60,7 @@ msgid "You are not allowed to see this page."
 msgstr "Vous n'êtes pas autorisé à voir cette page."
 
 #: flask_wiki/templates/wiki/404.html:19
-msgid "Page does not exists."
+msgid "Page does not exist."
 msgstr "Cette page n'existe pas."
 
 #: flask_wiki/templates/wiki/404.html:20
@@ -124,5 +124,5 @@ msgstr "Table des matières"
 
 #: flask_wiki/templates/wiki/search.html:16
 msgid "results"
-msgstr "resultats"
+msgstr "résultats"
 

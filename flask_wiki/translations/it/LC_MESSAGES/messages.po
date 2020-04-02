@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Flask-Admin VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-04-02 14:09+0200\n"
+"POT-Creation-Date: 2020-04-02 16:29+0200\n"
 "PO-Revision-Date: 2020-01-30 11:47+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: it\n"
@@ -21,107 +21,108 @@ msgstr ""
 
 #: flask_wiki/forms.py:19
 msgid "title"
-msgstr ""
+msgstr "titolo"
 
 #: flask_wiki/forms.py:20
 msgid "body"
-msgstr ""
+msgstr "corpo"
 
 #: flask_wiki/forms.py:21
 msgid "tags"
-msgstr ""
+msgstr "tags"
 
 #: flask_wiki/views.py:139
 msgid "Saved"
-msgstr ""
+msgstr "Salvato"
 
 #: flask_wiki/views.py:161
 msgid "No file part"
-msgstr ""
+msgstr "Nessuna parte del file"
 
 #: flask_wiki/views.py:167
 msgid "No selected file"
-msgstr ""
+msgstr "Nessun file selezionato"
 
 #: flask_wiki/views.py:174
 msgid "File already exists"
-msgstr ""
+msgstr "Il file esiste già"
 
 #: flask_wiki/views.py:178
 msgid "You do not have the permission to add files."
-msgstr ""
+msgstr "Non hai il permesso di aggiungere file."
 
 #: flask_wiki/templates/wiki/403.html:19
 msgid "Forbidden"
-msgstr ""
+msgstr "Vietato"
 
 #: flask_wiki/templates/wiki/403.html:20
 msgid "You are not allowed to see this page."
-msgstr ""
+msgstr "Non è permesso vedere questa pagina."
 
 #: flask_wiki/templates/wiki/404.html:19
-msgid "Page does not exists."
-msgstr ""
+msgid "Page does not exist."
+msgstr "La pagina non esiste."
 
 #: flask_wiki/templates/wiki/404.html:20
 msgid "You did not create any content for this page yet."
-msgstr ""
+msgstr "Non hai ancora creato alcun contenuto per questa pagina."
 
 #: flask_wiki/templates/wiki/404.html:23
 msgid "Create a new page"
-msgstr ""
+msgstr "Creare una nuova pagina"
 
 #: flask_wiki/templates/wiki/base.html:29
 #: flask_wiki/templates/wiki/base.html:35
 msgid "Flask-Wiki"
-msgstr ""
+msgstr "Flask-Wiki"
 
 #: flask_wiki/templates/wiki/editor.html:20
 msgid "Edit"
-msgstr ""
+msgstr "Modifica"
 
 #: flask_wiki/templates/wiki/editor.html:25
 msgid "Preview"
-msgstr ""
+msgstr "Anteprima"
 
 #: flask_wiki/templates/wiki/editor.html:35
 msgid "Save"
-msgstr "Italian"
+msgstr "Salva"
 
 #: flask_wiki/templates/wiki/editor.html:38
 msgid "Edit in"
-msgstr ""
+msgstr "Modifica in"
 
 #: flask_wiki/templates/wiki/files.html:21
 msgid "Copied in you clipboard"
-msgstr ""
+msgstr "Copiato nella clipboard"
 
 #: flask_wiki/templates/wiki/files.html:28
 msgid "Upload a file"
-msgstr ""
+msgstr "Caricare un file"
 
 #: flask_wiki/templates/wiki/files.html:34
 msgid "List of Uploaded Files"
-msgstr ""
+msgstr "Elenco dei file caricati"
 
 #: flask_wiki/templates/wiki/navigation.html:13
 msgid "Home"
-msgstr ""
+msgstr "Home"
 
 #: flask_wiki/templates/wiki/navigation.html:16
 msgid "Files"
-msgstr ""
+msgstr "File"
 
 #: flask_wiki/templates/wiki/navigation.html:20
 #: flask_wiki/templates/wiki/navigation.html:21
 #: flask_wiki/templates/wiki/navigation.html:23
 msgid "Search"
-msgstr ""
+msgstr "Ricerca"
 
 #: flask_wiki/templates/wiki/page.html:27
 msgid "Table of Content"
-msgstr ""
+msgstr "Indice dei contenuti"
 
 #: flask_wiki/templates/wiki/search.html:16
 msgid "results"
-msgstr ""
+msgstr "risultati"
+

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Flask-Wiki VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-04-02 14:09+0200\n"
+"POT-Creation-Date: 2020-04-02 16:29+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,7 +57,7 @@ msgid "You are not allowed to see this page."
 msgstr ""
 
 #: flask_wiki/templates/wiki/404.html:19
-msgid "Page does not exists."
+msgid "Page does not exist."
 msgstr ""
 
 #: flask_wiki/templates/wiki/404.html:20
