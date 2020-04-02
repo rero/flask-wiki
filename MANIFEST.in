@@ -24,6 +24,8 @@ recursive-include flask_wiki *.js
 recursive-include flask_wiki *.less
 recursive-include flask_wiki *.otf
 recursive-include flask_wiki *.po
+recursive-include flask_wiki *.pot
+recursive-include flask_wiki *.mo
 recursive-include flask_wiki *.scss
 recursive-include flask_wiki *.svg
 recursive-include flask_wiki *.ttf

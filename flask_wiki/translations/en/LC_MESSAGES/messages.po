@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Flask-Admin VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-02-05 08:37+0100\n"
+"POT-Creation-Date: 2020-04-02 14:09+0200\n"
 "PO-Revision-Date: 2020-01-30 11:47+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -31,23 +31,23 @@ msgstr ""
 msgid "tags"
 msgstr ""
 
-#: flask_wiki/views.py:133
+#: flask_wiki/views.py:139
 msgid "Saved"
 msgstr ""
 
-#: flask_wiki/views.py:155
+#: flask_wiki/views.py:161
 msgid "No file part"
 msgstr ""
 
-#: flask_wiki/views.py:161
+#: flask_wiki/views.py:167
 msgid "No selected file"
 msgstr ""
 
-#: flask_wiki/views.py:168
+#: flask_wiki/views.py:174
 msgid "File already exists"
 msgstr ""
 
-#: flask_wiki/views.py:172
+#: flask_wiki/views.py:178
 msgid "You do not have the permission to add files."
 msgstr ""
 
@@ -92,15 +92,15 @@ msgstr ""
 msgid "Edit in"
 msgstr ""
 
-#: flask_wiki/templates/wiki/files.html:20
+#: flask_wiki/templates/wiki/files.html:21
 msgid "Copied in you clipboard"
 msgstr ""
 
-#: flask_wiki/templates/wiki/files.html:26
+#: flask_wiki/templates/wiki/files.html:28
 msgid "Upload a file"
 msgstr ""
 
-#: flask_wiki/templates/wiki/files.html:31
+#: flask_wiki/templates/wiki/files.html:34
 msgid "List of Uploaded Files"
 msgstr ""
 
@@ -125,7 +125,3 @@ msgstr ""
 #: flask_wiki/templates/wiki/search.html:16
 msgid "results"
 msgstr ""
-
-#~ msgid "MarkDown Demo"
-#~ msgstr ""
-
