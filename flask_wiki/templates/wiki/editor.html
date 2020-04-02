@@ -29,7 +29,7 @@
     <div class="tab-pane fade show active" id="edit" role="tabpanel" aria-labelledby="home-tab">
       <form class="editor" method="post">
 
-        {{ form.csrf_token() }}
+        {{ form.csrf_token }}
         {{ render_form_row([form.title, form.tags]) }}
         {{ render_form_row([form.body]) }}
         <button class="btn btn-sm btn-outline-primary" type="submit">{{ _('Save') }}</button>
