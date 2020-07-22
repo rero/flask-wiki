@@ -151,6 +151,12 @@ def preview():
     data['html'], data['body'], data['meta'], data['toc'] = processor.process()
     return data['html']
 
+@blueprint.route('/delete/<path:url>/', methods=['GET', 'POST'])
+@can_edit_permission
+def delete(url):
+    current_wiki.delete(url)
+    flash(_('Deleted'), category='success')
+    return redirect(url_for('wiki.index', url=url))
 
 @blueprint.route('/files', methods=['GET', 'POST'])
 @can_read_permission
