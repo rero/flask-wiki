@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Flask-Wiki VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-08-18 08:33+0200\n"
+"POT-Creation-Date: 2020-08-26 08:37+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -139,7 +139,7 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
-#: flask_wiki/templates/wiki/page.html:27
+#: flask_wiki/templates/wiki/page.html:28
 msgid "Table of Content"
 msgstr ""
 
