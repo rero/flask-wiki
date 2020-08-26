@@ -27,7 +27,7 @@ class BootstrapTreeprocessor(Treeprocessor):
     def run(self, node):
         for child in node.getiterator():
             if child.tag == 'img':
-                child.set("class", "img-fluid")
+                child.set("class", "img-fluid mx-auto d-block")
             elif child.tag == 'table':
                 child.set("class", "table table-striped")
 

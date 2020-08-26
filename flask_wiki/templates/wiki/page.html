@@ -24,8 +24,10 @@
         {{ page }}
     </div>
     <div class="col-md-4">
-        <h5>{{ _('Table of Content') }}</h5>
-        {{ page.toc }}
+        <div class="sticky-top pt-3">
+            <h5>{{ _('Table of Content') }}</h5>
+            {{ page.toc }}
+        </div>
     </div>
 </div>
 {% endblock %}
