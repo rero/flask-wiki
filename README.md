@@ -33,6 +33,7 @@ Simple file based wiki for Flask
 - WIKI_URL_PREFIX = '/wiki'
 - WIKI_CONTENT_DIR = './data'
 - WIKI_UPLOAD_FOLDER = os.path.join(WIKI_CONTENT_DIR, 'files')
+- WIKI_ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'svg'}
 - WIKI_MARKDOWN_EXTENSIONS = set(('codehilite', 'fenced_code'))
 
 ### Permssions
