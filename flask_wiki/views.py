@@ -104,7 +104,7 @@ def setWiki():
 
 
 def allowed_file(filename):
-    ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+    ALLOWED_EXTENSIONS = current_app.config.get('WIKI_ALLOWED_EXTENSIONS')
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
@@ -151,12 +151,25 @@ def preview():
     data['html'], data['body'], data['meta'], data['toc'] = processor.process()
     return data['html']
 
-@blueprint.route('/delete/<path:url>/', methods=['GET', 'POST'])
+@blueprint.route('/page/delete/<path:url>')
 @can_edit_permission
-def delete(url):
-    current_wiki.delete(url)
-    flash(_('Deleted'), category='success')
-    return redirect(url_for('wiki.index', url=url))
+def delete_page(url):
+    if current_wiki.delete(url):
+        flash(_('Page deleted'), category='success')
+    else:
+        flash(_('Could not delete page as it does not exist.'), category='error')
+    return redirect(url_for('wiki.index'))
+
+@blueprint.route('/file/delete/<path:filename>')
+@can_edit_permission
+def delete_file(filename):
+    path = os.path.join(current_app.config.get('WIKI_UPLOAD_FOLDER'), filename)
+    try:
+        os.remove(path)
+        flash(_('File deleted'), category='success')
+    except Exception as e:
+        flash(_('Something went wrong. Could not delete file.'), category='error')
+    return redirect(url_for('wiki.files'))
 
 @blueprint.route('/files', methods=['GET', 'POST'])
 @can_read_permission

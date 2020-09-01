@@ -8,7 +8,7 @@
 */
 
 $(document).ready(function () {
-  // ask the backend for the preview and reder it
+  // ask the backend for the preview and render it
   $('.wiki-editor #preview-tab').on('click', function () {
     var url = $(this).data('preview-url');
     var $form = $('form');
@@ -40,7 +40,6 @@ $(document).ready(function () {
 
   // Add the following code if you want the name of the file appear on select
   $('.wiki-files .custom-file-input').on('change', function () {
-    console.log('test');
     var form = $('form');
     form.submit();
   });
@@ -63,5 +62,13 @@ $(document).ready(function () {
     document.execCommand('copy');
     $temp.remove();
     $('.wiki-files .toast').toast('show');
+  });
+
+  // Change the target modal when an element is clicked
+  $('.delete-file').on('click', function (e) {
+    var file = e.currentTarget.id;
+    var confirm = document.getElementById("confirm");
+    var url = confirm.href.concat(file);
+    document.getElementById("confirm").href=url;
   });
 });

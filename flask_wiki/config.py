@@ -30,6 +30,8 @@ WIKI_LANGUAGES = ['en']
 WIKI_URL_PREFIX = '/wiki'
 WIKI_CONTENT_DIR = './data'
 WIKI_UPLOAD_FOLDER = os.path.join(WIKI_CONTENT_DIR, 'files')
+WIKI_ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'svg'}
+
 """Markdown Extensions.
 
 See: https://python-markdown.github.io/extensions/ for more details

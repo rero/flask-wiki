@@ -33,17 +33,45 @@
 
     <h1>{{ _('List of Uploaded Files') }}</h1>
     {% for file in files %}
-    <figure class="figure ml-4">
+    <figure id="{{file}}" class="figure ml-4">
         <img src="{{ url_for('uploaded_files', filename=file) }}" class="figure-img img-fluid rounded img-thumbnail"
             alt="{{ file }}" />
         <figcaption class="figure-caption text-center">
             <a href="{{ url_for('uploaded_files', filename=file) }}">{{ file }}</a>
-            <button data-name="{{ file }}"
-                data-link="{{ url_for('uploaded_files', filename=file) }}" class="copy-md-code btn btn-sm btn-outline-primary">
+            <button data-name="{{ file }}" data-link="{{ url_for('uploaded_files', filename=file) }}"
+                class="copy-md-code btn btn-sm btn-outline-primary">
                 <i class="fa fa-clipboard"></i>
+            </button>
+            <button data-toggle="modal" data-target="#deleteModal" id="{{file}}" class="delete-file btn btn-sm btn-outline-danger">
+                <i class="fa fa-trash"></i>
             </button>
         </figcaption>
     </figure>
+
     {% endfor %}
+
+<!-- Delete modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalCenterTitle">{{ _('Delete file') }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {{ _('Are you sure you want to delete this file? Be warned that links from existing pages will be broken.') }}
+            </div>
+            <div class="modal-footer">
+                <a id="confirm" href="{{ url_for('wiki.delete_file', filename=file) }}" type="button"
+                    class="btn btn-danger">{{ _('Delete file') }}</a>
+                <button type="button" class="btn btn-outline-primary" data-dismiss="modal">{{ _('Back') }}</button>
+            </div>
+        </div>
+    </div>
 </div>
+</div>
+
 {% endblock %}
