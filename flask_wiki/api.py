@@ -151,12 +151,16 @@ class Processor(object):
         self.process_meta()
         self.process_post()
 
-        return self.final, self.markdown, self.meta, TOC(self.toc)
+        return self.final, self.markdown, self.meta, TOC(self.toc, self.md.toc_tokens)
 
 
 class TOC(object):
-    def __init__(self, toc):
+    def __init__(self, toc, tokens=[]):
         self._toc = toc
+        self.tokens = tokens
+
+    def __bool__(self):
+        return bool(self.tokens)
 
     def __html__(self):
         return self._toc
