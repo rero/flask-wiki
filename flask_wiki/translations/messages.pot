@@ -172,8 +172,8 @@ msgstr ""
 msgid "Copy link"
 msgstr ""
 
-#: flask_wiki/templates/wiki/page.html:39
-msgid "Table of Content"
+#: flask_wiki/templates/wiki/page.html:28
+msgid "Table of contents"
 msgstr ""
 
 #: flask_wiki/templates/wiki/search.html:17

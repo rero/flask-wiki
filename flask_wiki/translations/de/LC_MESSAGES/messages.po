@@ -178,8 +178,8 @@ msgstr "Suche"
 msgid "Copy link"
 msgstr "Link kopieren"
 
-#: flask_wiki/templates/wiki/page.html:39
-msgid "Table of Content"
+#: flask_wiki/templates/wiki/page.html:28
+msgid "Table of contents"
 msgstr "Inhaltsverzeichnis"
 
 #: flask_wiki/templates/wiki/search.html:17
@@ -200,4 +200,7 @@ msgstr "Ergebnisse"
 
 #~ msgid "Copied in you clipboard"
 #~ msgstr "In die Zwischenablage kopiert"
+
+#~ msgid "Table of Content"
+#~ msgstr "Inhaltsverzeichnis"
 

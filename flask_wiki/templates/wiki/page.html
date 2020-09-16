@@ -36,8 +36,10 @@
     </div>
     <div class="col-md-4">
         <div class="sticky-top pt-3">
-            <h5>{{ _('Table of Content') }}</h5>
+            {% if page.toc %}
+            <h5>{{ _('Table of contents') }}</h5>
             {{ page.toc }}
+            {% endif %}
         </div>
     </div>
 </div>

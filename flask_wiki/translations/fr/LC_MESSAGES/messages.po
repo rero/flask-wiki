@@ -161,7 +161,7 @@ msgstr ""
 
 #: flask_wiki/templates/wiki/navigation.html:13
 msgid "Home"
-msgstr "Home"
+msgstr "Accueil"
 
 #: flask_wiki/templates/wiki/navigation.html:16
 msgid "Files"
@@ -178,8 +178,8 @@ msgstr "Recherche"
 msgid "Copy link"
 msgstr "Copier le lien"
 
-#: flask_wiki/templates/wiki/page.html:39
-msgid "Table of Content"
+#: flask_wiki/templates/wiki/page.html:28
+msgid "Table of contents"
 msgstr "Table des matières"
 
 #: flask_wiki/templates/wiki/search.html:17
@@ -198,6 +198,11 @@ msgstr "résultats"
 #~ msgid "Could not delete file"
 #~ msgstr "Le fichier n'a pas pu être supprimé'"
 
+<<<<<<< HEAD
 #~ msgid "Copied in you clipboard"
 #~ msgstr "Copié dans le presse-papier"
+=======
+#~ msgid "Table of Content"
+#~ msgstr "Table des matières"
+>>>>>>> 8f78635... page: table of contents adjustments
 
