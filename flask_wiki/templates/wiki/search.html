@@ -13,7 +13,17 @@
 {% set active_page = "search" %}
 
 {% block content %}
+
 {{ results | length }} {{ _('results') }}
+
+<div data-delay="1500" class="toast">
+  <div class="toast-header text-primary font-weight-bold">
+      Markdown
+  </div>
+  <div class="toast-body">
+      {{ _('Copied to your clipboard') }}
+  </div>
+</div>
 
 <ul class="list-group list-group-flush">
   {%- for result in results -%}
@@ -24,6 +34,14 @@
     {% for tag in result.tags.split(',') %}
     <span class="badge badge-primary">{{ tag }}</span>
     {% endfor %}
+    {% if can_edit_wiki %}
+    <span class="float-right">
+      <button data-name="{{ result.title }}" data-link="{{ url_for('wiki.page', url=result.url) }}" class="copy-file-code btn btn-sm btn-outline-primary ml-1 mr-1">
+        <i class="fa fa-clipboard"></i> {{ _('Copy link') }}
+      </button>
+      <a class="btn btn-outline-primary btn-sm float-right ml-1 mr-1" href="{{ url_for('wiki.edit', url=result.url) }}"><i class="fa fa-pencil"></i> {{ _('Edit') }}</a>
+    </span>
+    {% endif %}
   </li>
   {%- endfor -%}
 </ul>

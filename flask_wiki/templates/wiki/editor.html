@@ -32,11 +32,11 @@
         {{ form.csrf_token }}
         {{ render_form_row([form.title, form.tags]) }}
         {{ render_form_row([form.body]) }}
-        <button class="btn btn-sm btn-outline-primary" type="submit">{{ _('Save') }}</button>
+        <button class="btn btn-sm btn-outline-primary" type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i> {{ _('Save') }}</button>
         {%- set pathes = path | edit_path_list -%}
         {%- if pathes %}
         <div class="btn-group">
-          <button type="button" class="btn btn-outline-primary btn-sm">{{ _('Edit in') }}</button>
+          <button type="button" class="btn btn-outline-primary btn-sm"><i class="fa fa-language" aria-hidden="true"></i> {{ _('Edit in') }}</button>
           <button type="button" class="btn btn-outline-primary btn-sm dropdown-toggle dropdown-toggle-split"
             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           </button>
@@ -48,7 +48,7 @@
         </div>
         {%- endif -%}
         <button type="button" class="btn btn-outline-danger btn-sm ml-1" data-toggle="modal" data-target="#deleteModal">
-          {{ _('Delete') }}
+          <i class="fa fa-trash" aria-hidden="true"></i> {{ _('Delete') }}
         </button>
       </form>
     </div>
