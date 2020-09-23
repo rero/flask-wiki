@@ -18,10 +18,10 @@
 .wiki-files {
   position: relative;
 }
-.wiki-files .toast {
+.toast {
   position: absolute;
   top: 50px;
-  left: 0;
+  left: 15px;
 }
 .wiki-files figure img {
   max-width: 200px;

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Flask-Admin VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-09-16 10:24+0200\n"
+"POT-Creation-Date: 2020-09-23 11:09+0200\n"
 "PO-Revision-Date: 2020-01-30 11:47+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: it\n"
@@ -93,6 +93,8 @@ msgid "Flask-Wiki"
 msgstr "Flask-Wiki"
 
 #: flask_wiki/templates/wiki/editor.html:20
+#: flask_wiki/templates/wiki/page.html:25
+#: flask_wiki/templates/wiki/search.html:41
 msgid "Edit"
 msgstr "Modifica"
 
@@ -126,28 +128,30 @@ msgstr ""
 "puntano a questa pagina smetterà di funzionare."
 
 #: flask_wiki/templates/wiki/editor.html:70
-#: flask_wiki/templates/wiki/files.html:70
+#: flask_wiki/templates/wiki/files.html:68
 msgid "Back"
 msgstr "Ritorno"
 
-#: flask_wiki/templates/wiki/files.html:21
-msgid "Copied in you clipboard"
+#: flask_wiki/templates/wiki/files.html:19
+#: flask_wiki/templates/wiki/page.html:19
+#: flask_wiki/templates/wiki/search.html:24
+msgid "Copied to your clipboard"
 msgstr "Copiato nella clipboard"
 
-#: flask_wiki/templates/wiki/files.html:28
+#: flask_wiki/templates/wiki/files.html:26
 msgid "Upload a file"
 msgstr "Caricare un file"
 
-#: flask_wiki/templates/wiki/files.html:34
+#: flask_wiki/templates/wiki/files.html:32
 msgid "List of Uploaded Files"
 msgstr "Elenco dei file caricati"
 
-#: flask_wiki/templates/wiki/files.html:59
-#: flask_wiki/templates/wiki/files.html:69
+#: flask_wiki/templates/wiki/files.html:57
+#: flask_wiki/templates/wiki/files.html:67
 msgid "Delete file"
 msgstr "Cancellare il file"
 
-#: flask_wiki/templates/wiki/files.html:65
+#: flask_wiki/templates/wiki/files.html:63
 msgid ""
 "Are you sure you want to delete this file? Be warned that links from "
 "existing pages will be broken."
@@ -169,11 +173,16 @@ msgstr "File"
 msgid "Search"
 msgstr "Ricerca"
 
-#: flask_wiki/templates/wiki/page.html:28
+#: flask_wiki/templates/wiki/page.html:27
+#: flask_wiki/templates/wiki/search.html:39
+msgid "Copy link"
+msgstr "Link copiare"
+
+#: flask_wiki/templates/wiki/page.html:40
 msgid "Table of contents"
 msgstr "Indice dei contenuti"
 
-#: flask_wiki/templates/wiki/search.html:16
+#: flask_wiki/templates/wiki/search.html:17
 msgid "results"
 msgstr "risultati"
 
@@ -191,4 +200,7 @@ msgstr "risultati"
 
 #~ msgid "Table of Content"
 #~ msgstr "Indice dei contenuti"
+
+#~ msgid "Copied in you clipboard"
+#~ msgstr "Copiato nella clipboard"
 

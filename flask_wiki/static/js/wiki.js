@@ -61,7 +61,27 @@ $(document).ready(function () {
       .focus();
     document.execCommand('copy');
     $temp.remove();
-    $('.wiki-files .toast').toast('show');
+    $('.toast').toast('show');
+  });
+
+  // copy the url code in the clip board
+  $('.copy-file-code').on('click', function () {
+    // function copy(name, link) {
+    var name = $(this).data('name');
+    var link = $(this).data('link');
+    var $temp = $('<div>');
+    $('body').append($temp);
+    $temp
+      .attr('contenteditable', true)
+      .html('[' + name + '](' + link + ')')
+      .select()
+      .on('focus', function () {
+        document.execCommand('selectAll', false, null);
+      })
+      .focus();
+    document.execCommand('copy');
+    $temp.remove();
+    $('.toast').toast('show');
   });
 
   // Change the target modal when an element is clicked
