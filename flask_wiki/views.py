@@ -11,6 +11,7 @@
 
 import glob
 import os
+from datetime import datetime
 from functools import wraps
 
 from babel import Locale
@@ -85,6 +86,9 @@ def edit_path_list(path):
             [dict(ln=ln, path='_'.join((base_path, ln)))
              for ln in current_wiki.languages]))
 
+@blueprint.app_template_filter()
+def date_format(value, format=None):
+    return value.strftime("%d-%m-%Y")
 
 # PROCESSORS
 # ==========

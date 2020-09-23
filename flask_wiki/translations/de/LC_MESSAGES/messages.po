@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Flask-Admin VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-09-23 11:09+0200\n"
+"POT-Creation-Date: 2020-09-23 11:43+0200\n"
 "PO-Revision-Date: 2020-01-30 11:47+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -178,7 +178,15 @@ msgstr "Suche"
 msgid "Copy link"
 msgstr "Link kopieren"
 
-#: flask_wiki/templates/wiki/page.html:40
+#: flask_wiki/templates/wiki/page.html:32
+msgid "Created:"
+msgstr "Erstellet am:"
+
+#: flask_wiki/templates/wiki/page.html:32
+msgid "Last updated:"
+msgstr "Letzte Änderung:"
+
+#: flask_wiki/templates/wiki/page.html:43
 msgid "Table of contents"
 msgstr "Inhaltsverzeichnis"
 

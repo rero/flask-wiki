@@ -40,6 +40,7 @@
 import os
 import re
 from collections import OrderedDict
+from datetime import datetime
 from io import open
 
 import markdown
@@ -186,6 +187,10 @@ class Page(object):
     def render(self):
         processor = Processor(self.content)
         self._html, self.body, self._meta, self.toc = processor.process()
+
+        # Get creation and update times from file
+        self.creation_datetime = datetime.fromtimestamp(os.path.getctime(self.path))
+        self.modification_datetime = datetime.fromtimestamp(os.path.getmtime(self.path))
 
     def save(self, update=True):
         folder = os.path.dirname(self.path)
