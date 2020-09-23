@@ -28,6 +28,9 @@
         </button>
         {% endif %}
         <h1>{{page.title}}</h1>
+        <div class="text-muted float-right small">
+            <span>{{ _('Created:')}} {{ page.creation_datetime | date_format }} - {{ _('Last updated:')}} {{ page.modification_datetime | date_format }}</span>
+        </div>
         {% for tag in page.tags.split(',') %}
         <span class="badge badge-primary">{{ tag }}</span>
         {% endfor %}
