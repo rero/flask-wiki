@@ -11,21 +11,19 @@
 {% set active_page = "files" %}
 
 {% block content %}
-<div class="wiki-files">
-    <div data-delay="1500" class="toast">
-
-        <div class="toast-header text-primary font-weight-bold">
-            Markdown
-        </div>
-        <div class="toast-body">
-            {{ _('Copied in you clipboard') }}
-        </div>
+<div data-delay="1500" class="toast">
+    <div class="toast-header text-primary font-weight-bold">
+        Markdown
     </div>
-
+    <div class="toast-body">
+        {{ _('Copied to your clipboard') }}
+    </div>
+</div>
+<div class="wiki-files">
     {% if can_edit_wiki %}
     <form class="float-right" method="post" enctype="multipart/form-data">
         <div class="custom-file">
-            <button class="btn btn-outline-primary btn-sm">{{ _('Upload a file') }}</button>
+            <button class="btn btn-outline-primary btn-sm"><i class="fa fa-upload" aria-hidden="true"></i> {{ _('Upload a file') }}</button>
             <input class="custom-file-input" type="file" name="file" accept="image/*" />
         </div>
     </form>
