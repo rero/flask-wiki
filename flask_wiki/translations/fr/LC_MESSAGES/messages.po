@@ -198,11 +198,9 @@ msgstr "résultats"
 #~ msgid "Could not delete file"
 #~ msgstr "Le fichier n'a pas pu être supprimé'"
 
-<<<<<<< HEAD
 #~ msgid "Copied in you clipboard"
 #~ msgstr "Copié dans le presse-papier"
-=======
+
 #~ msgid "Table of Content"
 #~ msgstr "Table des matières"
->>>>>>> 8f78635... page: table of contents adjustments
 
