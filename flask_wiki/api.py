@@ -41,6 +41,7 @@ import os
 import re
 from collections import OrderedDict
 from datetime import datetime
+from pathlib import Path
 from io import open
 
 import markdown
@@ -245,6 +246,18 @@ class Page(object):
     def tags(self, value):
         self['tags'] = value
 
+    @property
+    def language(self):
+        '''
+            Returns the language in which a page has been saved
+            or return default wiki language if page doesn't have a language.
+        '''
+        filename = Path(self.path).stem
+        if '_' in filename:
+            language = filename.split('_')[-1]
+        else:
+            language = current_wiki.languages[0]
+        return language
 
 class WikiBase(object):
     def __init__(self, root):
@@ -388,11 +401,17 @@ class WikiBase(object):
 
     def search(self, term, ignore_case=True, attrs=['title', 'tags', 'body']):
         pages = self.index()
-        if not term:
+
+        if term == "*":
             return pages
+
+        current_language_pages = [p for p in pages if p.language == self.current_language]
+        if not term:
+            return current_language_pages
+
         regex = re.compile(term, re.IGNORECASE if ignore_case else 0)
         matched = []
-        for page in pages:
+        for page in current_language_pages:
             for attr in attrs:
                 if regex.search(getattr(page, attr)):
                     matched.append(page)
