@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Flask-Wiki VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-09-23 11:43+0200\n"
+"POT-Creation-Date: 2020-09-30 11:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,39 +29,39 @@ msgstr ""
 msgid "tags"
 msgstr ""
 
-#: flask_wiki/views.py:139
+#: flask_wiki/views.py:143
 msgid "Saved"
 msgstr ""
 
-#: flask_wiki/views.py:158
+#: flask_wiki/views.py:162
 msgid "Page deleted"
 msgstr ""
 
-#: flask_wiki/views.py:160
+#: flask_wiki/views.py:164
 msgid "Could not delete page as it does not exist."
 msgstr ""
 
-#: flask_wiki/views.py:169
+#: flask_wiki/views.py:173
 msgid "File deleted"
 msgstr ""
 
-#: flask_wiki/views.py:171
+#: flask_wiki/views.py:175
 msgid "Something went wrong. Could not delete file."
 msgstr ""
 
-#: flask_wiki/views.py:180
+#: flask_wiki/views.py:184
 msgid "No file part"
 msgstr ""
 
-#: flask_wiki/views.py:186
+#: flask_wiki/views.py:190
 msgid "No selected file"
 msgstr ""
 
-#: flask_wiki/views.py:193
+#: flask_wiki/views.py:197
 msgid "File already exists"
 msgstr ""
 
-#: flask_wiki/views.py:197
+#: flask_wiki/views.py:201
 msgid "You do not have the permission to add files."
 msgstr ""
 
@@ -92,7 +92,7 @@ msgstr ""
 
 #: flask_wiki/templates/wiki/editor.html:20
 #: flask_wiki/templates/wiki/page.html:25
-#: flask_wiki/templates/wiki/search.html:41
+#: flask_wiki/templates/wiki/search.html:47
 msgid "Edit"
 msgstr ""
 
@@ -130,7 +130,7 @@ msgstr ""
 
 #: flask_wiki/templates/wiki/files.html:19
 #: flask_wiki/templates/wiki/page.html:19
-#: flask_wiki/templates/wiki/search.html:24
+#: flask_wiki/templates/wiki/search.html:27
 msgid "Copied to your clipboard"
 msgstr ""
 
@@ -168,7 +168,7 @@ msgid "Search"
 msgstr ""
 
 #: flask_wiki/templates/wiki/page.html:27
-#: flask_wiki/templates/wiki/search.html:39
+#: flask_wiki/templates/wiki/search.html:45
 msgid "Copy link"
 msgstr ""
 
@@ -184,7 +184,13 @@ msgstr ""
 msgid "Table of contents"
 msgstr ""
 
-#: flask_wiki/templates/wiki/search.html:17
-msgid "results"
+#: flask_wiki/templates/wiki/search.html:18
+msgid "result"
+msgid_plural "results"
+msgstr[0] ""
+msgstr[1] ""
+
+#: flask_wiki/templates/wiki/search.html:19
+msgid "All languages"
 msgstr ""
 
