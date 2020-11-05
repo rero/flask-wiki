@@ -176,7 +176,7 @@ def delete_file(filename):
     return redirect(url_for('wiki.files'))
 
 @blueprint.route('/files', methods=['GET', 'POST'])
-@can_read_permission
+@can_edit_permission
 def files():
     if request.method == 'POST' and current_app.config['WIKI_EDIT_UI_PERMISSION']():
         # check if the post request has the file part
@@ -207,7 +207,7 @@ def files():
 
 
 @blueprint.route('/search', methods=['GET'])
-@can_read_permission
+@can_edit_permission
 def search():
     query = request.args.get('q', '')
     results = current_wiki.search(query)
