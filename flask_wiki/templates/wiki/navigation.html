@@ -7,15 +7,16 @@
   more details
 -->
 
-{% if can_edit_wiki %}
 <nav class="navbar navbar-expand navbar-light bg-light row mb-4">
   <ul class="navbar-nav">
     <li class="nav-item">
       <a class="nav-link" href="{{ url_for('wiki.index') }}">{{ _('Home') }}</a>
     </li>
+    {% if can_edit_wiki %}
     <li class="nav-item">
       <a class="nav-link" href="{{ url_for('wiki.files') }}">{{ _('Files') }}</a>
     </li>
+    {% endif %}
   </ul>
   <form class="form-inline ml-auto" action="{{ url_for('wiki.search') }}">
     <input class="form-control mr-sm-2" type="search" value="{{ query }}" name="q" placeholder="{{ _('Search') }}"
@@ -25,4 +26,3 @@
     </button>
   </form>
 </nav>
-{% endif %}
