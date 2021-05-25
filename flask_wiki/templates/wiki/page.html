@@ -19,31 +19,48 @@
         {{ _('Copied to your clipboard') }}
     </div>
 </div>
-<div class="row mt-4 wiki-page">
-    <div class="col-md-8">
-        {% if can_edit_wiki %}
-        <a class="btn btn-outline-primary btn-sm float-right m-1" href="{{ url_for('wiki.edit', url=page.url) }}"><i class="fa fa-pencil"></i> {{ _('Edit') }}</a>
-        <button data-name="{{ page.title }}" data-link="{{ url_for('wiki.page', url=page.url) }}" class="copy-file-code btn btn-sm btn-outline-primary float-right m-1">
-            <i class="fa fa-clipboard"></i> {{ _('Copy link') }}
-        </button>
-        {% endif %}
-        <h1>{{page.title}}</h1>
-        <div class="text-muted float-right small">
-            <span>{{ _('Created:')}} {{ page.creation_datetime | date_format }} - {{ _('Last updated:')}} {{ page.modification_datetime | date_format }}</span>
-        </div>
-        {% for tag in page.tags.split(',') %}
-        <span class="badge badge-primary">{{ tag }}</span>
-        {% endfor %}
-        <hr>
+<main class="row mt-4 wiki-page">
+    <article class="col-md-8 offset-md-1">
+        <header class="d-flex flex-column justify-content-lg-between mb-4 pb-2 border-bottom">
+            <header class="wiki-page-header d-flex flex-column flex-lg-row justify-content-lg-between mb-2 mb-lg-0">
+            <h1 class="wiki-page-title mb-0">{{page.title}}</h1>
+            {% if can_edit_wiki %}
+            <div class="wiki-page-edition" role="group">
+                <button data-name="{{ page.title }}"
+                        data-link="{{ url_for('wiki.page', url=page.url) }}"
+                        class="copy-file-code btn btn-sm btn-outline-primary">
+                    <i class="fa fa-clipboard"></i> {{ _('Copy link') }}
+                </button>
+                <a type="button" class="btn btn-outline-primary btn-sm"
+                   href="{{ url_for('wiki.edit', url=page.url) }}">
+                   <i class="fa fa-pencil"></i> {{ _('Edit') }}
+                </a>
+            </div>
+            {% endif %}
+            </header>
+            <footer class="wiki-page-info d-flex flex-column flex-lg-row justify-content-lg-between">
+            {% if page.tags %}
+            <ul class="wiki-page-tags m-0 p-0">
+                {% for tag in page.tags.split(',') %}
+                <li class="badge badge-primary">{{ tag }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            <div class="text-muted small">
+                <span>{{ _('Created:')}} {{ page.creation_datetime | date_format }} - {{ _('Last updated:')}} {{ page.modification_datetime | date_format }}</span>
+            </div>
+            </footer>
+        </header>
+        <article>
         {{ page }}
-    </div>
-    <div class="col-md-4">
+        </article>
+    </article>
+    <aside class="col-md-3">
         <div class="sticky-top pt-3">
             {% if page.toc %}
             <h5>{{ _('Table of contents') }}</h5>
             {{ page.toc }}
             {% endif %}
-        </div>
-    </div>
-</div>
+    </aside>
+</main>
 {% endblock %}

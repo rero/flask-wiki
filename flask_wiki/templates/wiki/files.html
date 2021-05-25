@@ -19,34 +19,39 @@
         {{ _('Copied to your clipboard') }}
     </div>
 </div>
-<div class="wiki-files">
-    {% if can_edit_wiki %}
-    <form class="float-right" method="post" enctype="multipart/form-data">
-        <div class="custom-file">
-            <button class="btn btn-outline-primary btn-sm"><i class="fa fa-upload" aria-hidden="true"></i> {{ _('Upload a file') }}</button>
-            <input class="custom-file-input" type="file" name="file" accept="image/*" />
-        </div>
-    </form>
-    {% endif %}
-
-    <h1>{{ _('List of Uploaded Files') }}</h1>
-    {% for file in files %}
-    <figure id="{{file}}" class="figure ml-4">
-        <img src="{{ url_for('uploaded_files', filename=file) }}" class="figure-img img-fluid rounded img-thumbnail"
-            alt="{{ file }}" />
-        <figcaption class="figure-caption text-center">
-            <a href="{{ url_for('uploaded_files', filename=file) }}">{{ file }}</a>
-            <button data-name="{{ file }}" data-link="{{ url_for('uploaded_files', filename=file) }}"
-                class="copy-md-code btn btn-sm btn-outline-primary">
-                <i class="fa fa-clipboard"></i>
-            </button>
-            <button data-toggle="modal" data-target="#deleteModal" id="{{file}}" class="delete-file btn btn-sm btn-outline-danger">
-                <i class="fa fa-trash"></i>
-            </button>
-        </figcaption>
-    </figure>
-
-    {% endfor %}
+<main class="row mt-4 wiki-files">
+    <article class="offset-md-1 col-md-10">
+        <header class="d-flex flex-column flex-lg-row justify-content-lg-between">
+            <h1>{{ _('List of Uploaded Files') }}</h1>
+            {% if can_edit_wiki %}
+            <form class="" method="post" enctype="multipart/form-data">
+                <div class="custom-file">
+                    <button class="btn btn-outline-primary btn-sm"><i class="fa fa-upload" aria-hidden="true"></i> {{ _('Upload a file') }}</button>
+                    <input class="custom-file-input" type="file" name="file" accept="image/*" />
+                </div>
+            </form>
+            {% endif %}
+        </header>
+        <article class="d-flex flex-wrap">
+            {% for file in files -%}
+            <figure id="{{file}}" class="figure m-2">
+                <img src="{{ url_for('uploaded_files', filename=file) }}" class="figure-img img-fluid rounded img-thumbnail"
+                                                                          alt="{{ file }}" />
+                <figcaption class="figure-caption text-center">
+                    <a href="{{ url_for('uploaded_files', filename=file) }}">{{ file }}</a>
+                    <button data-name="{{ file }}" data-link="{{ url_for('uploaded_files', filename=file) }}"
+                                                   class="copy-md-code btn btn-sm btn-outline-primary">
+                        <i class="fa fa-clipboard"></i>
+                    </button>
+                    <button data-toggle="modal" data-target="#deleteModal" id="{{file}}" class="delete-file btn btn-sm btn-outline-danger">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </figcaption>
+            </figure>
+            {%- endfor %}
+        </article>
+    </article>
+</main>
 
 <!-- Delete modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalCenterTitle"

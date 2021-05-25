@@ -21,7 +21,7 @@
   {% block styles %}
   <!-- Bootstrap CSS -->
   {{ bootstrap.load_css() }}
-  <!--font awsome -->
+  <!--font awesome -->
   <link href="{{ url_for('wiki.static', filename='css/font-awesome.min.css') }}" rel="stylesheet" />
   <link href="{{ url_for('wiki.static', filename='css/wiki.css') }}" rel="stylesheet" />
   {% endblock %}
@@ -35,7 +35,7 @@
     <a class="navbar-brand" href="#">{{ _('Flask-Wiki') }}</a>
   </nav>
 
-  <div class="container py-4">
+  <div class="container-fluid py-4">
     {{ render_messages(dismissible=True, dismiss_animate=True) }}
     {% block navigation %} {%- include "wiki/navigation.html" %} {% endblock %}
     {% block content %} {% endblock %}

@@ -15,23 +15,29 @@
   height: 400px;
 }
 
-.wiki-files {
-  position: relative;
-}
 .toast {
   position: absolute;
   top: 50px;
   left: 15px;
 }
-.wiki-files figure img {
-  max-width: 200px;
-  max-height: 200px;
+
+.wiki-files,
+.wiki-page,
+.wiki-editor {
+    position: relative;
 }
+
+.wiki-files figure img {
+  max-width: 15rem;
+  max-height: 15rem;
+}
+
 .wiki-files form .custom-file {
   position: relative;
   overflow: hidden;
   display: inline-block;
 }
+
 .wiki-files form input[type='file'] {
   font-size: 100px;
   position: absolute;
