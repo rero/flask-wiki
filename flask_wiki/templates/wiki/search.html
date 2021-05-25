@@ -13,43 +13,63 @@
 {% set active_page = "search" %}
 
 {% block content %}
-
-<div class="pb-3">
-  {{ results | length }} {{ ngettext('result', 'results', results | length) }}
-  <a href="{{ url_for('wiki.search', q='*') }}" class="btn btn-sm btn-outline-primary ml-2">{{ _("All languages") }}</a>
-</div>
-
 <div data-delay="1500" class="toast">
-  <div class="toast-header text-primary font-weight-bold">
-      Markdown
-  </div>
-  <div class="toast-body">
-      {{ _('Copied to your clipboard') }}
-  </div>
+    <div class="toast-header text-primary font-weight-bold">
+        Markdown
+    </div>
+    <div class="toast-body">
+        {{ _('Copied to your clipboard') }}
+    </div>
 </div>
-
-<ul class="list-group list-group-flush">
-  {%- for result in results -%}
-  <li class="list-group-item">
-    <a class="mr-2" href="{{ url_for('wiki.page', url=result.url) }}">
-      {{ result.title }}
-    </a>
-    <span class="badge badge-secondary">
-      {{ result.language | upper }}
-    </span>
-    {% for tag in result.tags.split(',') %}
-    <span class="badge badge-primary">{{ tag }}</span>
-    {% endfor %}
-    {% if can_edit_wiki %}
-    <span class="float-right">
-      <button data-name="{{ result.title }}" data-link="{{ url_for('wiki.page', url=result.url) }}" class="copy-file-code btn btn-sm btn-outline-primary ml-2">
-        <i class="fa fa-clipboard"></i> {{ _('Copy link') }}
-      </button>
-      <a class="btn btn-outline-primary btn-sm float-right ml-2" href="{{ url_for('wiki.edit', url=result.url) }}"><i class="fa fa-pencil"></i> {{ _('Edit') }}</a>
-    </span>
-    {% endif %}
-  </li>
-  {%- endfor -%}
-</ul>
+<main class="row mt-4 wiki-page">
+    <article class="col-md-10 offset-md-1">
+        <header>
+            <div class="pb-3">
+                {{ results | length }} {{ ngettext('result', 'results', results | length) }}
+                <a href="{{ url_for('wiki.search', q='*') }}" class="btn btn-sm btn-outline-primary ml-2">{{ _("All languages") }}</a>
+                </div>
+        </header>
+        <article>
+            <ul class="list-group list-group-flush">
+                {%- for result in results -%}
+                <li class="list-group-item">
+                    <article class="d-lg-flex justify-content-lg-between">
+                        <article class="mb-2">
+                            <h5 class="m-0">
+                                <a class="mr-2" href="{{ url_for('wiki.page', url=result.url) }}">
+                                    {{ result.title }}
+                                </a>
+                            </h5>
+                            <ul class="m-0 p-0">
+                                <li class="badge badge-secondary">
+                                    {{ result.language | upper }}
+                                </li>
+                                {% if result.tags %}
+                                {% for tag in result.tags.split(',') %}
+                                <li class="badge badge-primary">{{ tag }}</li>
+                                {% endfor %}
+                                {% endif %}
+                            </ul>
+                        </article>
+                        {% if can_edit_wiki %}
+                        <footer>
+                            <button data-name="{{ result.title }}"
+                                    data-link="{{ url_for('wiki.page', url=result.url) }}"
+                                    class="copy-file-code btn btn-sm btn-outline-primary">
+                                <i class="fa fa-clipboard"></i> {{ _('Copy link') }}
+                            </button>
+                            <a class="btn btn-outline-primary btn-sm"
+                               href="{{ url_for('wiki.edit', url=result.url) }}">
+                                <i class="fa fa-pencil"></i> {{ _('Edit') }}
+                            </a>
+                        </footer>
+                        {% endif %}
+                    </article>
+                </li>
+                {%- endfor -%}
+            </ul>
+        </article>
+    </article>
+</main>
 
 {% endblock %}
