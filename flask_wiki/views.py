@@ -207,7 +207,6 @@ def files():
 
 
 @blueprint.route('/search', methods=['GET'])
-@can_edit_permission
 def search():
     query = request.args.get('q', '')
     results = current_wiki.search(query)
