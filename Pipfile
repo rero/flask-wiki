@@ -8,9 +8,14 @@ bootstrap-flask = "*"
 flask = "*"
 markdown = "*"
 flask-wtf = "*"
-babel = "*"
+babel = ">=2.9.1"
 flask-babelex = "*"
 flask-wiki = {editable = true, path = "."}
+pip = ">=21.1"
+wtforms = ">=3.0.0a1"
+werkzeug = ">=2.0.2"
+jinja2 = ">=2.11.3"
+pygments = ">=2.7.4"
 
 [dev-packages]
 check-manifest = "*"

@@ -10,12 +10,12 @@
 """Forms class."""
 
 from flask_babelex import gettext as _
-from flask_wtf import Form
-from wtforms import TextAreaField, TextField
+from flask_wtf import FlaskForm
+from wtforms import TextAreaField, StringField
 from wtforms.validators import InputRequired
 
 
-class EditorForm(Form):
-    title = TextField(_('title'), [InputRequired()])
+class EditorForm(FlaskForm):
+    title = StringField(_('title'), [InputRequired()])
     body = TextAreaField(_('body'), [InputRequired()])
-    tags = TextField(_('tags'))
+    tags = StringField(_('tags'))
