@@ -25,7 +25,7 @@ class BootstrapExtension(Extension):
 class BootstrapTreeprocessor(Treeprocessor):
 
     def run(self, node):
-        for child in node.getiterator():
+        for child in node.iter():
             if child.tag == 'img':
                 child.set("class", "img-fluid mx-auto d-block")
             elif child.tag == 'table':
