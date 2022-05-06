@@ -23,7 +23,7 @@ ipython = "*"
 "autopep8" = "*"
 
 [requires]
-python_version = "3.6"
+python_version = "^3.6"
 
 [scripts]
 extract_messages = "pipenv run pybabel extract --project Flask-Wiki -F babel.cfg -k gettext -k lazy_gettext -o flask_wiki/translations/messages.pot flask_wiki"

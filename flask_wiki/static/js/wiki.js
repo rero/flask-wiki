@@ -92,3 +92,11 @@ $(document).ready(function () {
     document.getElementById("confirm").href=url;
   });
 });
+
+// Load Easy MDE in editor-body
+const easyMDE = new EasyMDE({
+  spellChecker: false, // Disable spellchecker (only English)
+  sideBySideFullscreen: false, // Allow side by side preview
+  showIcons: ["code", "table", "heading-1", "heading-2", "heading-3"],
+  forceSync: true, // So that textArea doesn't appear as empty to flask
+});

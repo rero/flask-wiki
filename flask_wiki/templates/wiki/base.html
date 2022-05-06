@@ -24,6 +24,8 @@
   <!--font awesome -->
   <link href="{{ url_for('wiki.static', filename='css/font-awesome.min.css') }}" rel="stylesheet" />
   <link href="{{ url_for('wiki.static', filename='css/wiki.css') }}" rel="stylesheet" />
+  <!-- EasyMDE -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
   {% endblock %}
 
   <title>{{ _('Flask-Wiki') }}</title>
@@ -55,6 +57,8 @@
   </footer>
 
   {% block scripts %}
+  <!-- EasyMDE -->
+  <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
   <!-- Optional JavaScript -->
   {{ bootstrap.load_js() }}
   <script type="text/javascript" src="{{ url_for('wiki.static', filename='js/wiki.js') }}"></script>
