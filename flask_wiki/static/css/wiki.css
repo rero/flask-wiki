@@ -46,7 +46,7 @@
   opacity: 0;
 }
 
-/* Set the editor font familiy to monospace */
+/* Set the editor font family to monospace */
 .editor textarea {
     font-family: 'Courier New', Courier, monospace;
     font-size: small;
