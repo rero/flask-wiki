@@ -1,17 +1,23 @@
 # Flask-Wiki
-Simple file based wiki for Flask
 
-## Developpement
+## About
 
-- clone the git repository
-- pipenv sync
-- pipenv run pip install -e .
-- cd examples; pipenv run serve
+Simple file based wiki for Flask.
+
+## Getting started
+
+### Requirements
+
+* Python >=3.6.2
+* [Poetry](https://python-poetry.org/)
+
+### Install
+
+- Clone the git repository
+- run `poetry install`
+- If you want to enable debug mode, run `export FLASK_ENV=development`
+- `cd examples`, then `poetry run flask run`
 - go to http://localhost:5000/wiki
-
-## Tips
-
-- do not forget to add a header with title and tags if you edit your md file by hand
 
 ## Configuration
 
