@@ -1,0 +1,36 @@
+[tool.poetry]
+name = "flask-wiki"
+version = "0.1.0"
+description = "Simple file-based wiki for Flask"
+authors = ["rero <info@rero.ch>"]
+license = "BSD-3-Clause"
+
+[tool.poetry.dependencies]
+python = ">=3.6.2"
+bootstrap-flask = "*"
+flask = "*"
+markdown = "*"
+flask-wtf = "*"
+babel = ">=2.9.1"
+flask-babelex = "*"
+pip = ">=21.1"
+wtforms = ">=3.0.0a1"
+werkzeug = ">=2.0.2"
+jinja2 = ">=2.11.3"
+pygments = ">=2.7.4"
+
+[tool.poetry.dev-dependencies]
+check-manifest = "*"
+ipython = "*"
+autopep8 = "*"
+poethepoet = "^0.13.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poe.tasks]
+extract_messages = "pybabel extract --project Flask-Wiki -F babel.cfg -k gettext -k lazy_gettext -o flask_wiki/translations/messages.pot flask_wiki"
+init_catalog = "pybabel init -i flask_wiki/translations/messages.pot -d flask_wiki/translations -l "
+compile_catalog = "pybabel compile -d flask_wiki/translations"
+update_catalog = "pybabel update -i flask_wiki/translations/messages.pot -d flask_wiki/translations"
