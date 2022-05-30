@@ -11,7 +11,7 @@
 from flask import Flask, current_app, g, redirect, request, session, url_for
 from flask_babelex import Babel, Domain
 from flask_babelex import gettext as _
-from flask_bootstrap import Bootstrap
+from flask_bootstrap import Bootstrap4
 from pkg_resources import resource_filename
 
 from flask_wiki import Wiki
@@ -34,7 +34,7 @@ def create_app(test_config=None):
     else:
         # load the test config if passed in
         app.config.from_mapping(test_config)
-    Bootstrap(app)
+    Bootstrap4(app)
     Wiki(app)
     # use the flask-wiki translations
     domain = Domain(resource_filename('flask_wiki', 'translations'))
