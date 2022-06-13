@@ -7,6 +7,28 @@
   more details.
 */
 
+h1 {
+  font-weight: 700;
+}
+
+article article h1 {
+  font-weight: 700;
+}
+
+article article h2 {
+  font-weight: 600;
+}
+
+article article h1, article article h2 {
+  border-bottom: solid 2px;
+  margin-top: 2rem;
+}
+
+h3, h4, h5, h6 {
+  border-bottom: solid 1px lightgray;
+  margin-top: 1rem;
+}
+
 .wiki-page .toc ul {
   padding-left: 1em;
 }
@@ -44,10 +66,4 @@
   left: 0;
   top: 0;
   opacity: 0;
-}
-
-/* Set the editor font family to monospace */
-.editor textarea {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: small;
 }
