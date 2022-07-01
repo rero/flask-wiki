@@ -13,7 +13,7 @@
 {% set active_page = "search" %}
 
 {% block content %}
-<div data-delay="1500" class="toast">
+<div data-delay="1500" class="toast hide">
     <div class="toast-header text-primary font-weight-bold">
         Markdown
     </div>
@@ -22,18 +22,18 @@
     </div>
 </div>
 <main class="row mt-4 wiki-page">
-    <article class="col-md-10 offset-md-1">
+    <div class="col-md-7 offset-md-2">
         <header>
             <div class="pb-3">
                 {{ results | length }} {{ ngettext('result', 'results', results | length) }}
                 <a href="{{ url_for('wiki.search', q='*') }}" class="btn btn-sm btn-outline-primary ml-2">{{ _("All languages") }}</a>
                 </div>
         </header>
-        <article>
+        <div>
             <ul class="list-group list-group-flush">
                 {%- for result in results -%}
                 <li class="list-group-item">
-                    <article class="d-lg-flex justify-content-lg-between">
+                    <div class="d-lg-flex justify-content-lg-between">
                         <article class="mb-2">
                             <h5 class="m-0">
                                 <a class="mr-2" href="{{ url_for('wiki.page', url=result.url) }}">
@@ -64,12 +64,12 @@
                             </a>
                         </footer>
                         {% endif %}
-                    </article>
+                    </div>
                 </li>
                 {%- endfor -%}
             </ul>
-        </article>
-    </article>
+        </div>
+    </div>
 </main>
 
 {% endblock %}

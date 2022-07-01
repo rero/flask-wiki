@@ -11,11 +11,17 @@
 
 from flask_babelex import gettext as _
 from flask_wtf import FlaskForm
-from wtforms import TextAreaField, StringField
+from wtforms import TextAreaField, StringField, Form
 from wtforms.validators import InputRequired
 
 
 class EditorForm(FlaskForm):
-    title = StringField(_('title'), [InputRequired()])
-    body = TextAreaField(_('body'), [InputRequired()])
-    tags = StringField(_('tags'))
+    class Meta:
+        locales = ['en', 'fr', 'de', 'it']
+
+    def get_translations(self, form):
+            return super(FlaskForm.Meta, self).get_translations(form)
+
+    title = StringField(_('Title'), [InputRequired()])
+    body = TextAreaField(_('Body'), [InputRequired()])
+    tags = StringField(_('Tags'))

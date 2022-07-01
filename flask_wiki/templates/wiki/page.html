@@ -11,7 +11,7 @@
 {% set active_page = "page" %}
 
 {% block content %}
-<div data-delay="1500" class="toast">
+<div data-delay="1500" class="toast hide">
     <div class="toast-header text-primary font-weight-bold">
         Markdown
     </div>
@@ -20,7 +20,7 @@
     </div>
 </div>
 <main class="row mt-4 wiki-page">
-    <article class="col-md-8 offset-md-1">
+    <div class="col-md-7 offset-md-2">
         <header class="d-flex flex-column justify-content-lg-between mb-4 pb-2 border-bottom">
             <header class="wiki-page-header d-flex flex-column flex-lg-row justify-content-lg-between mb-2 mb-lg-0">
             <h1 class="wiki-page-title mb-0">{{page.title}}</h1>
@@ -51,10 +51,10 @@
             </div>
             </footer>
         </header>
-        <article>
+        <article class="content">
         {{ page }}
         </article>
-    </article>
+    </div>
     <aside class="col-md-3">
         <div class="sticky-top pt-3">
             {% if page.toc %}
