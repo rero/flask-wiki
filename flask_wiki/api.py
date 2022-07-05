@@ -402,21 +402,30 @@ class WikiBase(object):
     def search(self, term, ignore_case=True, attrs=['title', 'tags', 'body']):
         pages = self.index()
 
+        for page in pages:
+            page["score"] = 0
+            page["html_result"] = ""
+
+        # When searching for "*", return ALL pages
         if term == "*":
             return pages
 
+        # If no query term, return all current language pages
         current_language_pages = [p for p in pages if p.language == self.current_language]
         if not term:
             return current_language_pages
 
-        regex = re.compile(term, re.IGNORECASE if ignore_case else 0)
+        regex = re.compile(re.escape(term), re.IGNORECASE if ignore_case else 0)
+
         matched = []
         for page in current_language_pages:
             for attr in attrs:
-                if regex.search(getattr(page, attr)):
-                    matched.append(page)
-                    break
-        return matched
+                if found := re.findall(regex, getattr(page, attr)):
+                    page["score"] += len(found)
+                    if page not in matched:
+                        matched.append(page)
+        # Sort results by score
+        return sorted(matched, key=lambda x: x["score"], reverse=True)
 
 
 def get_wiki():
