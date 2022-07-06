@@ -34,7 +34,11 @@ h1 {
 }
 
 .wiki-page .toc ul {
-  padding-left: 1em;
+  padding-left: 1rem;
+}
+
+.wiki-page .toc {
+  z-index: 1000;
 }
 
 .wiki-editor form.editor textarea {
