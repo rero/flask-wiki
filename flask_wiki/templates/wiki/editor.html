@@ -14,46 +14,54 @@
 
 {% block content %}
 <main class="wiki-editor col-md-7 offset-md-2 mt-4">
-  <ul class="nav nav-tabs" role="tablist">
-    <li class="nav-item">
-      <a class="nav-link active" data-toggle="tab" id="edit-tab" href="#edit" role="tab" aria-controls="home"
-        aria-selected="true">{{ _('Edit') }}</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" data-toggle="tab" id="preview-tab" href="#preview" role="tab"
-        data-preview-url="{{ url_for('wiki.preview') }}" aria-controls="profile"
-        aria-selected="false">{{ _('Preview') }}</a>
-    </li>
-  </ul>
-  <div class="tab-content">
-    <div class="tab-pane fade show active" id="edit" role="tabpanel" aria-labelledby="home-tab">
-      <form class="editor content" method="post">
-        {{ form.csrf_token }}
-        {{ render_form_row([form.title, form.tags]) }}
-        {{ render_form_row([form.body]) }}
-        <button class="btn btn-sm btn-outline-primary" type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i> {{ _('Save') }}</button>
-        {%- set pathes = path | edit_path_list -%}
-        {%- if pathes %}
-        <div class="btn-group">
-          <button type="button" class="btn btn-outline-primary btn-sm"><i class="fa fa-language" aria-hidden="true"></i> {{ _('Edit in') }}</button>
-          <button type="button" class="btn btn-outline-primary btn-sm dropdown-toggle dropdown-toggle-split"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <form class="editor-content" method="post">
+    <ul class="nav nav-tabs mb-2" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" id="edit-tab" href="#edit" role="tab" aria-controls="home"
+          aria-selected="true">{{ _('Edit') }}</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" id="preview-tab" href="#preview" role="tab"
+          data-preview-url="{{ url_for('wiki.preview') }}" aria-controls="profile"
+          aria-selected="false">{{ _('Preview') }}</a>
+      </li>
+      <li class="ml-auto">
+        <div class="editor-btns text-right align-self-center">
+          <button type="button" class="btn btn-outline-danger btn-sm ml-1" data-toggle="modal" data-target="#deleteModal">
+            <i class="fa fa-trash" aria-hidden="true"></i> {{ _('Delete') }}
           </button>
-          <div class="dropdown-menu">
-            {%- for path in pathes %}
-            <a class="dropdown-item" href="{{ url_for('wiki.edit', url=path.path) }}">{{ path.ln | translate_ln }}</a>
-            {%- endfor -%}
+          {%- set pathes = path | edit_path_list -%}
+          {%- if pathes %}
+          <div class="btn-group">
+            <button type="button" class="btn btn-outline-primary btn-sm"><i class="fa fa-language" aria-hidden="true"></i> {{
+              _('Edit in') }}</button>
+            <button type="button" class="btn btn-outline-primary btn-sm dropdown-toggle dropdown-toggle-split"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            </button>
+            <div class="dropdown-menu">
+              {%- for path in pathes %}
+              <a class="dropdown-item" href="{{ url_for('wiki.edit', url=path.path) }}">{{ path.ln | translate_ln }}</a>
+              {%- endfor -%}
+            </div>
           </div>
+          <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i> {{ _('Save')
+            }}</button>
+          {%- endif -%}
         </div>
-        {%- endif -%}
-        <button type="button" class="btn btn-outline-danger btn-sm ml-1" data-toggle="modal" data-target="#deleteModal">
-          <i class="fa fa-trash" aria-hidden="true"></i> {{ _('Delete') }}
-        </button>
-      </form>
+      </li>
+    </ul>
+    
+    <div class="tab-content mt-9">
+      <div class="tab-pane fade show active" id="edit" role="tabpanel" aria-labelledby="home-tab">
+        <div class="editor content">
+          {{ form.csrf_token }}
+          {{ render_form_row([form.title, form.tags]) }}
+          {{ render_form_row([form.body]) }}
+        </div>
+      </div>
+      <div class="tab-pane fade content" id="preview" role="tabpanel" aria-labelledby="profile-tab"></div>
     </div>
-    <div class="tab-pane fade content" id="preview" role="tabpanel" aria-labelledby="profile-tab"></div>
-  </div>
-</div>
+  </form>
 
 <!-- Delete modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalCenterTitle" aria-hidden="true">
