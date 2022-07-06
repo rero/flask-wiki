@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Flask-Wiki VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-07-04 08:11+0200\n"
+"POT-Creation-Date: 2022-07-12 10:54+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -90,40 +90,40 @@ msgstr ""
 msgid "Flask-Wiki"
 msgstr ""
 
-#: flask_wiki/templates/wiki/editor.html:20
+#: flask_wiki/templates/wiki/editor.html:21
 #: flask_wiki/templates/wiki/page.html:36
 #: flask_wiki/templates/wiki/search.html:63
 msgid "Edit"
 msgstr ""
 
-#: flask_wiki/templates/wiki/editor.html:25
+#: flask_wiki/templates/wiki/editor.html:26
 msgid "Preview"
 msgstr ""
 
-#: flask_wiki/templates/wiki/editor.html:34
-msgid "Save"
-msgstr ""
-
-#: flask_wiki/templates/wiki/editor.html:38
-msgid "Edit in"
-msgstr ""
-
-#: flask_wiki/templates/wiki/editor.html:50
+#: flask_wiki/templates/wiki/editor.html:31
 msgid "Delete"
 msgstr ""
 
-#: flask_wiki/templates/wiki/editor.html:63
-#: flask_wiki/templates/wiki/editor.html:72
+#: flask_wiki/templates/wiki/editor.html:37
+msgid "Edit in"
+msgstr ""
+
+#: flask_wiki/templates/wiki/editor.html:47
+msgid "Save"
+msgstr ""
+
+#: flask_wiki/templates/wiki/editor.html:71
+#: flask_wiki/templates/wiki/editor.html:80
 msgid "Delete page"
 msgstr ""
 
-#: flask_wiki/templates/wiki/editor.html:69
+#: flask_wiki/templates/wiki/editor.html:77
 msgid ""
 "Are you sure you want to delete this page? Be warned that links pointing "
 "to this page will stop working."
 msgstr ""
 
-#: flask_wiki/templates/wiki/editor.html:73
+#: flask_wiki/templates/wiki/editor.html:81
 #: flask_wiki/templates/wiki/files.html:73
 msgid "Back"
 msgstr ""
