@@ -72,16 +72,9 @@ class Processor(object):
         """
         markdown_ext = current_app.config['WIKI_MARKDOWN_EXTENSIONS']
 
-        self.md = markdown.Markdown(extensions=set(
-            (
-                BootstrapExtension(),
-                'codehilite',
-                'fenced_code',
-                'toc',
-                'meta',
-                'tables'
-            )
-        ).union(markdown_ext))
+        self.md = markdown.Markdown(extensions={BootstrapExtension(
+        ), 'codehilite', 'fenced_code', 'toc', 'meta', 'tables'}.union(markdown_ext))
+
         self.input = text
         self.markdown = None
         self.meta_raw = None
@@ -157,7 +150,9 @@ class Processor(object):
 
 
 class TOC(object):
-    def __init__(self, toc, tokens=[]):
+    def __init__(self, toc, tokens=None):
+        if tokens is None:
+            tokens = []
         self._toc = toc
         self.tokens = tokens
 
@@ -179,7 +174,7 @@ class Page(object):
             self.render()
 
     def __repr__(self):
-        return u"<Page: {}@{}>".format(self.url, self.path)
+        return f"<Page: {self.url}@{self.path}>"
 
     def load(self):
         with open(self.path, 'r', encoding='utf-8') as f:
@@ -190,8 +185,10 @@ class Page(object):
         self._html, self.body, self._meta, self.toc = processor.process()
 
         # Get creation and update times from file
-        self.creation_datetime = datetime.fromtimestamp(os.path.getctime(self.path))
-        self.modification_datetime = datetime.fromtimestamp(os.path.getmtime(self.path))
+        self.creation_datetime = datetime.fromtimestamp(
+            os.path.getctime(self.path))
+        self.modification_datetime = datetime.fromtimestamp(
+            os.path.getmtime(self.path))
 
     def save(self, update=True):
         folder = os.path.dirname(self.path)
@@ -253,21 +250,18 @@ class Page(object):
             or return default wiki language if page doesn't have a language.
         '''
         filename = Path(self.path).stem
-        if '_' in filename:
-            language = filename.split('_')[-1]
-        else:
-            language = current_wiki.languages[0]
-        return language
+        return filename.split('_')[-1] if '_' in filename else current_wiki.languages[0]
+
 
 class WikiBase(object):
     def __init__(self, root):
         self.root = root
 
     def path(self, url):
-        return os.path.join(self.root, url + '.md')
+        return os.path.join(self.root, f'{url}.md')
 
     def ln_path(self, url):
-        return os.path.join(self.root, url + '_%s.md' % self.current_language)
+        return os.path.join(self.root, f'{url}_{self.current_language}.md')
 
     def exists(self, url):
         path = self.path(url)
@@ -283,8 +277,7 @@ class WikiBase(object):
         return None
 
     def get_or_404(self, url):
-        page = self.get(url)
-        if page:
+        if page := self.get(url):
             return page
         abort(404)
 
@@ -295,8 +288,8 @@ class WikiBase(object):
         return Page(path, url, new=True)
 
     def move(self, url, newurl):
-        source = os.path.join(self.root, url) + '.md'
-        target = os.path.join(self.root, newurl) + '.md'
+        source = f'{os.path.join(self.root, url)}.md'
+        target = f'{os.path.join(self.root, newurl)}.md'
         # normalize root path (just in case somebody defined it absolute,
         # having some '../' inside) to correctly compare it to the target
         root = os.path.normpath(self.root)
@@ -385,10 +378,7 @@ class WikiBase(object):
 
     def index_by_tag(self, tag):
         pages = self.index()
-        tagged = []
-        for page in pages:
-            if tag in page.tags:
-                tagged.append(page)
+        tagged = [page for page in pages if tag in page.tags]
         return sorted(tagged, key=lambda x: x.title.lower())
 
     @property
@@ -399,23 +389,27 @@ class WikiBase(object):
     def languages(self):
         return current_app.config.get('WIKI_LANGUAGES')
 
-    def search(self, term, ignore_case=True, attrs=['title', 'tags', 'body']):
+    def search(self, term, ignore_case=True, attrs=None):
+        if attrs is None:
+            attrs = ['title', 'tags', 'body']
         pages = self.index()
 
         for page in pages:
             page["score"] = 0
-            page["html_result"] = ""
 
         # When searching for "*", return ALL pages
         if term == "*":
             return pages
 
+        current_language_pages = [
+            p for p in pages if p.language == self.current_language]
+
         # If no query term, return all current language pages
-        current_language_pages = [p for p in pages if p.language == self.current_language]
         if not term:
             return current_language_pages
 
-        regex = re.compile(re.escape(term), re.IGNORECASE if ignore_case else 0)
+        regex = re.compile(
+            re.escape(term), re.IGNORECASE if ignore_case else 0)
 
         matched = []
         for page in current_language_pages:
