@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "flask-wiki"
-version = "0.1.0"
+version = "0.2.1"
 description = "Simple file-based wiki for Flask"
 authors = ["rero <info@rero.ch>"]
 license = "BSD-3-Clause"
@@ -8,14 +8,14 @@ license = "BSD-3-Clause"
 [tool.poetry.dependencies]
 python = ">=3.6.2"
 bootstrap-flask = "*"
-flask = "*"
+flask = "<2.0.0"
 markdown = "*"
 flask-wtf = "*"
 babel = ">=2.9.1"
 flask-babelex = "*"
 pip = ">=21.1"
-wtforms = ">=3.0.0a1"
-werkzeug = ">=2.0.2"
+wtforms = "<3.0.0"
+werkzeug = ">=0.15,<2.0"
 jinja2 = ">=2.11.3"
 pygments = ">=2.7.4"
 
