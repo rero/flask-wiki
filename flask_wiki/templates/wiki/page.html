@@ -11,14 +11,7 @@
 {% set active_page = "page" %}
 
 {% block content %}
-<div data-delay="1500" class="toast hide">
-    <div class="toast-header text-primary font-weight-bold">
-        Markdown
-    </div>
-    <div class="toast-body">
-        {{ _('Copied to your clipboard') }}
-    </div>
-</div>
+{{ super() }}
 <main class="row mt-4 wiki-page">
     <div class="col-md-7 offset-md-2">
         <header class="d-flex flex-column justify-content-lg-between mb-4 pb-2 border-bottom">

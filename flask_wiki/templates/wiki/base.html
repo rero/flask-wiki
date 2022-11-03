@@ -40,7 +40,24 @@
   <div class="container-fluid py-4">
     {{ render_messages(dismissible=True, dismiss_animate=True) }}
     {% block navigation %} {%- include "wiki/navigation.html" %} {% endblock %}
-    {% block content %} {% endblock %}
+    {% block content %}
+    <div data-delay="2500" id="copy-success" class="toast hide">
+      <div class="toast-header text-primary font-weight-bold">
+          Markdown
+      </div>
+      <div class="toast-body">
+          {{ _('Link copied to your clipboard') }}
+      </div>
+    </div>
+    <div data-delay="2500" id="copy-error" class="toast hide">
+      <div class="toast-header text-primary font-weight-bold">
+          Markdown
+      </div>
+      <div class="toast-body">
+          {{ _('Failed to copy link to your clipboard') }}
+      </div>
+    </div>
+    {% endblock %}
   </div>
 
   <footer class="container py-5">

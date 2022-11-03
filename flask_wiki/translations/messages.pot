@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Flask-Wiki VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-07-12 10:54+0200\n"
+"POT-Creation-Date: 2022-11-03 15:31+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.10.1\n"
+"Generated-By: Babel 2.11.0\n"
 
 #: flask_wiki/forms.py:25
 msgid "Title"
@@ -90,9 +90,17 @@ msgstr ""
 msgid "Flask-Wiki"
 msgstr ""
 
+#: flask_wiki/templates/wiki/base.html:49
+msgid "Link copied to your clipboard"
+msgstr ""
+
+#: flask_wiki/templates/wiki/base.html:57
+msgid "Failed to copy link to your clipboard"
+msgstr ""
+
 #: flask_wiki/templates/wiki/editor.html:21
-#: flask_wiki/templates/wiki/page.html:36
-#: flask_wiki/templates/wiki/search.html:63
+#: flask_wiki/templates/wiki/page.html:29
+#: flask_wiki/templates/wiki/search.html:56
 msgid "Edit"
 msgstr ""
 
@@ -124,30 +132,24 @@ msgid ""
 msgstr ""
 
 #: flask_wiki/templates/wiki/editor.html:81
-#: flask_wiki/templates/wiki/files.html:73
+#: flask_wiki/templates/wiki/files.html:66
 msgid "Back"
 msgstr ""
 
-#: flask_wiki/templates/wiki/files.html:19
-#: flask_wiki/templates/wiki/page.html:19
-#: flask_wiki/templates/wiki/search.html:21
-msgid "Copied to your clipboard"
-msgstr ""
-
-#: flask_wiki/templates/wiki/files.html:25
+#: flask_wiki/templates/wiki/files.html:18
 msgid "List of Uploaded Files"
 msgstr ""
 
-#: flask_wiki/templates/wiki/files.html:29
+#: flask_wiki/templates/wiki/files.html:22
 msgid "Upload a file"
 msgstr ""
 
-#: flask_wiki/templates/wiki/files.html:62
-#: flask_wiki/templates/wiki/files.html:72
+#: flask_wiki/templates/wiki/files.html:55
+#: flask_wiki/templates/wiki/files.html:65
 msgid "Delete file"
 msgstr ""
 
-#: flask_wiki/templates/wiki/files.html:68
+#: flask_wiki/templates/wiki/files.html:61
 msgid ""
 "Are you sure you want to delete this file? Be warned that links from "
 "existing pages will be broken."
@@ -166,26 +168,26 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
-#: flask_wiki/templates/wiki/page.html:32
-#: flask_wiki/templates/wiki/search.html:59
+#: flask_wiki/templates/wiki/page.html:25
+#: flask_wiki/templates/wiki/search.html:52
 msgid "Copy link"
 msgstr ""
 
-#: flask_wiki/templates/wiki/page.html:50
+#: flask_wiki/templates/wiki/page.html:43
 msgid "Last updated:"
 msgstr ""
 
-#: flask_wiki/templates/wiki/page.html:61
+#: flask_wiki/templates/wiki/page.html:54
 msgid "Table of contents"
 msgstr ""
 
-#: flask_wiki/templates/wiki/search.html:28
+#: flask_wiki/templates/wiki/search.html:21
 msgid "result"
 msgid_plural "results"
 msgstr[0] ""
 msgstr[1] ""
 
-#: flask_wiki/templates/wiki/search.html:29
+#: flask_wiki/templates/wiki/search.html:22
 msgid "All languages"
 msgstr ""
 
