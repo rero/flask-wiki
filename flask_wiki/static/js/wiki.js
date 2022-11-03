@@ -48,20 +48,8 @@ $(document).ready(function () {
   $('.wiki-files .copy-md-code').on('click', function () {
     // function copy(name, link) {
     var name = $(this).data('name');
-    var link = $(this).data('link');
-    var $temp = $('<div>');
-    $('body').append($temp);
-    $temp
-      .attr('contenteditable', true)
-      .html('![' + name + '](' + link + ' "' + name + '"' + ')')
-      .select()
-      .on('focus', function () {
-        document.execCommand('selectAll', false, null);
-      })
-      .focus();
-    document.execCommand('copy');
-    $temp.remove();
-    $('.toast').toast('show');
+    var link = $(this).data('link');;
+    copyToClipboard(`![${name}](${link} "${name}")`);
   });
 
   // copy the url code in the clip board
@@ -69,19 +57,7 @@ $(document).ready(function () {
     // function copy(name, link) {
     var name = $(this).data('name');
     var link = $(this).data('link');
-    var $temp = $('<div>');
-    $('body').append($temp);
-    $temp
-      .attr('contenteditable', true)
-      .html('[' + name + '](' + link + ')')
-      .select()
-      .on('focus', function () {
-        document.execCommand('selectAll', false, null);
-      })
-      .focus();
-    document.execCommand('copy');
-    $temp.remove();
-    $('.toast').toast('show');
+    copyToClipboard(`[${name}](${link})`);
   });
 
   // Change the target modal when an element is clicked
@@ -92,6 +68,17 @@ $(document).ready(function () {
     document.getElementById("confirm").href=url;
   });
 });
+
+function copyToClipboard(text) {
+  navigator.clipboard.writeText(text).then(
+    () => {
+      $('#copy-success').toast('show');
+    },
+    () => {
+      $('#copy-error').toast('show');
+    }
+  );
+}
 
 // Load Easy MDE in editor-body
 try {

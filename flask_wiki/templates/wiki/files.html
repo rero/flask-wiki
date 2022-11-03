@@ -11,14 +11,7 @@
 {% set active_page = "files" %}
 
 {% block content %}
-<div data-delay="1500" class="toast hide">
-    <div class="toast-header text-primary font-weight-bold">
-        Markdown
-    </div>
-    <div class="toast-body">
-        {{ _('Copied to your clipboard') }}
-    </div>
-</div>
+{{ super() }}
 <main class="row mt-4 wiki-files">
     <article class="offset-md-1 col-md-10">
         <header class="d-flex flex-column flex-lg-row justify-content-lg-between">
