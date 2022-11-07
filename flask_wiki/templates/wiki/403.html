@@ -16,6 +16,10 @@ Wiki page not found!
 {% endblock %}
 
 {% block content %}
-<h1>{{ _('Forbidden') }}</h1>
-<p>{{ _('You are not allowed to see this page.') }}</p>
+<main class="row mt-4 wiki-page">
+  <div class="col-md-7 offset-md-2">
+    <h1>{{ _('Forbidden') }}</h1>
+    <p>{{ _('You are not allowed to see this page.') }}</p>
+  </div>
+</main>
 {% endblock %}
