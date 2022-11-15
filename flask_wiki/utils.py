@@ -46,7 +46,7 @@ def clean_url(url):
     """Cleans the url and corrects various errors.
 
         Removes multiple spaces and all leading and trailing spaces. Changes
-        spaces to underscores and makes all characters lowercase. Also takes
+        spaces to underscores. Also takes
         care of Windows style folders use.
 
         :param str url: the url to clean
@@ -54,7 +54,6 @@ def clean_url(url):
         :rtype: str
     """
     url = re.sub('[ ]{2,}', ' ', url).strip()
-    url = url.lower().replace(' ', '_')
     url = url.replace('\\\\', '/').replace('\\', '/')
     return url
 
