@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "flask-wiki"
-version = "0.2.3"
+version = "0.2.4"
 description = "Simple file-based wiki for Flask"
 readme = "README.md"
 authors = ["rero <info@rero.ch>"]
