@@ -18,7 +18,7 @@ from babel import Locale
 from flask import (Blueprint, abort, current_app, flash, jsonify, redirect,
                    render_template, request, url_for)
 from flask.wrappers import Response
-from flask_babelex import gettext as _
+from flask_babel import gettext as _
 from werkzeug.utils import secure_filename
 
 from .api import Processor, current_wiki, get_wiki

@@ -7,12 +7,12 @@ authors = ["rero <info@rero.ch>"]
 license = "BSD-3-Clause"
 
 [tool.poetry.dependencies]
-python = ">=3.8.0"
+python = ">=3.8.0,<4.0.0"
 bootstrap-flask = "*"
 flask = "<3.0.0"
 flask-wtf = "*"
 babel = ">=2.9.1"
-flask-babelex = "*"
+flask-babel = ">=3.0.0"
 wtforms = "<3.0.0"
 werkzeug = ">=0.15"
 jinja2 = ">=3.0.0"
@@ -22,7 +22,7 @@ markdown = "<3.4.0"
 check-manifest = "*"
 ipython = "*"
 autopep8 = "*"
-poethepoet = "^0.13.1"
+poethepoet = "*"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

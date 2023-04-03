@@ -123,3 +123,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Translations
+*.mo
+
+# Macosx
+.DS_Store

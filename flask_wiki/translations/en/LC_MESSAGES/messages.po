@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Flask-Admin VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-11-03 15:31+0100\n"
+"POT-Creation-Date: 2023-04-06 11:48+0200\n"
 "PO-Revision-Date: 2020-01-30 11:47+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -17,7 +17,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.11.0\n"
+"Generated-By: Babel 2.12.1\n"
 
 #: flask_wiki/forms.py:25
 msgid "Title"
@@ -67,23 +67,23 @@ msgstr ""
 msgid "You do not have the permission to add files."
 msgstr ""
 
-#: flask_wiki/templates/wiki/403.html:19
+#: flask_wiki/templates/wiki/403.html:21
 msgid "Forbidden"
 msgstr ""
 
-#: flask_wiki/templates/wiki/403.html:20
+#: flask_wiki/templates/wiki/403.html:22
 msgid "You are not allowed to see this page."
 msgstr ""
 
-#: flask_wiki/templates/wiki/404.html:19
+#: flask_wiki/templates/wiki/404.html:21
 msgid "Page does not exist."
 msgstr ""
 
-#: flask_wiki/templates/wiki/404.html:20
+#: flask_wiki/templates/wiki/404.html:22
 msgid "You did not create any content for this page yet."
 msgstr ""
 
-#: flask_wiki/templates/wiki/404.html:23
+#: flask_wiki/templates/wiki/404.html:25
 msgid "Create a new page"
 msgstr ""
 
