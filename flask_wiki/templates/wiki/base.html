@@ -1,13 +1,13 @@
 <!--
   This file is part of Flask-Wiki
-  Copyright (C) 2020 RERO
+  Copyright (C) 2023 RERO
 
   Flask-Wiki is free software; you can redistribute it and/or modify
   it under the terms of the Revised BSD License; see LICENSE file for
   more details
 -->
 
-{% from 'bootstrap/utils.html' import render_messages %}
+{% from 'bootstrap4/utils.html' import render_messages %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -63,12 +63,16 @@
   <footer class="container py-5">
     <div class="row">
       <div class="col-md-6">
-        <small class="d-block mb-3 text-muted">RERO &copy; 2020</small>
+        <small class="d-block mb-3 text-muted">RERO &copy; 2023</small>
       </div>
       <div class="col-md-6">
-        {% for language in g._wiki.languages -%}
-        <a class="ml-2" href="">{{ language }}</a>
-        {%- endfor %}
+        {% for language in g._wiki.languages.items() %}
+          {% if CURRENT_LANGUAGE == language[0] %}
+            {{ language[1] }}
+          {% else %}
+            <a class="ml-2" href="{{ url_for('change_language', ln=language[0]) }}" >{{ language[1] }}</a>
+          {%  endif %}
+        {% endfor %}
       </div>
     </div>
   </footer>
