@@ -49,7 +49,7 @@ def create_app(test_config=None):
         app.config.from_mapping(test_config)
     Bootstrap4(app)
     Wiki(app)
-    babel = Babel(app, locale_selector=get_locale)
+    Babel(app, locale_selector=get_locale)
 
     @app.context_processor
     def inject_conf_var():

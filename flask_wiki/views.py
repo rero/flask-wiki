@@ -18,6 +18,7 @@ from flask import (Blueprint, abort, current_app, flash, redirect,
                    render_template, request, url_for)
 from flask_babel import gettext as _
 from werkzeug.utils import secure_filename
+from whoosh import index as whoosh_index
 
 from .api import Processor, current_wiki, get_wiki
 from .forms import EditorForm
@@ -243,10 +244,13 @@ def files():
 def search():
     """."""
     query = request.args.get('q', '')
-    results = current_wiki.search(query)
-    return render_template(
-        current_app.config.get('WIKI_SEARCH_TEMPLATE'),
-        results=results, query=query)
+    with current_app.app_context():
+            ix = whoosh_index.open_dir(current_app.config.get('WIKI_INDEX_DIR'))
+    with ix.searcher() as searcher:
+        results = current_wiki.search(query, ix, searcher)
+        return render_template(
+            current_app.config.get('WIKI_SEARCH_TEMPLATE'),
+            results=results, query=query)
 
 
 @blueprint.errorhandler(404)

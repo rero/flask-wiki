@@ -8,16 +8,18 @@ Simple file based wiki for Flask.
 
 ### Requirements
 
-* Python >=3.6.2
+* Python >=3.8.0,<4.0.0
 * [Poetry](https://python-poetry.org/)
 
-### Install
+### Install dev environment
 
 - Clone the git repository
 - run `poetry install`
-- If you want to enable debug mode, run `export FLASK_ENV=development`
-- `cd examples`, then `poetry run flask run`
-- go to http://localhost:5000/wiki
+- `cd examples`, 
+- `poetry run flask flask_wiki init_index`
+- `poetry run flask flask_wiki index`
+- then `poetry run flask run --debug`
+- go to http://localhost:5000/help
 
 ## Configuration
 
@@ -36,8 +38,9 @@ Simple file based wiki for Flask.
 - WIKI_HOME = 'home'
 - WIKI_CURRENT_LANGUAGE = lambda: 'en'
 - WIKI_LANGUAGES = ['en']
-- WIKI_URL_PREFIX = '/wiki'
+- WIKI_URL_PREFIX = '/help'
 - WIKI_CONTENT_DIR = './data'
+- WIKI_INDEX_DIR = './index'
 - WIKI_UPLOAD_FOLDER = os.path.join(WIKI_CONTENT_DIR, 'files')
 - WIKI_ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'svg'}
 - WIKI_MARKDOWN_EXTENSIONS = set(('codehilite', 'fenced_code'))
