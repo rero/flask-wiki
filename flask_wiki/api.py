@@ -10,15 +10,19 @@
 """Core classes."""
 
 import os
-import re
 from collections import OrderedDict
 from datetime import datetime
 from io import open
 from pathlib import Path
 
 import markdown
+from bs4 import BeautifulSoup
 from flask import abort, current_app, g
 from werkzeug.local import LocalProxy
+from whoosh import index, qparser
+from whoosh.analysis import LanguageAnalyzer
+from whoosh.fields import ID, TEXT, Schema
+from whoosh.writing import AsyncWriter
 
 from .markdown_ext import BootstrapExtension
 from .utils import clean_url, wikilink
@@ -44,7 +48,9 @@ class Processor(object):
 
         self.md = markdown.Markdown(extensions={
             BootstrapExtension(),
-            'codehilite', 'fenced_code', 'toc', 'meta', 'tables'
+            'codehilite',
+            'fenced_code',
+            'toc', 'meta', 'tables'
             }.union(markdown_ext))
 
         self.input = text
@@ -167,6 +173,19 @@ class Page(object):
         self.modification_datetime = datetime.fromtimestamp(
             os.path.getmtime(self.path))
 
+    def index(self):
+        """Index page data for whoosh search engine."""
+        index_dir = index.open_dir(current_app.config.get('WIKI_INDEX_DIR'))
+        writer = AsyncWriter(index_dir)
+        writer.update_document(
+            url=self.url,
+            title=self.title,
+            body=self.raw_body,
+            tags=self.tags,
+            language=self.language
+        )
+        writer.commit()
+
     def save(self, update=True):
         """Save a page."""
         folder = os.path.dirname(self.path)
@@ -178,6 +197,7 @@ class Page(object):
                 f.write(line)
             f.write(u'\n')
             f.write(self.body.replace(u'\r\n', u'\n'))
+        self.index()
         if update:
             self.load()
             self.render()
@@ -214,7 +234,6 @@ class Page(object):
 
     @title.setter
     def title(self, value):
-        """."""
         self['title'] = value
 
     @property
@@ -227,8 +246,22 @@ class Page(object):
 
     @tags.setter
     def tags(self, value):
-        """."""
         self['tags'] = value
+
+    @property
+    def raw_body(self):
+        """Return raw text of the body.
+
+        Returns the raw text of the body without markdown or html markup,
+        used for indexing and search results display.
+        """
+        html = markdown.markdown(self.body)
+        html = BeautifulSoup(html, 'html.parser')
+        return html.get_text(separator=' ')
+
+    @raw_body.setter
+    def raw_body(self, value):
+        self['raw_body'] = value
 
     @property
     def language(self):
@@ -239,11 +272,11 @@ class Page(object):
         """
         filename = Path(self.path).stem
         return filename.split('_')[-1] if '_' in filename\
-            else current_wiki.languages[0]
+            else list(current_wiki.languages.keys())[0]
 
 
 class WikiBase(object):
-    """."""
+    """Utility class for wiki management methods."""
 
     def __init__(self, root):
         """."""
@@ -309,9 +342,54 @@ class WikiBase(object):
         if not self.exists(url):
             return False
         os.remove(path)
+        index_dir = index.open_dir(current_app.config.get('WIKI_INDEX_DIR'))
+        writer = AsyncWriter(index_dir)
+        writer.delete_by_term('path', path)
+        writer.commit()
         return True
 
-    def index(self):
+    def init_search_index(self):
+        """Create a new whoosh search index for the wiki."""
+        index_dir = current_app.config.get('WIKI_INDEX_DIR')
+        # initialize whoosh index schema
+        schema = Schema(
+            url=ID(stored=True, unique=True),
+            title=TEXT(stored=True, analyzer=LanguageAnalyzer("fr")),
+            tags=TEXT(stored=True),
+            body=TEXT(stored=True, analyzer=LanguageAnalyzer("fr")),
+            language=ID(stored=True)
+            )
+        if not os.path.exists(index_dir):
+            os.mkdir(index_dir)
+        index.create_in(index_dir, schema)
+
+    def search(self, query, ix, searcher):
+        """Search the whoosh index for a given query.
+
+        :param str query: the search query
+        :param whoosh.index ix: the whoosh index to use
+        :param whoosh.searcher searcher: an active whoosh searcher instance
+
+        :returns: a whoosh.results object instance
+        """
+        # parse the query to search all fields present in the schema
+        fields = ix.schema.names()
+        query_parser = qparser.MultifieldParser(
+            fields,
+            schema=ix.schema,
+            group=qparser.OrGroup
+            )
+        parsed_query = query_parser.parse(query)
+        # return a whoosh Results object to treat results
+        results = searcher.search(parsed_query)
+        # set highlights fragment size to 50 words
+        results.fragmenter.surround = 50
+        # set highlights separator for display
+        results.formatter.between = '<strong> [...] </strong>'
+        # return the modified Results object
+        return results
+
+    def list_pages(self):
         """Build up a list of all the available pages.
 
         :returns: a list of all the wiki pages
@@ -331,6 +409,11 @@ class WikiBase(object):
                     page = Page(path, url)
                     pages.append(page)
         return sorted(pages, key=lambda x: x.title.lower())
+
+    def index_all_pages(self):
+        """Index all the pages for the current wiki."""
+        for page in self.list_pages():
+            Page.index(page)
 
     def index_by(self, key):
         """Get an index based on the given key.
@@ -352,13 +435,13 @@ class WikiBase(object):
         return pages
 
     def get_by_title(self, title):
-        """."""
-        pages = self.index(attr='title')
+        """Get all page titles."""
+        pages = self.list_pages(attr='title')
         return pages.get(title)
 
     def get_tags(self):
-        """."""
-        pages = self.index()
+        """Get all tags."""
+        pages = self.list_pages()
         tags = {}
         for page in pages:
             pagetags = page.tags.split(',')
@@ -372,9 +455,9 @@ class WikiBase(object):
                     tags[tag] = [page]
         return tags
 
-    def index_by_tag(self, tag):
-        """."""
-        pages = self.index()
+    def list_tagged_pages(self, tag):
+        """Get a list of all pages that have a tag."""
+        pages = self.list_pages()
         tagged = [page for page in pages if tag in page.tags]
         return sorted(tagged, key=lambda x: x.title.lower())
 
@@ -387,39 +470,6 @@ class WikiBase(object):
     def languages(self):
         """."""
         return current_app.config.get('WIKI_LANGUAGES')
-
-    def search(self, term, ignore_case=True, attrs=None):
-        """."""
-        if attrs is None:
-            attrs = ['title', 'tags', 'body']
-        pages = self.index()
-
-        for page in pages:
-            page["score"] = 0
-
-        # When searching for "*", return ALL pages
-        if term == "*":
-            return pages
-
-        current_language_pages = [
-            p for p in pages if p.language == self.current_language]
-
-        # If no query term, return all current language pages
-        if not term:
-            return current_language_pages
-
-        regex = re.compile(
-            re.escape(term), re.IGNORECASE if ignore_case else 0)
-
-        matched = []
-        for page in current_language_pages:
-            for attr in attrs:
-                if found := re.findall(regex, getattr(page, attr)):
-                    page["score"] += len(found)
-                    if page not in matched:
-                        matched.append(page)
-        # Sort results by score
-        return sorted(matched, key=lambda x: x["score"], reverse=True)
 
 
 def get_wiki():

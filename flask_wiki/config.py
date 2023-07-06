@@ -27,9 +27,10 @@ WIKI_PAGE_TEMPLATE = 'wiki/page.html'
 WIKI_HOME = 'home'
 WIKI_CURRENT_LANGUAGE = lambda: 'en'
 WIKI_LANGUAGES = ['en']
-WIKI_URL_PREFIX = '/wiki'
+WIKI_URL_PREFIX = '/help'
 WIKI_CONTENT_DIR = './data'
 WIKI_UPLOAD_FOLDER = os.path.join(WIKI_CONTENT_DIR, 'files')
+WIKI_INDEX_DIR = './index'
 WIKI_ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'svg'}
 
 """Markdown Extensions.
