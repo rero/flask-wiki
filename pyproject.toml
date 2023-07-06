@@ -21,6 +21,9 @@ pytest = "^7.4.0"
 py = "^1.11.0"
 pytest-pycodestyle = "^2.3.1"
 pytest-pydocstyle = "^2.3.2"
+whoosh = "^2.7.4"
+beautifulsoup4 = "^4.12.2"
+click = "^8.1.5"
 
 [tool.poetry.dev-dependencies]
 check-manifest = "*"
@@ -31,6 +34,9 @@ poethepoet = "*"
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."flask.commands"]
+flask_wiki = "flask_wiki.cli:flask_wiki"
 
 [tool.poe.tasks]
 extract_messages = "pybabel extract --project Flask-Wiki -F babel.cfg -k gettext -k lazy_gettext -o flask_wiki/translations/messages.pot flask_wiki"

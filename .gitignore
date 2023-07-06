@@ -129,3 +129,6 @@ dmypy.json
 
 # Macosx
 .DS_Store
+
+# Whoosh index
+/examples/index/

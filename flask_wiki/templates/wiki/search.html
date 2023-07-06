@@ -19,7 +19,6 @@
         <header>
             <div class="pb-3">
                 {{ results | length }} {{ ngettext('result', 'results', results | length) }}
-                <a href="{{ url_for('wiki.search', q='*') }}" class="btn btn-sm btn-outline-primary ml-2">{{ _("All languages") }}</a>
                 </div>
         </header>
         <div>
@@ -27,12 +26,13 @@
                 {%- for result in results -%}
                 <li class="list-group-item">
                     <div class="d-lg-flex justify-content-lg-between">
-                        <article class="mb-2">
+                        <article class="mb-2 col-10">
                             <h5 class="m-0">
                                 <a class="mr-2" href="{{ url_for('wiki.page', url=result.url) }}">
                                     {{ result.title }}
                                 </a>
                             </h5>
+                            <p>{{ result.highlights("body", top=3) | safe }}</p>
                             <ul class="m-0 p-0">
                                 <li class="badge badge-secondary">
                                     {{ result.language | upper }}
@@ -45,7 +45,7 @@
                             </ul>
                         </article>
                         {% if can_edit_wiki %}
-                        <footer>
+                        <footer class="ml-3 col-4">
                             <button data-name="{{ result.title }}"
                                     data-link="{{ url_for('wiki.page', url=result.url) }}"
                                     class="copy-file-code btn btn-sm btn-outline-primary">
