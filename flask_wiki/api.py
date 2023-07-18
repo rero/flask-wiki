@@ -1,35 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (c) 2013, Alexander Jung-Loddenkemper
-# All rights reserved.
-
-# Redistribution and use in source and binary forms, with or without modification,
-# are permitted provided that the following conditions are met:
-
-#   Redistributions of source code must retain the above copyright notice, this
-#   list of conditions and the following disclaimer.
-
-#   Redistributions in binary form must reproduce the above copyright notice, this
-#   list of conditions and the following disclaimer in the documentation and/or
-#   other materials provided with the distribution.
-
-#   Neither the name of this project nor the names of its
-#   contributors may be used to endorse or promote products derived from
-#   this software without specific prior written permission.
-
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-# ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-# WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
-# ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-# (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-# LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-# ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-# SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
 # This file is part of Flask-Wiki
-# Copyright (C) 2020 RERO
+# Copyright (C) 2023 RERO
 #
 # Flask-Wiki is free software; you can redistribute it and/or modify
 # it under the terms of the Revised BSD License; see LICENSE file for
@@ -41,11 +13,11 @@ import os
 import re
 from collections import OrderedDict
 from datetime import datetime
-from pathlib import Path
 from io import open
+from pathlib import Path
 
 import markdown
-from flask import abort, current_app, g, url_for
+from flask import abort, current_app, g
 from werkzeug.local import LocalProxy
 
 from .markdown_ext import BootstrapExtension
@@ -53,27 +25,27 @@ from .utils import clean_url, wikilink
 
 
 class Processor(object):
-    """
-        The processor handles the processing of file content into
-        metadata and markdown and takes care of the rendering.
+    """Processing file content into metadata and rendering.
 
-        It also offers some helper methods that can be used for various
-        cases.
+    The processor handles the processing of file content intometadata and
+    markdown and takes care of the rendering. It also offers some helper
+    methods that can be used for various cases.
     """
 
     preprocessors = []
     postprocessors = [wikilink]
 
     def __init__(self, text):
-        """
-            Initialization of the processor.
+        """Initialize the processor.
 
-            :param str text: the text to process
+        :param str text: the text to process
         """
         markdown_ext = current_app.config['WIKI_MARKDOWN_EXTENSIONS']
 
-        self.md = markdown.Markdown(extensions={BootstrapExtension(
-        ), 'codehilite', 'fenced_code', 'toc', 'meta', 'tables'}.union(markdown_ext))
+        self.md = markdown.Markdown(extensions={
+            BootstrapExtension(),
+            'codehilite', 'fenced_code', 'toc', 'meta', 'tables'
+            }.union(markdown_ext))
 
         self.input = text
         self.markdown = None
@@ -86,33 +58,26 @@ class Processor(object):
         self.toc = None
 
     def process_pre(self):
-        """
-            Content preprocessor.
-        """
+        """Content preprocessor."""
         current = self.input
         for processor in self.preprocessors:
             current = processor(current)
         self.pre = current
 
     def process_markdown(self):
-        """
-            Convert to HTML.
-        """
+        """Convert to HTML."""
         self.html = self.md.convert(self.pre)
         self.toc = self.md.toc
 
     def split_raw(self):
-        """
-            Split text into raw meta and content.
-        """
+        """Split text into raw meta and content."""
         self.meta_raw, self.markdown = self.pre.split('\n\n', 1)
 
     def process_meta(self):
-        """
-            Get metadata.
+        """Get metadata.
 
-            .. warning:: Can only be called after :meth:`html` was
-                called.
+        .. warning:: Can only be called after :meta:`html` was
+        called.
         """
         # the markdown meta plugin does not retain the order of the
         # entries, so we have to loop over the meta values a second
@@ -126,19 +91,18 @@ class Processor(object):
                 '\n'.join(self.md.Meta[key.lower()])
 
     def process_post(self):
-        """
-            Content postprocessor.
-        """
+        """Content postprocessor."""
         current = self.html
         for processor in self.postprocessors:
             current = processor(current)
         self.final = current
 
     def process(self):
-        """
-            Runs the full suite of processing on the given text, all
-            pre and post processing, markdown rendering and meta data
-            handling.
+        """Run the full processing suite.
+
+        Runs the full suite of processing on the given text, all
+        pre and post processing, markdown rendering and meta data
+        handling.
         """
         self.process_pre()
         self.process_markdown()
@@ -146,25 +110,35 @@ class Processor(object):
         self.process_meta()
         self.process_post()
 
-        return self.final, self.markdown, self.meta, TOC(self.toc, self.md.toc_tokens)
+        return self.final, self.markdown, self.meta, TOC(
+            self.toc, self.md.toc_tokens
+            )
 
 
 class TOC(object):
+    """Table of contents."""
+
     def __init__(self, toc, tokens=None):
+        """Initialize the table of contents."""
         if tokens is None:
             tokens = []
         self._toc = toc
         self.tokens = tokens
 
     def __bool__(self):
+        """."""
         return bool(self.tokens)
 
     def __html__(self):
+        """."""
         return self._toc
 
 
 class Page(object):
+    """A page of the wiki."""
+
     def __init__(self, path, url, new=False):
+        """."""
         self.path = path
         self.url = url
         self._meta = OrderedDict()
@@ -174,13 +148,16 @@ class Page(object):
             self.render()
 
     def __repr__(self):
+        """."""
         return f"<Page: {self.url}@{self.path}>"
 
     def load(self):
+        """Load a page."""
         with open(self.path, 'r', encoding='utf-8') as f:
             self.content = f.read()
 
     def render(self):
+        """Process and render a page."""
         processor = Processor(self.content)
         self._html, self.body, self._meta, self.toc = processor.process()
 
@@ -191,6 +168,7 @@ class Page(object):
             os.path.getmtime(self.path))
 
     def save(self, update=True):
+        """Save a page."""
         folder = os.path.dirname(self.path)
         if not os.path.exists(folder):
             os.makedirs(folder)
@@ -206,23 +184,29 @@ class Page(object):
 
     @property
     def meta(self):
+        """."""
         return self._meta
 
     def __getitem__(self, name):
+        """."""
         return self._meta[name]
 
     def __setitem__(self, name, value):
+        """."""
         self._meta[name] = value
 
     @property
     def html(self):
+        """."""
         return self._html
 
     def __html__(self):
+        """."""
         return self.html
 
     @property
     def title(self):
+        """Return page title."""
         try:
             return self['title']
         except KeyError:
@@ -230,10 +214,12 @@ class Page(object):
 
     @title.setter
     def title(self, value):
+        """."""
         self['title'] = value
 
     @property
     def tags(self):
+        """Return page tags."""
         try:
             return self['tags']
         except KeyError:
@@ -241,53 +227,62 @@ class Page(object):
 
     @tags.setter
     def tags(self, value):
+        """."""
         self['tags'] = value
 
     @property
     def language(self):
-        '''
-            Returns the language in which a page has been saved
-            or return default wiki language if page doesn't have a language.
-        '''
+        """Return page language.
+
+        Returns the language in which a page has been saved
+        or returns default wiki language if page doesn't have a language.
+        """
         filename = Path(self.path).stem
-        return filename.split('_')[-1] if '_' in filename else current_wiki.languages[0]
+        return filename.split('_')[-1] if '_' in filename\
+            else current_wiki.languages[0]
 
 
 class WikiBase(object):
+    """."""
+
     def __init__(self, root):
+        """."""
         self.root = root
 
     def path(self, url):
+        """."""
         return os.path.join(self.root, f'{url}.md')
 
     def ln_path(self, url):
+        """."""
         return os.path.join(self.root, f'{url}_{self.current_language}.md')
 
     def exists(self, url):
+        """."""
         path = self.path(url)
         return os.path.exists(path)
 
     def get(self, url):
+        """."""
         path = self.ln_path(url)
         if os.path.isfile(path):
             return Page(path, url)
         path = self.path(url)
-        if os.path.isfile(path):
-            return Page(path, url)
-        return None
+        return Page(path, url) if os.path.isfile(path) else None
 
     def get_or_404(self, url):
+        """."""
         if page := self.get(url):
             return page
         abort(404)
 
     def get_bare(self, url):
+        """."""
         path = self.path(url)
-        if self.exists(url):
-            return False
-        return Page(path, url, new=True)
+        return False if self.exists(url) else Page(path, url, new=True)
 
     def move(self, url, newurl):
+        """."""
         source = f'{os.path.join(self.root, url)}.md'
         target = f'{os.path.join(self.root, newurl)}.md'
         # normalize root path (just in case somebody defined it absolute,
@@ -309,6 +304,7 @@ class WikiBase(object):
         os.rename(source, target)
 
     def delete(self, url):
+        """."""
         path = self.path(url)
         if not self.exists(url):
             return False
@@ -316,11 +312,10 @@ class WikiBase(object):
         return True
 
     def index(self):
-        """
-            Builds up a list of all the available pages.
+        """Build up a list of all the available pages.
 
-            :returns: a list of all the wiki pages
-            :rtype: list
+        :returns: a list of all the wiki pages
+        :rtype: list
         """
         # make sure we always have the absolute path for fixing the
         # walk path
@@ -338,17 +333,16 @@ class WikiBase(object):
         return sorted(pages, key=lambda x: x.title.lower())
 
     def index_by(self, key):
-        """
-            Get an index based on the given key.
+        """Get an index based on the given key.
 
-            Will use the metadata value of the given key to group
-            the existing pages.
+        Will use the metadata value of the given key to group
+        the existing pages.
 
-            :param str key: the attribute to group the index on.
+        :param str key: the attribute to group the index on.
 
-            :returns: Will return a dictionary where each entry holds
-                a list of pages that share the given attribute.
-            :rtype: dict
+        :returns: Will return a dictionary where each entry holds
+            a list of pages that share the given attribute.
+        :rtype: dict
         """
         pages = {}
         for page in self.index():
@@ -358,10 +352,12 @@ class WikiBase(object):
         return pages
 
     def get_by_title(self, title):
+        """."""
         pages = self.index(attr='title')
         return pages.get(title)
 
     def get_tags(self):
+        """."""
         pages = self.index()
         tags = {}
         for page in pages:
@@ -377,19 +373,23 @@ class WikiBase(object):
         return tags
 
     def index_by_tag(self, tag):
+        """."""
         pages = self.index()
         tagged = [page for page in pages if tag in page.tags]
         return sorted(tagged, key=lambda x: x.title.lower())
 
     @property
     def current_language(self):
+        """."""
         return current_app.config.get('WIKI_CURRENT_LANGUAGE')()
 
     @property
     def languages(self):
+        """."""
         return current_app.config.get('WIKI_LANGUAGES')
 
     def search(self, term, ignore_case=True, attrs=None):
+        """."""
         if attrs is None:
             attrs = ['title', 'tags', 'body']
         pages = self.index()
@@ -423,6 +423,7 @@ class WikiBase(object):
 
 
 def get_wiki():
+    """."""
     wiki = getattr(g, '_wiki', None)
     if wiki is None:
         wiki = g._wiki = WikiBase(current_app.config['WIKI_CONTENT_DIR'])
