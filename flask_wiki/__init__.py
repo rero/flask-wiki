@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of Flask-Wiki
-# Copyright (C) 2020 RERO
+# Copyright (C) 2023 RERO
 #
 # Flask-Wiki is free software; you can redistribute it and/or modify
 # it under the terms of the Revised BSD License; see LICENSE file for
@@ -9,15 +9,17 @@
 
 """This extension create a wiki from a tree directory."""
 
-from flask import current_app
-import os
-from .views import blueprint
 from werkzeug.middleware.shared_data import SharedDataMiddleware
+
 from . import config
+from .views import blueprint
 
 
 class Wiki(object):
+    """."""
+
     def __init__(self, app=None):
+        """."""
         self.app = app
         if app is not None:
             self.init_app(app)

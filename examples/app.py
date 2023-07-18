@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
+#
 # This file is part of Flask-Wiki
-# Copyright (C) 2020 RERO
+# Copyright (C) 2023 RERO
 #
 # Flask-Wiki is free software; you can redistribute it and/or modify
 # it under the terms of the Revised BSD License; see LICENSE file for
@@ -9,7 +10,7 @@
 """Simple Testing applications."""
 
 from flask import Flask, redirect, request, session, url_for
-from flask_babel import Babel, Domain, get_locale, get_translations, get_domain
+from flask_babel import Babel
 from flask_bootstrap import Bootstrap4
 from pkg_resources import resource_filename
 
@@ -34,7 +35,9 @@ def create_app(test_config=None):
             'de': 'German',
             'it': 'Italian'
         },
-        BABEL_TRANSLATION_DIRECTORIES = resource_filename('flask_wiki', 'translations'),
+        BABEL_TRANSLATION_DIRECTORIES=resource_filename(
+            'flask_wiki', 'translations'
+        ),
         BABEL_DEFAULT_LOCALE='fr',
         DEBUG=True
     )
