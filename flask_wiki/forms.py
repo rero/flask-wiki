@@ -9,7 +9,7 @@
 
 """Forms class."""
 
-from flask_babel import gettext as _
+from flask_babel import lazy_gettext as _
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField
 from wtforms.validators import InputRequired
@@ -17,15 +17,6 @@ from wtforms.validators import InputRequired
 
 class EditorForm(FlaskForm):
     """."""
-
-    class Meta:
-        """."""
-
-        locales = ['en', 'fr', 'de', 'it']
-
-    def get_translations(self, form):
-        """."""
-        return super(FlaskForm.Meta, self).get_translations(form)
 
     title = StringField(_('Title'), [InputRequired()])
     body = TextAreaField(_('Body'), [InputRequired()])
