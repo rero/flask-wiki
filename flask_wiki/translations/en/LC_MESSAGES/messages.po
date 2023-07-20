@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Flask-Admin VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-04-06 11:48+0200\n"
+"POT-Creation-Date: 2023-07-20 14:42+0200\n"
 "PO-Revision-Date: 2020-01-30 11:47+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -19,51 +19,47 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.12.1\n"
 
-#: flask_wiki/forms.py:25
+#: flask_wiki/forms.py:21
 msgid "Title"
 msgstr ""
 
-#: flask_wiki/forms.py:26
+#: flask_wiki/forms.py:22
 msgid "Body"
 msgstr ""
 
-#: flask_wiki/forms.py:27
+#: flask_wiki/forms.py:23
 msgid "Tags"
 msgstr ""
 
-#: flask_wiki/views.py:143
+#: flask_wiki/views.py:155
 msgid "Saved"
 msgstr ""
 
-#: flask_wiki/views.py:162
+#: flask_wiki/views.py:177
 msgid "Page deleted"
 msgstr ""
 
-#: flask_wiki/views.py:164
+#: flask_wiki/views.py:180
 msgid "Could not delete page as it does not exist."
 msgstr ""
 
-#: flask_wiki/views.py:173
+#: flask_wiki/views.py:193
 msgid "File deleted"
 msgstr ""
 
-#: flask_wiki/views.py:175
-msgid "Something went wrong. Could not delete file."
-msgstr ""
-
-#: flask_wiki/views.py:184
+#: flask_wiki/views.py:210
 msgid "No file part"
 msgstr ""
 
-#: flask_wiki/views.py:190
+#: flask_wiki/views.py:216
 msgid "No selected file"
 msgstr ""
 
-#: flask_wiki/views.py:197
+#: flask_wiki/views.py:223
 msgid "File already exists"
 msgstr ""
 
-#: flask_wiki/views.py:201
+#: flask_wiki/views.py:228
 msgid "You do not have the permission to add files."
 msgstr ""
 
@@ -192,43 +188,4 @@ msgstr[1] ""
 #: flask_wiki/templates/wiki/search.html:22
 msgid "All languages"
 msgstr ""
-
-#~ msgid ""
-#~ "Are you sure you want to delete"
-#~ " this file? Be warned that links "
-#~ "from existing page will be broken."
-#~ msgstr ""
-
-#~ msgid "Deleted"
-#~ msgstr ""
-
-#~ msgid "Could not delete file"
-#~ msgstr ""
-
-#~ msgid "Table of Content"
-#~ msgstr ""
-
-#~ msgid "Copied in you clipboard"
-#~ msgstr ""
-
-#~ msgid "results"
-#~ msgstr ""
-
-#~ msgid "Show all pages"
-#~ msgstr ""
-
-#~ msgid "title"
-#~ msgstr ""
-
-#~ msgid "body"
-#~ msgstr ""
-
-#~ msgid "tags"
-#~ msgstr ""
-
-#~ msgid "Created:"
-#~ msgstr ""
-
-#~ msgid "Copied to your clipboard"
-#~ msgstr ""
 

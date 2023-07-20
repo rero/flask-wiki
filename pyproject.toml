@@ -34,6 +34,6 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poe.tasks]
 extract_messages = "pybabel extract --project Flask-Wiki -F babel.cfg -k gettext -k lazy_gettext -o flask_wiki/translations/messages.pot flask_wiki"
-init_catalog = "pybabel init -i flask_wiki/translations/messages.pot -d flask_wiki/translations -l "
+init_catalog = "pybabel init -i flask_wiki/translations/messages.pot -d flask_wiki/translations -l"
 compile_catalog = "pybabel compile -d flask_wiki/translations"
-update_catalog = "pybabel update -i flask_wiki/translations/messages.pot -d flask_wiki/translations"
+update_catalog = "pybabel update -i flask_wiki/translations/messages.pot -d flask_wiki/translations --no-fuzzy-matching --ignore-obsolete true"
