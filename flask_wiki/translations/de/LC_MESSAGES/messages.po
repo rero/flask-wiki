@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Flask-Admin VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-07-20 14:42+0200\n"
+"POT-Creation-Date: 2023-08-24 11:41+0200\n"
 "PO-Revision-Date: 2020-01-30 11:47+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -31,35 +31,35 @@ msgstr "Inhalt"
 msgid "Tags"
 msgstr "Tags"
 
-#: flask_wiki/views.py:155
+#: flask_wiki/views.py:156
 msgid "Saved"
 msgstr "Gespeichert"
 
-#: flask_wiki/views.py:177
+#: flask_wiki/views.py:178
 msgid "Page deleted"
 msgstr "Seite gelöscht"
 
-#: flask_wiki/views.py:180
+#: flask_wiki/views.py:181
 msgid "Could not delete page as it does not exist."
 msgstr "Seite konnte nicht gelöscht werden, da sie nicht existiert."
 
-#: flask_wiki/views.py:193
+#: flask_wiki/views.py:194
 msgid "File deleted"
 msgstr "Datei gelöscht"
 
-#: flask_wiki/views.py:210
+#: flask_wiki/views.py:211
 msgid "No file part"
 msgstr "Kein Dateifeld"
 
-#: flask_wiki/views.py:216
+#: flask_wiki/views.py:217
 msgid "No selected file"
 msgstr "Keine Dateien ausgewählt"
 
-#: flask_wiki/views.py:223
+#: flask_wiki/views.py:224
 msgid "File already exists"
 msgstr "Die Datei existiert bereits"
 
-#: flask_wiki/views.py:228
+#: flask_wiki/views.py:229
 msgid "You do not have the permission to add files."
 msgstr "Sie haben nicht die Berechtigung, Dateien hinzuzufügen."
 
@@ -112,7 +112,7 @@ msgstr "Löschen"
 
 #: flask_wiki/templates/wiki/editor.html:37
 msgid "Edit in"
-msgstr "Bearbeiten in"
+msgstr "Bearbeiten auf"
 
 #: flask_wiki/templates/wiki/editor.html:47
 msgid "Save"
@@ -188,8 +188,4 @@ msgid "result"
 msgid_plural "results"
 msgstr[0] "Ergebnis"
 msgstr[1] "Ergebnisse"
-
-#: flask_wiki/templates/wiki/search.html:22
-msgid "All languages"
-msgstr "Alle Sprachen"
 
