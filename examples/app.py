@@ -28,7 +28,7 @@ def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         SECRET_KEY='dev',
-        WIKI_CURRENT_LANGUAGE=lambda: session.get('language', 'fr'),
+        WIKI_CURRENT_LANGUAGE=lambda: session.get('language', app.config.get('BABEL_DEFAULT_LOCALE')),
         WIKI_LANGUAGES={
             'en': 'English',
             'fr': 'French',
