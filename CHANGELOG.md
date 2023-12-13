@@ -1,3 +1,10 @@
+## [v0.3.1](https://github.com/rero/flask-wiki/tree/v0.3.0) (2023-12-13)
+
+[Full Changelog](https://github.com/rero/flask-wiki/compare/v0.3.0...v0.3.1)
+
+**Fixes:**
+* fix: config languages [\#65](https://github.com/rero/flask-wiki/pull/65) (by @PascalRepond)
+
 ## [v0.3.0](https://github.com/rero/flask-wiki/tree/v0.3.0) (2023-08-24)
 
 [Full Changelog](https://github.com/rero/flask-wiki/compare/v0.2.4...v0.3.0)
