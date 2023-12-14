@@ -109,16 +109,16 @@ def permission_processor():
 # MISCS
 # =====
 @blueprint.before_request
-def setWiki():
+def set_wiki():
     """."""
     get_wiki()
 
 
 def allowed_file(filename):
     """."""
-    ALLOWED_EXTENSIONS = current_app.config.get('WIKI_ALLOWED_EXTENSIONS')
+    allowed_extensions = current_app.config.get('WIKI_ALLOWED_EXTENSIONS')
     return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+           filename.rsplit('.', 1)[1].lower() in allowed_extensions
 
 
 # ROUTES

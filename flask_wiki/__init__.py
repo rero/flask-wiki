@@ -15,7 +15,7 @@ from . import config
 from .views import blueprint
 
 
-class Wiki(object):
+class Wiki:
     """."""
 
     def __init__(self, app=None):

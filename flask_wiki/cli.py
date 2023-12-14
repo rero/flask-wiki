@@ -18,7 +18,6 @@ from .api import get_wiki
 @click.group()
 def flask_wiki():
     """Command-line interface for flask-wiki."""
-    pass
 
 
 @flask_wiki.command()
