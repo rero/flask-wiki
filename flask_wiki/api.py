@@ -28,10 +28,10 @@ from .markdown_ext import BootstrapExtension
 from .utils import clean_url, wikilink
 
 
-class Processor(object):
+class Processor:
     """Processing file content into metadata and rendering.
 
-    The processor handles the processing of file content intometadata and
+    The processor handles the processing of file content into metadata and
     markdown and takes care of the rendering. It also offers some helper
     methods that can be used for various cases.
     """
@@ -193,10 +193,10 @@ class Page(object):
             os.makedirs(folder)
         with open(self.path, 'w', encoding='utf-8') as f:
             for key, value in self._meta.items():
-                line = u'%s: %s\n' % (key, value)
+                line = f'{key}: {value}\n'
                 f.write(line)
-            f.write(u'\n')
-            f.write(self.body.replace(u'\r\n', u'\n'))
+            f.write('\n')
+            f.write(self.body.replace('\r\n', '\n'))
         self.index()
         if update:
             self.load()
@@ -328,8 +328,8 @@ class WikiBase(object):
         # us outside defined root directory
         if len(common) < len(root):
             raise RuntimeError(
-                'Possible write attempt outside content directory: '
-                '%s' % newurl)
+                f'Possible write attempt outside content directory: '
+                f'{newurl}')
         # create folder if it does not exists yet
         folder = os.path.dirname(target)
         if not os.path.exists(folder):
@@ -428,16 +428,11 @@ class WikiBase(object):
         :rtype: dict
         """
         pages = {}
-        for page in self.index():
+        for page in self.list_pages():
             value = getattr(page, key)
             pre = pages.get(value, [])
             pages[value] = pre.append(page)
         return pages
-
-    def get_by_title(self, title):
-        """Get all page titles."""
-        pages = self.list_pages(attr='title')
-        return pages.get(title)
 
     def get_tags(self):
         """Get all tags."""

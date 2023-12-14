@@ -15,7 +15,7 @@ from markdown.treeprocessors import Treeprocessor
 class BootstrapExtension(Extension):
     """."""
 
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md):
         """."""
         md.registerExtension(self)
         self.processor = BootstrapTreeprocessor()
