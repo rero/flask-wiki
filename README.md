@@ -45,7 +45,7 @@ Simple file based wiki for Flask.
 - WIKI_ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'svg'}
 - WIKI_MARKDOWN_EXTENSIONS = set(('codehilite', 'fenced_code'))
 
-### Permssions
+### Permissions
 
 - WIKI_EDIT_VIEW_PERMISSION = lambda: True
 - WIKI_READ_VIEW_PERMISSION = lambda: True
