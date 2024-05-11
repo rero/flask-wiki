@@ -57,9 +57,6 @@ def wikilink(text, url_formatter=None):
     for i in link_regex.findall(text):
         title = [i[-1] or i[1]][0]
         url = clean_url(i[1])
-        html_url = u"<a href='{0}'>{1}</a>".format(
-            url_formatter('display', url=url),
-            title
-        )
+        html_url = f"<a href='{url_formatter('display', url=url)}'>{title}</a>"
         text = re.sub(link_regex, html_url, text, count=1)
     return text
