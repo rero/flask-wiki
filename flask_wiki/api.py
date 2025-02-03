@@ -44,14 +44,18 @@ class Processor(object):
 
         :param str text: the text to process
         """
-        markdown_ext = current_app.config['WIKI_MARKDOWN_EXTENSIONS']
+        markdown_ext = current_app.config["WIKI_MARKDOWN_EXTENSIONS"]
 
-        self.md = markdown.Markdown(extensions={
-            BootstrapExtension(),
-            'codehilite',
-            'fenced_code',
-            'toc', 'meta', 'tables'
-            }.union(markdown_ext))
+        self.md = markdown.Markdown(
+            extensions={
+                BootstrapExtension(),
+                "codehilite",
+                "fenced_code",
+                "toc",
+                "meta",
+                "tables",
+            }.union(markdown_ext)
+        )
 
         self.input = text
         self.markdown = None
@@ -77,7 +81,7 @@ class Processor(object):
 
     def split_raw(self):
         """Split text into raw meta and content."""
-        self.meta_raw, self.markdown = self.pre.split('\n\n', 1)
+        self.meta_raw, self.markdown = self.pre.split("\n\n", 1)
 
     def process_meta(self):
         """Get metadata.
@@ -89,12 +93,11 @@ class Processor(object):
         # entries, so we have to loop over the meta values a second
         # time to put them into a dictionary in the correct order
         self.meta = OrderedDict()
-        for line in self.meta_raw.split('\n'):
-            key = line.split(':', 1)[0]
+        for line in self.meta_raw.split("\n"):
+            key = line.split(":", 1)[0]
             # markdown metadata always returns a list of lines, we will
             # reverse that here
-            self.meta[key.lower()] = \
-                '\n'.join(self.md.Meta[key.lower()])
+            self.meta[key.lower()] = "\n".join(self.md.Meta[key.lower()])
 
     def process_post(self):
         """Content postprocessor."""
@@ -116,9 +119,7 @@ class Processor(object):
         self.process_meta()
         self.process_post()
 
-        return self.final, self.markdown, self.meta, TOC(
-            self.toc, self.md.toc_tokens
-            )
+        return self.final, self.markdown, self.meta, TOC(self.toc, self.md.toc_tokens)
 
 
 class TOC(object):
@@ -159,7 +160,7 @@ class Page(object):
 
     def load(self):
         """Load a page."""
-        with open(self.path, 'r', encoding='utf-8') as f:
+        with open(self.path, "r", encoding="utf-8") as f:
             self.content = f.read()
 
     def render(self):
@@ -168,21 +169,19 @@ class Page(object):
         self._html, self.body, self._meta, self.toc = processor.process()
 
         # Get creation and update times from file
-        self.creation_datetime = datetime.fromtimestamp(
-            os.path.getctime(self.path))
-        self.modification_datetime = datetime.fromtimestamp(
-            os.path.getmtime(self.path))
+        self.creation_datetime = datetime.fromtimestamp(os.path.getctime(self.path))
+        self.modification_datetime = datetime.fromtimestamp(os.path.getmtime(self.path))
 
     def index(self):
         """Index page data for whoosh search engine."""
-        index_dir = index.open_dir(current_app.config.get('WIKI_INDEX_DIR'))
+        index_dir = index.open_dir(current_app.config.get("WIKI_INDEX_DIR"))
         writer = AsyncWriter(index_dir)
         writer.update_document(
             url=self.url,
             title=self.title,
             body=self.raw_body,
             tags=self.tags,
-            language=self.language
+            language=self.language,
         )
         writer.commit()
 
@@ -191,12 +190,12 @@ class Page(object):
         folder = os.path.dirname(self.path)
         if not os.path.exists(folder):
             os.makedirs(folder)
-        with open(self.path, 'w', encoding='utf-8') as f:
+        with open(self.path, "w", encoding="utf-8") as f:
             for key, value in self._meta.items():
-                line = u'%s: %s\n' % (key, value)
+                line = "%s: %s\n" % (key, value)
                 f.write(line)
-            f.write(u'\n')
-            f.write(self.body.replace(u'\r\n', u'\n'))
+            f.write("\n")
+            f.write(self.body.replace("\r\n", "\n"))
         self.index()
         if update:
             self.load()
@@ -228,25 +227,25 @@ class Page(object):
     def title(self):
         """Return page title."""
         try:
-            return self['title']
+            return self["title"]
         except KeyError:
             return self.url
 
     @title.setter
     def title(self, value):
-        self['title'] = value
+        self["title"] = value
 
     @property
     def tags(self):
         """Return page tags."""
         try:
-            return self['tags']
+            return self["tags"]
         except KeyError:
             return ""
 
     @tags.setter
     def tags(self, value):
-        self['tags'] = value
+        self["tags"] = value
 
     @property
     def raw_body(self):
@@ -256,12 +255,12 @@ class Page(object):
         used for indexing and search results display.
         """
         html = markdown.markdown(self.body)
-        html = BeautifulSoup(html, 'html.parser')
-        return html.get_text(separator=' ')
+        html = BeautifulSoup(html, "html.parser")
+        return html.get_text(separator=" ")
 
     @raw_body.setter
     def raw_body(self, value):
-        self['raw_body'] = value
+        self["raw_body"] = value
 
     @property
     def language(self):
@@ -271,8 +270,11 @@ class Page(object):
         or returns default wiki language if page doesn't have a language.
         """
         filename = Path(self.path).stem
-        return filename.split('_')[-1] if '_' in filename\
+        return (
+            filename.split("_")[-1]
+            if "_" in filename
             else list(current_wiki.languages.keys())[0]
+        )
 
 
 class WikiBase(object):
@@ -284,11 +286,11 @@ class WikiBase(object):
 
     def path(self, url):
         """."""
-        return os.path.join(self.root, f'{url}.md')
+        return os.path.join(self.root, f"{url}.md")
 
     def ln_path(self, url):
         """."""
-        return os.path.join(self.root, f'{url}_{self.current_language}.md')
+        return os.path.join(self.root, f"{url}_{self.current_language}.md")
 
     def exists(self, url):
         """."""
@@ -316,8 +318,8 @@ class WikiBase(object):
 
     def move(self, url, newurl):
         """."""
-        source = f'{os.path.join(self.root, url)}.md'
-        target = f'{os.path.join(self.root, newurl)}.md'
+        source = f"{os.path.join(self.root, url)}.md"
+        target = f"{os.path.join(self.root, newurl)}.md"
         # normalize root path (just in case somebody defined it absolute,
         # having some '../' inside) to correctly compare it to the target
         root = os.path.normpath(self.root)
@@ -328,8 +330,8 @@ class WikiBase(object):
         # us outside defined root directory
         if len(common) < len(root):
             raise RuntimeError(
-                'Possible write attempt outside content directory: '
-                '%s' % newurl)
+                "Possible write attempt outside content directory: " "%s" % newurl
+            )
         # create folder if it does not exists yet
         folder = os.path.dirname(target)
         if not os.path.exists(folder):
@@ -342,23 +344,23 @@ class WikiBase(object):
         if not self.exists(url):
             return False
         os.remove(path)
-        index_dir = index.open_dir(current_app.config.get('WIKI_INDEX_DIR'))
+        index_dir = index.open_dir(current_app.config.get("WIKI_INDEX_DIR"))
         writer = AsyncWriter(index_dir)
-        writer.delete_by_term('path', path)
+        writer.delete_by_term("path", path)
         writer.commit()
         return True
 
     def init_search_index(self):
         """Create a new whoosh search index for the wiki."""
-        index_dir = current_app.config.get('WIKI_INDEX_DIR')
+        index_dir = current_app.config.get("WIKI_INDEX_DIR")
         # initialize whoosh index schema
         schema = Schema(
             url=ID(stored=True, unique=True),
             title=TEXT(stored=True, analyzer=LanguageAnalyzer("fr")),
             tags=TEXT(stored=True),
             body=TEXT(stored=True, analyzer=LanguageAnalyzer("fr")),
-            language=ID(stored=True)
-            )
+            language=ID(stored=True),
+        )
         if not os.path.exists(index_dir):
             os.mkdir(index_dir)
         index.create_in(index_dir, schema)
@@ -375,17 +377,15 @@ class WikiBase(object):
         # parse the query to search all fields present in the schema
         fields = ix.schema.names()
         query_parser = qparser.MultifieldParser(
-            fields,
-            schema=ix.schema,
-            group=qparser.OrGroup
-            )
+            fields, schema=ix.schema, group=qparser.OrGroup
+        )
         parsed_query = query_parser.parse(query)
         # return a whoosh Results object to treat results
         results = searcher.search(parsed_query)
         # set highlights fragment size to 50 words
         results.fragmenter.surround = 50
         # set highlights separator for display
-        results.formatter.between = '<strong> [...] </strong>'
+        results.formatter.between = "<strong> [...] </strong>"
         # return the modified Results object
         return results
 
@@ -401,10 +401,10 @@ class WikiBase(object):
         root = os.path.abspath(self.root)
         for cur_dir, _, files in os.walk(root):
             # get the url of the current directory
-            cur_dir_url = cur_dir[len(root)+1:]
+            cur_dir_url = cur_dir[len(root) + 1 :]
             for cur_file in files:
                 path = os.path.join(cur_dir, cur_file)
-                if cur_file.endswith('.md'):
+                if cur_file.endswith(".md"):
                     url = clean_url(os.path.join(cur_dir_url, cur_file[:-3]))
                     page = Page(path, url)
                     pages.append(page)
@@ -436,7 +436,7 @@ class WikiBase(object):
 
     def get_by_title(self, title):
         """Get all page titles."""
-        pages = self.list_pages(attr='title')
+        pages = self.list_pages(attr="title")
         return pages.get(title)
 
     def get_tags(self):
@@ -444,10 +444,10 @@ class WikiBase(object):
         pages = self.list_pages()
         tags = {}
         for page in pages:
-            pagetags = page.tags.split(',')
+            pagetags = page.tags.split(",")
             for tag in pagetags:
                 tag = tag.strip()
-                if tag == '':
+                if tag == "":
                     continue
                 elif tags.get(tag):
                     tags[tag].append(page)
@@ -464,19 +464,19 @@ class WikiBase(object):
     @property
     def current_language(self):
         """."""
-        return current_app.config.get('WIKI_CURRENT_LANGUAGE')()
+        return current_app.config.get("WIKI_CURRENT_LANGUAGE")()
 
     @property
     def languages(self):
         """."""
-        return current_app.config.get('WIKI_LANGUAGES')
+        return current_app.config.get("WIKI_LANGUAGES")
 
 
 def get_wiki():
     """."""
-    wiki = getattr(g, '_wiki', None)
+    wiki = getattr(g, "_wiki", None)
     if wiki is None:
-        wiki = g._wiki = WikiBase(current_app.config['WIKI_CONTENT_DIR'])
+        wiki = g._wiki = WikiBase(current_app.config["WIKI_CONTENT_DIR"])
     return wiki
 
 

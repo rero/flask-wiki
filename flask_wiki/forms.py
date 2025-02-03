@@ -18,6 +18,6 @@ from wtforms.validators import InputRequired
 class EditorForm(FlaskForm):
     """."""
 
-    title = StringField(_('Title'), [InputRequired()])
-    body = TextAreaField(_('Body'), [InputRequired()])
-    tags = StringField(_('Tags'))
+    title = StringField(_("Title"), [InputRequired()])
+    body = TextAreaField(_("Body"), [InputRequired()])
+    tags = StringField(_("Tags"))

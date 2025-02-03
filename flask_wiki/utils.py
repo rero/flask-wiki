@@ -24,8 +24,8 @@ def clean_url(url):
     :returns: the cleaned url
     :rtype: str
     """
-    url = re.sub('[ ]{2,}', ' ', url).strip()
-    url = url.replace('\\\\', '/').replace('\\', '/')
+    url = re.sub("[ ]{2,}", " ", url).strip()
+    url = url.replace("\\\\", "/").replace("\\", "/")
     return url
 
 
@@ -51,15 +51,13 @@ def wikilink(text, url_formatter=None):
     if url_formatter is None:
         url_formatter = url_for
     link_regex = re.compile(
-        r"((?<!\<code\>)\[\[([^<].+?) \s*([|] \s* (.+?) \s*)?]])",
-        re.X | re.U
+        r"((?<!\<code\>)\[\[([^<].+?) \s*([|] \s* (.+?) \s*)?]])", re.X | re.U
     )
     for i in link_regex.findall(text):
         title = [i[-1] or i[1]][0]
         url = clean_url(i[1])
-        html_url = u"<a href='{0}'>{1}</a>".format(
-            url_formatter('display', url=url),
-            title
+        html_url = "<a href='{0}'>{1}</a>".format(
+            url_formatter("display", url=url), title
         )
         text = re.sub(link_regex, html_url, text, count=1)
     return text
