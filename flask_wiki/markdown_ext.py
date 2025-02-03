@@ -21,7 +21,7 @@ class BootstrapExtension(Extension):
         self.processor = BootstrapTreeprocessor()
         self.processor.md = md
         self.processor.config = self.getConfigs()
-        md.treeprocessors.add('bootstrap', self.processor, '_end')
+        md.treeprocessors.add("bootstrap", self.processor, "_end")
 
 
 class BootstrapTreeprocessor(Treeprocessor):
@@ -30,9 +30,9 @@ class BootstrapTreeprocessor(Treeprocessor):
     def run(self, node):
         """."""
         for child in node.iter():
-            if child.tag == 'img':
+            if child.tag == "img":
                 child.set("class", "img-fluid mx-auto d-block")
-            elif child.tag == 'table':
+            elif child.tag == "table":
                 child.set("class", "table table-striped")
 
         return node

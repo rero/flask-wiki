@@ -1,41 +1,48 @@
-[tool.poetry]
+[project]
 name = "flask-wiki"
 version = "0.3.1"
 description = "Simple file-based wiki for Flask"
 readme = "README.md"
-authors = ["rero <info@rero.ch>"]
+authors = [{name = "RERO+", email = "<software@rero.ch>"}]
 license = "BSD-3-Clause"
+requires-python = ">= 3.9,<3.10"
 
-[tool.poetry.dependencies]
-python = ">=3.8.0,<4.0.0"
-bootstrap-flask = "*"
-flask = "<3.0.0"
-flask-wtf = "*"
-babel = ">=2.9.1"
-flask-babel = ">=3.0.0"
-wtforms = "<3.0.0"
-werkzeug = ">=0.15"
-jinja2 = ">=3.0.0"
-markdown = "<3.4.0"
-pytest = "<8.0.0"
-py = "<2.0.0"
-pytest-pycodestyle = "<3.0.0"
-pytest-pydocstyle = "<3.0.0"
-whoosh = "<3.0.0"
-beautifulsoup4 = "<5.0.0"
-click = "<9.0.0"
+dependencies = [
+    "bootstrap-flask",
+    "Flask (<3.0.0)",
+    "flask-wtf",
+    "babel (>=2.9.1)",
+    "flask-babel (>=3.0.0)",
+    "wtforms (<3.0.0)",
+    "werkzeug (>=0.15)",
+    "jinja2 (>=3.0.0)",
+    "markdown (<3.4.0)",
+    "pytest (<8.0.0)",
+    "py (<2.0.0)",
+    "whoosh (<3.0.0)",
+    "beautifulsoup4 (<5.0.0)",
+    "click (<9.0.0)",
+    "pytest-black (>=0.6.0,<0.7.0)",
+]
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 check-manifest = "*"
 ipython = "*"
 autopep8 = "*"
 poethepoet = "*"
+black = "*"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
-[tool.poetry.plugins."flask.commands"]
+
+
+
+[tool.poetry.requires-plugins]
+poetry-plugin-shell = ">=1.0.1,<2.0.0"
+
+[project.entry-points."flask.commands"]
 flask_wiki = "flask_wiki.cli:flask_wiki"
 
 [tool.poe.tasks]

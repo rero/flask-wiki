@@ -27,20 +27,24 @@ class Wiki(object):
     def init_app(self, app):
         """Flask application initialization."""
         self.init_config(app)
-        app.register_blueprint(
-            blueprint,
-            url_prefix=app.config.get('WIKI_URL_PREFIX')
-        )
+        app.register_blueprint(blueprint, url_prefix=app.config.get("WIKI_URL_PREFIX"))
         app.add_url_rule(
-            app.config.get('WIKI_URL_PREFIX') + '/files/<filename>',
-            'uploaded_files', build_only=True)
+            app.config.get("WIKI_URL_PREFIX") + "/files/<filename>",
+            "uploaded_files",
+            build_only=True,
+        )
 
-        app.wsgi_app = SharedDataMiddleware(app.wsgi_app, {app.config.get(
-            'WIKI_URL_PREFIX') + '/files': app.config['WIKI_UPLOAD_FOLDER']})
-        app.extensions['flask-wiki'] = self
+        app.wsgi_app = SharedDataMiddleware(
+            app.wsgi_app,
+            {
+                app.config.get("WIKI_URL_PREFIX")
+                + "/files": app.config["WIKI_UPLOAD_FOLDER"]
+            },
+        )
+        app.extensions["flask-wiki"] = self
 
     def init_config(self, app):
         """Initialize configuration."""
         for k in dir(config):
-            if k.startswith('WIKI_'):
+            if k.startswith("WIKI_"):
                 app.config.setdefault(k, getattr(config, k))
