@@ -5,11 +5,11 @@ description = "Simple file-based wiki for Flask"
 readme = "README.md"
 authors = [{name = "RERO+", email = "<software@rero.ch>"}]
 license = "BSD-3-Clause"
-requires-python = ">= 3.9,<3.10"
+requires-python = ">= 3.9.2, <3.13"
 
 dependencies = [
     "bootstrap-flask",
-    "Flask (<3.0.0)",
+    "Flask",
     "flask-wtf",
     "babel (>=2.9.1)",
     "flask-babel (>=3.0.0)",
@@ -17,12 +17,10 @@ dependencies = [
     "werkzeug (>=0.15)",
     "jinja2 (>=3.0.0)",
     "markdown (<3.4.0)",
-    "pytest (<8.0.0)",
     "py (<2.0.0)",
     "whoosh (<3.0.0)",
     "beautifulsoup4 (<5.0.0)",
     "click (<9.0.0)",
-    "pytest-black (>=0.6.0,<0.7.0)",
 ]
 
 [tool.poetry.group.dev.dependencies]
@@ -30,14 +28,13 @@ check-manifest = "*"
 ipython = "*"
 autopep8 = "*"
 poethepoet = "*"
+pytest = "*"
 black = "*"
+pytest-black = "*"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
-
-
-
 
 [tool.poetry.requires-plugins]
 poetry-plugin-shell = ">=1.0.1,<2.0.0"
