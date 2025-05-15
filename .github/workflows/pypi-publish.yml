@@ -1,0 +1,43 @@
+# -*- coding: utf-8 -*-
+#
+# Flask-Wiki
+# Copyright (C) 2025 RERO.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published by
+# the Free Software Foundation, version 3 of the License.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+name: Publish
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  build-n-publish:
+    runs-on: ubuntu-latest
+    environment: pypi
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: poetry-publish
+        run: |
+          poetry publish --build -u __token__ -p ${{ secrets.PYPI_TOKEN }}
