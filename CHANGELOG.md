@@ -1,5 +1,12 @@
 # Changelog
 
+## [v1.0.1](https://github.com/rero/flask-wiki/tree/v1.0.1) (2025-05-15)
+
+[Full Changelog](https://github.com/rero/flask-wiki/compare/v1.0.0...v1.0.1)
+
+**Fix:**
+* Unlock wtforms version (by @rerowep & @PascalRepond)
+
 ## [v1.0.0](https://github.com/rero/flask-wiki/tree/v1.0.0) (2025-05-15)
 
 [Full Changelog](https://github.com/rero/flask-wiki/compare/v0.3.1...v1.0.0)
