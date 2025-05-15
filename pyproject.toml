@@ -1,6 +1,6 @@
 [project]
 name = "flask-wiki"
-version = "1.0.0"
+version = "1.0.1"
 description = "Simple file-based wiki for Flask"
 readme = "README.md"
 authors = [{name = "RERO+", email = "<software@rero.ch>"}]
@@ -13,7 +13,7 @@ dependencies = [
     "flask-wtf",
     "babel (>=2.9.1)",
     "flask-babel (>=3.0.0)",
-    "wtforms (<3.0.0)",
+    "wtforms",
     "werkzeug (>=0.15)",
     "jinja2 (>=3.0.0)",
     "markdown (<3.4.0)",
