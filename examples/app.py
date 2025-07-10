@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Flask-Wiki
-# Copyright (C) 2023 RERO
+# Copyright (C) 2025 RERO
 #
 # Flask-Wiki is free software; you can redistribute it and/or modify
 # it under the terms of the Revised BSD License; see LICENSE file for
@@ -18,19 +16,18 @@ from flask_wiki import Wiki
 
 
 def create_app(test_config=None):
+    """Create and configure the Flask application."""
+
     # create and configure the app
     def get_locale():
         if ln := request.args.get("language"):
             session["language"] = ln
-        ln = session.get("language", "en")
-        return ln
+        return session.get("language", "en")
 
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         SECRET_KEY="dev",
-        WIKI_CURRENT_LANGUAGE=lambda: session.get(
-            "language", app.config.get("BABEL_DEFAULT_LOCALE")
-        ),
+        WIKI_CURRENT_LANGUAGE=lambda: session.get("language", app.config.get("BABEL_DEFAULT_LOCALE")),
         WIKI_LANGUAGES={
             "en": "English",
             "fr": "French",
@@ -53,15 +50,13 @@ def create_app(test_config=None):
 
     @app.context_processor
     def inject_conf_var():
-        return dict(
-            AVAILABLE_LANGUAGES=app.config["WIKI_LANGUAGES"],
-            CURRENT_LANGUAGE=session.get(
+        return {
+            "AVAILABLE_LANGUAGES": app.config["WIKI_LANGUAGES"],
+            "CURRENT_LANGUAGE": session.get(
                 "language",
-                request.accept_languages.best_match(
-                    app.config["WIKI_LANGUAGES"].keys()
-                ),
+                request.accept_languages.best_match(app.config["WIKI_LANGUAGES"].keys()),
             ),
-        )
+        }
 
     @app.route("/language/<ln>")
     def change_language(ln=None):

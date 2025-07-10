@@ -8,17 +8,17 @@ Simple file based wiki for Flask.
 
 ### Requirements
 
-* Python >=3.8.0,<4.0.0
-* [Poetry](https://python-poetry.org/)
+* Python >=3.9.2,<3.13
+* [uv](https://docs.astral.sh/uv/)
 
 ### Install dev environment
 
 - Clone the git repository
-- run `poetry install`
-- `cd examples`, 
-- `poetry run flask flask_wiki init-index`
-- `poetry run flask flask_wiki index`
-- then `poetry run flask run --debug`
+- run `uv sync --frozen`
+- `cd examples`
+- `uv run flask flask_wiki init-index`
+- `uv run flask flask_wiki index`
+- then `uv run flask run --debug`
 - go to http://localhost:5000/help
 
 ## Configuration

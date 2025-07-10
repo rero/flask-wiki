@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Flask-Wiki
-# Copyright (C) 2023 RERO
+# Copyright (C) 2025 RERO
 #
 # Flask-Wiki is free software; you can redistribute it and/or modify
 # it under the terms of the Revised BSD License; see LICENSE file for
@@ -12,7 +10,6 @@
 import os
 from collections import OrderedDict
 from datetime import datetime
-from io import open
 from pathlib import Path
 
 import markdown
@@ -28,7 +25,7 @@ from .markdown_ext import BootstrapExtension
 from .utils import clean_url, wikilink
 
 
-class Processor(object):
+class Processor:
     """Processing file content into metadata and rendering.
 
     The processor handles the processing of file content intometadata and
@@ -36,15 +33,15 @@ class Processor(object):
     methods that can be used for various cases.
     """
 
-    preprocessors = []
-    postprocessors = [wikilink]
-
     def __init__(self, text):
         """Initialize the processor.
 
         :param str text: the text to process
         """
         markdown_ext = current_app.config["WIKI_MARKDOWN_EXTENSIONS"]
+
+        self.preprocessors = []
+        self.postprocessors = [wikilink]
 
         self.md = markdown.Markdown(
             extensions={
@@ -122,7 +119,7 @@ class Processor(object):
         return self.final, self.markdown, self.meta, TOC(self.toc, self.md.toc_tokens)
 
 
-class TOC(object):
+class TOC:
     """Table of contents."""
 
     def __init__(self, toc, tokens=None):
@@ -141,7 +138,7 @@ class TOC(object):
         return self._toc
 
 
-class Page(object):
+class Page:
     """A page of the wiki."""
 
     def __init__(self, path, url, new=False):
@@ -160,7 +157,7 @@ class Page(object):
 
     def load(self):
         """Load a page."""
-        with open(self.path, "r", encoding="utf-8") as f:
+        with open(self.path, encoding="utf-8") as f:
             self.content = f.read()
 
     def render(self):
@@ -169,8 +166,8 @@ class Page(object):
         self._html, self.body, self._meta, self.toc = processor.process()
 
         # Get creation and update times from file
-        self.creation_datetime = datetime.fromtimestamp(os.path.getctime(self.path))
-        self.modification_datetime = datetime.fromtimestamp(os.path.getmtime(self.path))
+        self.creation_datetime = datetime.fromtimestamp(os.path.getctime(self.path))  # noqa
+        self.modification_datetime = datetime.fromtimestamp(os.path.getmtime(self.path))  # noqa
 
     def index(self):
         """Index page data for whoosh search engine."""
@@ -192,7 +189,7 @@ class Page(object):
             os.makedirs(folder)
         with open(self.path, "w", encoding="utf-8") as f:
             for key, value in self._meta.items():
-                line = "%s: %s\n" % (key, value)
+                line = f"{key}: {value}\n"
                 f.write(line)
             f.write("\n")
             f.write(self.body.replace("\r\n", "\n"))
@@ -270,14 +267,10 @@ class Page(object):
         or returns default wiki language if page doesn't have a language.
         """
         filename = Path(self.path).stem
-        return (
-            filename.split("_")[-1]
-            if "_" in filename
-            else list(current_wiki.languages.keys())[0]
-        )
+        return filename.split("_")[-1] if "_" in filename else next(iter(current_wiki.languages.keys()))
 
 
-class WikiBase(object):
+class WikiBase:
     """Utility class for wiki management methods."""
 
     def __init__(self, root):
@@ -310,6 +303,7 @@ class WikiBase(object):
         if page := self.get(url):
             return page
         abort(404)
+        return None
 
     def get_bare(self, url):
         """."""
@@ -329,9 +323,7 @@ class WikiBase(object):
         # otherwise there are probably some '..' links in target path leading
         # us outside defined root directory
         if len(common) < len(root):
-            raise RuntimeError(
-                "Possible write attempt outside content directory: " "%s" % newurl
-            )
+            raise RuntimeError(f"Possible write attempt outside content directory: {newurl}")
         # create folder if it does not exists yet
         folder = os.path.dirname(target)
         if not os.path.exists(folder):
@@ -376,9 +368,7 @@ class WikiBase(object):
         """
         # parse the query to search all fields present in the schema
         fields = ix.schema.names()
-        query_parser = qparser.MultifieldParser(
-            fields, schema=ix.schema, group=qparser.OrGroup
-        )
+        query_parser = qparser.MultifieldParser(fields, schema=ix.schema, group=qparser.OrGroup)
         parsed_query = query_parser.parse(query)
         # return a whoosh Results object to treat results
         results = searcher.search(parsed_query)
@@ -449,7 +439,7 @@ class WikiBase(object):
                 tag = tag.strip()
                 if tag == "":
                     continue
-                elif tags.get(tag):
+                if tags.get(tag):
                     tags[tag].append(page)
                 else:
                     tags[tag] = [page]

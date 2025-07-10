@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Flask-Wiki
-# Copyright (C) 2023 RERO
+# Copyright (C) 2025 RERO
 #
 # Flask-Wiki is free software; you can redistribute it and/or modify
 # it under the terms of the Revised BSD License; see LICENSE file for
@@ -18,7 +16,6 @@ from .api import get_wiki
 @click.group()
 def flask_wiki():
     """Command-line interface for flask-wiki."""
-    pass
 
 
 @flask_wiki.command()

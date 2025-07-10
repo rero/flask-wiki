@@ -1,43 +1,35 @@
-# -*- coding: utf-8 -*-
+# This file is part of Flask-Wiki
+# Copyright (C) 2025 RERO
 #
-# Flask-Wiki
-# Copyright (C) 2025 RERO.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as published by
-# the Free Software Foundation, version 3 of the License.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
+# Flask-Wiki is free software; you can redistribute it and/or modify
+# it under the terms of the Revised BSD License; see LICENSE file for
+# more details.
 
 name: Publish
 
 on:
-  push:
-    tags:
-      - v*
+  release:
+    types: ["published"]
 
 jobs:
-  build-n-publish:
+  run:
+    name: "Build and publish release"
     runs-on: ubuntu-latest
-    environment: pypi
+
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
         with:
-          python-version: 3.12
+          enable-cache: true
+          cache-dependency-glob: uv.lock
 
-      - name: Install Poetry
-        uses: snok/install-poetry@v1
+      - name: Set up Python
+        run: uv python install 3.12
 
-      - name: poetry-publish
-        run: |
-          poetry publish --build -u __token__ -p ${{ secrets.PYPI_TOKEN }}
+      - name: Build
+        run: uv build
+
+      - name: Publish
+        run: uv publish -t ${{ secrets.PYPI_TOKEN }}

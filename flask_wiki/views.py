@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Flask-Wiki
-# Copyright (C) 2023 RERO
+# Copyright (C) 2025 RERO
 #
 # Flask-Wiki is free software; you can redistribute it and/or modify
 # it under the terms of the Revised BSD License; see LICENSE file for
@@ -31,9 +29,7 @@ from whoosh import index as whoosh_index
 from .api import Processor, current_wiki, get_wiki
 from .forms import EditorForm
 
-blueprint = Blueprint(
-    "wiki", __name__, template_folder="templates", static_folder="static"
-)
+blueprint = Blueprint("wiki", __name__, template_folder="templates", static_folder="static")
 
 
 # PERMISSIONS
@@ -92,16 +88,13 @@ def edit_path_list(path):
     return list(
         filter(
             lambda v: v["path"] != path,
-            [
-                dict(ln=ln, path="_".join((base_path, ln)))
-                for ln in current_wiki.languages
-            ],
+            [{"ln": ln, "path": "_".join((base_path, ln))} for ln in current_wiki.languages],
         )
     )
 
 
 @blueprint.app_template_filter()
-def date_format(value, format=None):
+def date_format(value):
     """."""
     return value.strftime("%d-%m-%Y")
 
@@ -111,24 +104,24 @@ def date_format(value, format=None):
 @blueprint.context_processor
 def permission_processor():
     """."""
-    return dict(
-        can_edit_wiki=current_app.config.get("WIKI_EDIT_UI_PERMISSION")(),
-        can_read_wiki=current_app.config.get("WIKI_READ_UI_PERMISSION")(),
-    )
+    return {
+        "can_edit_wiki": current_app.config.get("WIKI_EDIT_UI_PERMISSION")(),
+        "can_read_wiki": current_app.config.get("WIKI_READ_UI_PERMISSION")(),
+    }
 
 
 # MISCS
 # =====
 @blueprint.before_request
-def setWiki():
+def set_wiki():
     """."""
     get_wiki()
 
 
 def allowed_file(filename):
     """."""
-    ALLOWED_EXTENSIONS = current_app.config.get("WIKI_ALLOWED_EXTENSIONS")
-    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+    allowed_extensions = current_app.config.get("WIKI_ALLOWED_EXTENSIONS")
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in allowed_extensions
 
 
 # ROUTES
@@ -161,9 +154,7 @@ def edit(url):
         page.save()
         flash(_("Saved"), category="success")
         return redirect(url_for("wiki.page", url=url))
-    return render_template(
-        current_app.config.get("WIKI_EDITOR_TEMPLATE"), form=form, page=page, path=url
-    )
+    return render_template(current_app.config.get("WIKI_EDITOR_TEMPLATE"), form=form, page=page, path=url)
 
 
 @blueprint.route("/preview/", methods=["POST"])
@@ -197,7 +188,7 @@ def delete_file(filename):
         flash(_("File deleted"), category="success")
     except Exception as e:
         flash(
-            _(f"Something went wrong. Could not delete file. Error: {e}"),
+            _("Something went wrong. Could not delete file. Error: {e}").format(e=e),
             category="error",
         )
     return redirect(url_for("wiki.files"))
@@ -220,9 +211,7 @@ def files():
             return redirect(request.url)
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            output_filename = os.path.join(
-                current_app.config["WIKI_UPLOAD_FOLDER"], filename
-            )
+            output_filename = os.path.join(current_app.config["WIKI_UPLOAD_FOLDER"], filename)
             if os.path.isfile(output_filename):
                 flash(_("File already exists"), category="danger")
             else:
@@ -247,9 +236,7 @@ def search():
         index_dir = whoosh_index.open_dir(current_app.config.get("WIKI_INDEX_DIR"))
     with index_dir.searcher() as searcher:
         results = current_wiki.search(query, index_dir, searcher)
-        return render_template(
-            current_app.config.get("WIKI_SEARCH_TEMPLATE"), results=results, query=query
-        )
+        return render_template(current_app.config.get("WIKI_SEARCH_TEMPLATE"), results=results, query=query)
 
 
 @blueprint.errorhandler(404)

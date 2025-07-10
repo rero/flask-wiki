@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Flask-Wiki
-# Copyright (C) 2023 RERO
+# Copyright (C) 2025 RERO
 #
 # Flask-Wiki is free software; you can redistribute it and/or modify
 # it under the terms of the Revised BSD License; see LICENSE file for
@@ -15,7 +13,7 @@ from . import config
 from .views import blueprint
 
 
-class Wiki(object):
+class Wiki:
     """."""
 
     def __init__(self, app=None):
@@ -36,10 +34,7 @@ class Wiki(object):
 
         app.wsgi_app = SharedDataMiddleware(
             app.wsgi_app,
-            {
-                app.config.get("WIKI_URL_PREFIX")
-                + "/files": app.config["WIKI_UPLOAD_FOLDER"]
-            },
+            {app.config.get("WIKI_URL_PREFIX") + "/files": app.config["WIKI_UPLOAD_FOLDER"]},
         )
         app.extensions["flask-wiki"] = self
 
