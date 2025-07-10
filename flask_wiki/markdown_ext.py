@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Flask-Wiki
-# Copyright (C) 2023 RERO
+# Copyright (C) 2025 RERO
 #
 # Flask-Wiki is free software; you can redistribute it and/or modify
 # it under the terms
@@ -15,7 +13,7 @@ from markdown.treeprocessors import Treeprocessor
 class BootstrapExtension(Extension):
     """."""
 
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md, md_globals):  # noqa
         """."""
         md.registerExtension(self)
         self.processor = BootstrapTreeprocessor()

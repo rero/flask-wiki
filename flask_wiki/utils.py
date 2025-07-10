@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
-#
 # This file is part of Flask-Wiki
-# Copyright (C) 2023 RERO
+# Copyright (C) 2025 RERO
 #
 # Flask-Wiki is free software; you can redistribute it and/or modify
 # it under the terms of the Revised BSD License; see LICENSE file for
@@ -25,8 +23,7 @@ def clean_url(url):
     :rtype: str
     """
     url = re.sub("[ ]{2,}", " ", url).strip()
-    url = url.replace("\\\\", "/").replace("\\", "/")
-    return url
+    return url.replace("\\\\", "/").replace("\\", "/")
 
 
 def wikilink(text, url_formatter=None):
@@ -50,14 +47,10 @@ def wikilink(text, url_formatter=None):
     """
     if url_formatter is None:
         url_formatter = url_for
-    link_regex = re.compile(
-        r"((?<!\<code\>)\[\[([^<].+?) \s*([|] \s* (.+?) \s*)?]])", re.X | re.U
-    )
+    link_regex = re.compile(r"((?<!\<code\>)\[\[([^<].+?) \s*([|] \s* (.+?) \s*)?]])", re.X | re.U)
     for i in link_regex.findall(text):
         title = [i[-1] or i[1]][0]
-        url = clean_url(i[1])
-        html_url = "<a href='{0}'>{1}</a>".format(
-            url_formatter("display", url=url), title
-        )
+        url = url_formatter("display", url=clean_url(i[1]))
+        html_url = f"""<a href="{url}">{title}</a>"""
         text = re.sub(link_regex, html_url, text, count=1)
     return text

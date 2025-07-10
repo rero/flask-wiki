@@ -1,29 +1,40 @@
-name: run tests
+# This file is part of Flask-Wiki
+# Copyright (C) 2025 RERO
+#
+# Flask-Wiki is free software; you can redistribute it and/or modify
+# it under the terms of the Revised BSD License; see LICENSE file for
+# more details.
+
+name: CI
 on: [push, pull_request, workflow_dispatch]
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.12"]
+        dependencies: ["dev", "deploy"]
     steps:
 
     - uses: actions/checkout@v4
 
-    - name: Set up Python 3.12
-      uses: actions/setup-python@v5
+    - name: Install uv
+      uses: astral-sh/setup-uv@v5
       with:
-        python-version: 3.12
+        enable-cache: true
+        cache-dependency-glob: uv.lock
 
-    - name: Install Poetry
-      uses: snok/install-poetry@v1
+    - name: Set up Python
+      run: uv python install ${{ matrix.python-version }}
 
-    - name: Install dependencies
-      run: poetry install
+    - name: Update and install dependencies
+      if: ${{ matrix.dependencies == 'dev' }}
+      run: uv sync --upgrade
 
-    - name: Code Quality
-      run: poetry run black . --check
+    - name: Install locked dependencies
+      if: ${{ matrix.dependencies == 'deploy' }}
+      run: uv sync --frozen
 
-    - name: Run Tests
-      run: poetry run pytest
-
-    - name: Test publish in dry run mode
-      run: poetry publish --build --dry-run
+    - name: Run tests
+      run: uv run poe run_tests
