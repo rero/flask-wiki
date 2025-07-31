@@ -1,5 +1,11 @@
 # Changelog
 
+## [v1.0.2](https://github.com/rero/flask-wiki/tree/v1.0.2) (2025-07-31)
+
+**Changes:**
+
+* feat(dev): add uv and ruff [\#72](https://github.com/rero/flask-wiki/pull/72) (by @PascalRepond)
+
 ## [v1.0.1](https://github.com/rero/flask-wiki/tree/v1.0.1) (2025-05-15)
 
 [Full Changelog](https://github.com/rero/flask-wiki/compare/v1.0.0...v1.0.1)

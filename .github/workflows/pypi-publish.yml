@@ -15,6 +15,9 @@ jobs:
   run:
     name: "Build and publish release"
     runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
 
     steps:
       - uses: actions/checkout@v4
@@ -28,8 +31,8 @@ jobs:
       - name: Set up Python
         run: uv python install 3.12
 
-      - name: Build
+      - name: Build wheel
         run: uv build
 
-      - name: Publish
-        run: uv publish -t ${{ secrets.PYPI_TOKEN }}
+      - name: Publish package
+        run: uv publish
