@@ -1,5 +1,11 @@
 # Changelog
 
+## [v1.0.3](https://github.com/rero/flask-wiki/tree/v1.0.3) (2025-08-05)
+
+[Full Changelog](https://github.com/rero/flask-wiki/compare/v1.0.2...v1.0.3)
+
+- chore: use uv_publish as a build system (by @PascalRepond)
+
 ## [v1.0.2](https://github.com/rero/flask-wiki/tree/v1.0.2) (2025-07-31)
 
 **Changes:**

@@ -1,10 +1,11 @@
 [project]
 name = "flask-wiki"
-version = "1.0.2"
+version = "1.0.3"
 description = "Simple file-based wiki for Flask"
 readme = "README.md"
 authors = [{name = "RERO+", email = "software@rero.ch"}]
 license = "BSD-3-Clause"
+license-files = ["LICENSE"]
 requires-python = ">= 3.9.2, <3.13"
 
 dependencies = [
@@ -60,10 +61,11 @@ run_tests = {cmd = "./scripts/test", help = "Runs all tests"}
 update_catalog = "pybabel update -i flask_wiki/translations/messages.pot -d flask_wiki/translations --no-fuzzy-matching --ignore-obsolete true"
 
 [build-system]
-requires = ["setuptools"]
+requires = ["uv_build"]
+build-backend = "uv_build"
 
-[tool.setuptools.packages.find]
-where = ["."]
+[tool.uv.build-backend]
+module-root = "."
 
 [tool.uv]
 package = true
