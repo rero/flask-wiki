@@ -1,5 +1,7 @@
 # Changelog
 
+## TEST PR auto-assign
+
 ## [v1.0.3](https://github.com/rero/flask-wiki/tree/v1.0.3) (2025-08-05)
 
 [Full Changelog](https://github.com/rero/flask-wiki/compare/v1.0.2...v1.0.3)
