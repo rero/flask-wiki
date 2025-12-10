@@ -7,10 +7,11 @@
 
 """Simple Testing applications."""
 
+import importlib.resources
+
 from flask import Flask, redirect, request, session, url_for
 from flask_babel import Babel
 from flask_bootstrap import Bootstrap4
-from pkg_resources import resource_filename
 
 from flask_wiki import Wiki
 
@@ -34,7 +35,7 @@ def create_app(test_config=None):
             "de": "German",
             "it": "Italian",
         },
-        BABEL_TRANSLATION_DIRECTORIES=resource_filename("flask_wiki", "translations"),
+        BABEL_TRANSLATION_DIRECTORIES=str(importlib.resources.files("flask_wiki") / "translations"),
         BABEL_DEFAULT_LOCALE="fr",
         DEBUG=True,
     )

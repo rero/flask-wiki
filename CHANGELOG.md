@@ -1,5 +1,12 @@
 # Changelog
 
+## [v1.0.4](https://github.com/rero/flask-wiki/tree/v1.0.4) (2025-12-10)
+
+[Full Changelog](https://github.com/rero/flask-wiki/compare/v1.0.3...v1.0.4)
+
+- chore: update dependencies [\#77](https://github.com/rero/flask-wiki/pull/77) (by @PascalRepond)
+- chore(actions): auto-assign PR author (by @PascalRepond)
+
 ## [v1.0.3](https://github.com/rero/flask-wiki/tree/v1.0.3) (2025-08-05)
 
 [Full Changelog](https://github.com/rero/flask-wiki/compare/v1.0.2...v1.0.3)

@@ -13,13 +13,13 @@ from markdown.treeprocessors import Treeprocessor
 class BootstrapExtension(Extension):
     """."""
 
-    def extendMarkdown(self, md, md_globals):  # noqa
+    def extendMarkdown(self, md):  # noqa
         """."""
         md.registerExtension(self)
         self.processor = BootstrapTreeprocessor()
         self.processor.md = md
         self.processor.config = self.getConfigs()
-        md.treeprocessors.add("bootstrap", self.processor, "_end")
+        md.treeprocessors.register(self.processor, "bootstrap", 1)
 
 
 class BootstrapTreeprocessor(Treeprocessor):

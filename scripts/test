@@ -64,10 +64,6 @@ fi
 
 function pretests () {
   info_msg "Check vulnerabilities:"
-  # pip  25.2    GHSA-4xh5-x5gv-qwph
-  add_exceptions "GHSA-4xh5-x5gv-qwph"
-  # py 1.11.0  PYSEC-2022-42969
-  add_exceptions " PYSEC-2022-42969"
   pip-audit ${pip_audit_exceptions}
 
   info_msg "Test formatting:"
