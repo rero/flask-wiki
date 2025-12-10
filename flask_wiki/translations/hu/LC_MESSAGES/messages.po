@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Flask-Wiki VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-08-24 11:41+0200\n"
+"POT-Creation-Date: 2025-12-10 11:26+0100\n"
 "PO-Revision-Date: 2022-07-12 10:52+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hu\n"
@@ -16,49 +16,54 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.12.1\n"
+"Generated-By: Babel 2.17.0\n"
 
-#: flask_wiki/forms.py:21
+#: flask_wiki/forms.py:19
 msgid "Title"
 msgstr "Cím"
 
-#: flask_wiki/forms.py:22
+#: flask_wiki/forms.py:20
 msgid "Body"
 msgstr "Törzs"
 
-#: flask_wiki/forms.py:23
+#: flask_wiki/forms.py:21
 msgid "Tags"
 msgstr "Címkék"
 
-#: flask_wiki/views.py:156
+#: flask_wiki/views.py:155
 msgid "Saved"
 msgstr "Mentve"
 
-#: flask_wiki/views.py:178
+#: flask_wiki/views.py:175
 msgid "Page deleted"
 msgstr "Oldal törölve"
 
-#: flask_wiki/views.py:181
+#: flask_wiki/views.py:177
 msgid "Could not delete page as it does not exist."
 msgstr "Az oldal nem törölhető mert nem létezik."
 
-#: flask_wiki/views.py:194
+#: flask_wiki/views.py:188
 msgid "File deleted"
 msgstr "Fájl törölve"
 
-#: flask_wiki/views.py:211
+#: flask_wiki/views.py:191
+#, python-brace-format
+msgid "Something went wrong. Could not delete file. Error: {e}"
+msgstr ""
+
+#: flask_wiki/views.py:204
 msgid "No file part"
 msgstr "Hiányzó fájl"
 
-#: flask_wiki/views.py:217
+#: flask_wiki/views.py:210
 msgid "No selected file"
 msgstr "Nincs kiválasztott fájl"
 
-#: flask_wiki/views.py:224
+#: flask_wiki/views.py:216
 msgid "File already exists"
 msgstr "A fájl már létezik"
 
-#: flask_wiki/views.py:229
+#: flask_wiki/views.py:220
 msgid "You do not have the permission to add files."
 msgstr "Nincsenek jogosultságaid fájlok hozzáadásához."
 

@@ -1,6 +1,6 @@
 [project]
 name = "flask-wiki"
-version = "1.0.3"
+version = "1.0.4"
 description = "Simple file-based wiki for Flask"
 readme = "README.md"
 authors = [{name = "RERO+", email = "software@rero.ch"}]
@@ -16,22 +16,19 @@ dependencies = [
     "flask-babel (>=3.0.0)",
     "wtforms",
     "werkzeug (>=0.15)",
-    "jinja2 (>=3.0.0)",
-    "markdown (<3.4.0)",
-    "py (<2.0.0)",
-    "beautifulsoup4 (<5.0.0)",
-    "click (<9.0.0)",
-    "whoosh-reloaded>=2.7.5",
+    "markdown",
+    "beautifulsoup4",
+    "click",
+    "whoosh-reloaded (>=2.7.5)",
 ]
 
 [dependency-groups]
 dev = [
-    "check-manifest",
     "ipython",
     "pip-audit",
     "poethepoet",
     "pytest",
-    "ruff>=0.12.3",
+    "ruff (>=0.12.3)",
 ]
 
 [project.entry-points."flask.commands"]
