@@ -50,7 +50,7 @@ def wikilink(text, url_formatter=None):
     link_regex = re.compile(r"((?<!\<code\>)\[\[([^<].+?) \s*([|] \s* (.+?) \s*)?]])", re.X | re.U)
     for i in link_regex.findall(text):
         title = [i[-1] or i[1]][0]
-        url = url_formatter("display", url=clean_url(i[1]))
+        url = url_formatter("wiki.page", url=clean_url(i[1]))
         html_url = f"""<a href="{url}">{title}</a>"""
         text = re.sub(link_regex, html_url, text, count=1)
     return text

@@ -83,8 +83,7 @@ if [ $# -eq 0 ]
   then
     set -e
     pretests
-    # TODO: Uncomment when there is at least one test
-    # tests
+    tests
 fi
 
 success_msg+exit "Perfect ${PROGRAM} external! See you soon…"
