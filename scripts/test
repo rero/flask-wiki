@@ -64,6 +64,8 @@ fi
 
 function pretests () {
   info_msg "Check vulnerabilities:"
+  # pygments 2.19.2 - CVE-2026-4539
+  add_exceptions "CVE-2026-4539"
   pip-audit ${pip_audit_exceptions}
 
   info_msg "Test formatting:"
