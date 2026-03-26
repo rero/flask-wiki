@@ -36,7 +36,7 @@ dev = [
 flask_wiki = "flask_wiki.cli:flask_wiki"
 
 [tool.pytest.ini_options]
-addopts = "--color=yes --doctest-modules --ignore=flask_wiki/config.py"
+addopts = "--color=yes --doctest-modules --ignore=flask_wiki/config.py --ignore=tests/data"
 testpaths = "tests flask_wiki"
 
 [tool.ruff]
