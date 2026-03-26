@@ -1,5 +1,13 @@
 # Changelog
 
+## [v2.0.0](https://github.com/rero/flask-wiki/tree/v2.0.0) (2026-03-26)
+
+[Full Changelog](https://github.com/rero/flask-wiki/compare/v1.0.4...v2.0.0)
+
+- BREAKING CHANGE: deprecates Python<3.10.
+- feat: add basic test suite [\#80](https://github.com/rero/flask-wiki/pull/80) (by @PascalRepond)
+- chore: update dependencies [\#79](https://github.com/rero/flask-wiki/pull/79) (by @PascalRepond)
+
 ## [v1.0.4](https://github.com/rero/flask-wiki/tree/v1.0.4) (2025-12-10)
 
 [Full Changelog](https://github.com/rero/flask-wiki/compare/v1.0.3...v1.0.4)
