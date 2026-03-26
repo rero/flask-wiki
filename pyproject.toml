@@ -1,6 +1,6 @@
 [project]
 name = "flask-wiki"
-version = "1.0.4"
+version = "2.0.0"
 description = "Simple file-based wiki for Flask"
 readme = "README.md"
 authors = [{name = "RERO+", email = "software@rero.ch"}]
@@ -12,14 +12,14 @@ dependencies = [
     "bootstrap-flask",
     "Flask",
     "flask-wtf",
-    "babel (>=2.9.1)",
-    "flask-babel (>=3.0.0)",
+    "babel>=2.16.0",
+    "flask-babel>=3.0.0",
     "wtforms",
-    "werkzeug (>=0.15)",
+    "werkzeug>=0.15",
     "markdown",
     "beautifulsoup4",
     "click",
-    "whoosh-reloaded (>=2.7.5)",
+    "whoosh-reloaded>=2.7.5",
     "markdown-captions>=2.1.2",
     "poethepoet",
 ]
@@ -29,7 +29,7 @@ dev = [
     "ipython",
     "pip-audit",
     "pytest",
-    "ruff (>=0.12.3)",
+    "ruff>=0.12.3",
 ]
 
 [project.entry-points."flask.commands"]
@@ -51,12 +51,20 @@ convention = "pep257"
 
 [tool.poe.tasks]
 compile_catalog = "pybabel compile -d flask_wiki/translations"
-extract_messages = "pybabel extract --project Flask-Wiki -F babel.cfg -k gettext -k lazy_gettext -o flask_wiki/translations/messages.pot flask_wiki"
+extract_messages = "pybabel extract --project Flask-Wiki -F pyproject.toml -k gettext -k lazy_gettext -o flask_wiki/translations/messages.pot flask_wiki"
 format =  {cmd = "ruff format .", help = "Formats all files"}
 init_catalog = "pybabel init -i flask_wiki/translations/messages.pot -d flask_wiki/translations -l"
 lint = {cmd = "ruff check", help = "Checks linting"}
 run_tests = {cmd = "./scripts/test", help = "Runs all tests"}
 update_catalog = "pybabel update -i flask_wiki/translations/messages.pot -d flask_wiki/translations --no-fuzzy-matching --ignore-obsolete true"
+
+[[tool.babel.mappings]]
+method = "python"
+pattern = "**.py"
+
+[[tool.babel.mappings]]
+method = "jinja2"
+pattern = "**/templates/**.html"
 
 [build-system]
 requires = ["uv_build"]
