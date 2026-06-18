@@ -5,6 +5,8 @@ SPDX-License-Identifier: BSD-3-Clause
 
 # Changelog
 
+<!-- version list -->
+
 ## [v2.0.0](https://github.com/rero/flask-wiki/tree/v2.0.0) (2026-03-26)
 
 [Full Changelog](https://github.com/rero/flask-wiki/compare/v1.0.4...v2.0.0)
