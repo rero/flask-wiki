@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: Fondation RERO+
+SPDX-License-Identifier: BSD-3-Clause
+-->
+
 # Flask-Wiki
 
 A lightweight, file-based wiki system built as a Flask extension. Create, edit, search, and manage wiki pages stored as Markdown files on the filesystem -- no database required.

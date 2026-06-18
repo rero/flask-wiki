@@ -6,7 +6,7 @@ readme = "README.md"
 authors = [{name = "RERO+", email = "software@rero.ch"}]
 license = "BSD-3-Clause"
 license-files = ["LICENSE"]
-requires-python = ">=3.10,<3.15"
+requires-python = ">=3.12,<3.15"
 
 dependencies = [
     "bootstrap-flask",

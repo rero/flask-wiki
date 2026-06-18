@@ -1,9 +1,5 @@
-# This file is part of Flask-Wiki
-# Copyright (C) 2025-2026 RERO
-#
-# Flask-Wiki is free software; you can redistribute it and/or modify
-# it under the terms of the Revised BSD License; see LICENSE file for
-# more details.
+# SPDX-FileCopyrightText: Fondation RERO+
+# SPDX-License-Identifier: BSD-3-Clause
 
 """Core classes."""
 

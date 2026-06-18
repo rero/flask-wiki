@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: Fondation RERO+
+SPDX-License-Identifier: BSD-3-Clause
+-->
+
 # Changelog
 
 ## [v2.0.0](https://github.com/rero/flask-wiki/tree/v2.0.0) (2026-03-26)
