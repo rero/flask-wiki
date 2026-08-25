@@ -47,9 +47,13 @@ line-length = 120
 [tool.ruff.lint]
 extend-select = ["ALL"]
 ignore = [
-    "COM812",  # managed by formatter
     "ANN", # type annotations are not used in this project
+    "COM812",  # managed by formatter
 ]
+
+[tool.ruff.lint.flake8-copyright]
+# CPY001: require the two-line SPDX header, any copyright holder, license pinned
+notice-rgx = '# SPDX-FileCopyrightText: .+\n# SPDX-License-Identifier: BSD-3-Clause'
 
 [tool.ruff.lint.per-file-ignores]
 "examples/*.py" = [

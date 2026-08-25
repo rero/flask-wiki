@@ -30,7 +30,7 @@ from flask import Flask
 from flask_wiki import Wiki
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'your-secret-key'
+app.config["SECRET_KEY"] = "your-secret-key"
 Wiki(app)
 ```
 
@@ -42,9 +42,10 @@ from flask_wiki import Wiki
 
 wiki = Wiki()
 
+
 def create_app():
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = 'your-secret-key'
+    app.config["SECRET_KEY"] = "your-secret-key"
     wiki.init_app(app)
     return app
 ```
@@ -97,9 +98,9 @@ Each permission is a callable (no arguments) that is evaluated per-request. This
 ```python
 from flask_login import current_user
 
-app.config['WIKI_READ_VIEW_PERMISSION'] = lambda: current_user.is_authenticated
-app.config['WIKI_EDIT_VIEW_PERMISSION'] = lambda: current_user.is_authenticated and current_user.has_role('editor')
-app.config['WIKI_EDIT_UI_PERMISSION'] = app.config['WIKI_EDIT_VIEW_PERMISSION']
+app.config["WIKI_READ_VIEW_PERMISSION"] = lambda: current_user.is_authenticated
+app.config["WIKI_EDIT_VIEW_PERMISSION"] = lambda: current_user.is_authenticated and current_user.has_role("editor")
+app.config["WIKI_EDIT_UI_PERMISSION"] = app.config["WIKI_EDIT_VIEW_PERMISSION"]
 ```
 
 The `VIEW` permissions are enforced server-side via route decorators. The `UI` permissions only toggle visibility of buttons and links in the templates -- they do not enforce access control on their own. Typically you'll set the UI permissions to match the view permissions, but you can separate them if needed (e.g., show a "log in to edit" button to anonymous users).

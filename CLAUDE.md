@@ -11,9 +11,6 @@ flask-wiki is a lightweight, file-based wiki packaged as a Flask extension. Wiki
 
 See [README.md](README.md) for user-facing documentation (features, configuration keys, permissions, quick start).
 
-**Stack**: Python >=3.12,<3.15, Flask, Jinja templates, Whoosh (search), Python-Markdown, EasyMDE (editor), Flask-Babel (i18n)
-**Package manager**: `uv` with `poethepoet` for task running
-
 ## Commands
 
 During development, all commands are run through uv's virtual env with `uv run`.
@@ -27,15 +24,11 @@ uv run poe lint     # ruff check
 uv run poe format   # ruff format .
 ```
 
-Ruff is configured with `extend-select = ["ALL"]`; type annotations (`ANN`) are intentionally disabled — do not add them.
-
 ### Tests
 
 ```bash
-uv run poe run_tests   # runs ./scripts/test: pip-audit, ruff format --check, ruff check, pytest
+uv run poe run_tests
 ```
-
-`scripts/test` must be run inside the uv virtual env (it checks `VIRTUAL_ENV`). pytest also runs `--doctest-modules` over `flask_wiki`, so docstring examples are tested.
 
 ### Running the example app
 
@@ -46,55 +39,23 @@ uv run flask flask_wiki index
 uv run flask run --debug   # http://localhost:5000/help
 ```
 
-## Architecture
+## i18n
 
-The whole extension lives under `flask_wiki/`:
-
-```text
-flask_wiki/
-├── __init__.py       # Wiki extension class (init_app, blueprint + middleware registration)
-├── views.py          # Flask blueprint: routes, permission decorators, template processors
-├── api.py            # Core domain logic: Page, WikiBase, Processor, TOC classes
-├── forms.py          # WTForms for the editor
-├── cli.py            # `flask flask_wiki` CLI group (init-index, index)
-├── config.py         # Default WIKI_* config values (excluded from lint/doctest)
-├── markdown_ext.py   # Custom Bootstrap Markdown extension
-├── utils.py          # Helpers
-├── templates/wiki/   # Jinja templates (overridable via WIKI_*_TEMPLATE config)
-├── static/           # CSS/JS (wiki.css, wiki.js)
-└── translations/     # Babel message catalogs
-```
-
-### Core classes (`api.py`)
-
-- **`Page`**: a single wiki page — loads/parses a Markdown file, exposes metadata (title, tags, language), renders HTML, saves, and indexes itself.
-- **`WikiBase`**: filesystem-level access — maps URLs to file paths (`path`, `ln_path`), `exists`, `get`/`get_or_404`, language-variant resolution.
-- **`Processor`** / **`TOC`**: Markdown pre/post-processing pipeline and table-of-contents handling.
-
-### Permissions
-
-Access control is callable-based, configured by the host app via four `WIKI_*_PERMISSION` settings (see README). In code:
-
-- `can_read_permission` / `can_edit_permission` decorators in `views.py` enforce the `*_VIEW_PERMISSION` callables server-side (return 403 on failure).
-- The `*_UI_PERMISSION` callables only toggle visibility of template elements and enforce nothing on their own.
-
-### i18n
-
-User-facing strings are marked with `gettext`/`lazy_gettext` (Python) and in Jinja templates. Babel mappings are configured in `pyproject.toml`. Translation catalogs are managed via `uv run poe extract_messages` / `update_catalog` / `compile_catalog` — only touch catalogs when explicitly working on translations.
+User-facing strings are marked with `gettext`/`lazy_gettext` (Python) and in Jinja templates. Translation catalogs are managed via `uv run poe extract_messages` / `update_catalog` / `compile_catalog` — only touch catalogs when explicitly working on translations.
 
 ## Code Style
 
 - Be clear and concise in the docstrings and do not over-comment the code.
-- Do not use Python type annotations (no `-> str`, `: str`, etc. in signatures) — enforced by ruff `ANN` ignore.
+- Ruff is configured in `pyproject.toml` under `[tool.ruff]`: every rule set is enabled (`extend-select = ["ALL"]`), so expect strict linting.
+- Do not use Python type annotations (no `-> str`, `: str`, etc. in signatures) — the `ANN` rules are intentionally disabled.
 - Every source file starts with the SPDX header (`# SPDX-FileCopyrightText: Fondation RERO+` / `# SPDX-License-Identifier: BSD-3-Clause`).
 - Commit messages follow [Conventional Commits](https://www.conventionalcommits.org).
 
 ## Testing Notes
 
-- Tests use function-based style (no class-based tests) and live in `tests/` (`test_api.py`, `test_views.py`, `test_utils.py`).
-- Shared fixtures are in `tests/conftest.py`; sample wiki content is in `tests/data/` (ignored by pytest collection).
+- Tests use function-based style (no class-based tests).
 - Follow a test-driven methodology: each behavioral change should come with tests. Tests should cover this app's behavior, not the behavior of external dependencies (Flask, Whoosh, Markdown).
-- Doctests in `flask_wiki` modules run as part of the suite — keep docstring examples correct.
+- pytest runs with `--doctest-modules` over `flask_wiki`, so every docstring example is executed — keep them correct.
 
 ## Behavioral guidelines
 
