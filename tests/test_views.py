@@ -125,6 +125,11 @@ def test_page_fallback_banner(client, app):
         res = client.get("/help/sample/")
         assert res.status_code == 200
         assert banner in res.data
+
+        # a legacy page is not in the reader's language either
+        res = client.get("/help/legacy_page/")
+        assert res.status_code == 200
+        assert banner in res.data
     finally:
         app.config["WIKI_CURRENT_LANGUAGE"] = lambda: "en"
 

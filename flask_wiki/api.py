@@ -373,7 +373,8 @@ class WikiBase:
         ``fallback`` is False, for each language of ``WIKI_FALLBACK_LANGUAGES`` in
         turn (e.g. ``page_en.md``, then ``page_fr.md``). A URL that carries its own
         language code is never served in another language. A legacy page without a
-        language code (e.g. ``page.md``) is used as a last resort.
+        language code (e.g. ``page.md``) is used as a last resort, as a fallback in
+        the language it is assumed to be in.
 
         :param str url: the page URL slug, with or without a language code
         :param bool fallback: if False, skip the fallback languages. Use it when the
@@ -393,7 +394,14 @@ class WikiBase:
                 if path.is_file():
                     return Page(path, url, fallback_language=language)
         path = self.legacy_path(url)
-        return Page(path, url) if path.is_file() else None
+        if not path.is_file():
+            return None
+        page = Page(path, url)
+        # a legacy page carries no language code, it is assumed to be written in
+        # the first configured language
+        if page.language != self.current_language:
+            page.fallback_language = page.language
+        return page
 
     def get_or_404(self, url):
         """Return the page for the given URL, or abort with a 404 error.
@@ -422,14 +430,18 @@ class WikiBase:
     def move(self, url, newurl):
         """Rename a page from one URL to another.
 
-        Creates any intermediate folders as needed. Raises RuntimeError if
-        the target path would escape the content directory.
+        Renames the current language variant, or the legacy page without a language
+        code when there is no such variant, in which case the page is renamed to the
+        current language variant. Creates any intermediate folders as needed. Raises
+        RuntimeError if the target path would escape the content directory.
 
         :param str url: current URL slug of the page
         :param str newurl: new URL slug for the page
         :raises RuntimeError: if the target path escapes the content directory
         """
         source = self.path(url)
+        if not source.is_file():
+            source = self.legacy_path(url)
         target = self.path(newurl)
         # resolve root to normalize any '../' in the configured path
         root = Path(self.root).resolve()

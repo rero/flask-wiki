@@ -166,11 +166,20 @@ def test_wiki_get_explicit_language(app):
             app.config["WIKI_CURRENT_LANGUAGE"] = original_language
 
 
-def test_wiki_get_legacy_page(wiki):
+def test_wiki_get_legacy_page(wiki, app):
     """Test that a page without a language code is served as a last resort."""
+    original_language = app.config["WIKI_CURRENT_LANGUAGE"]
     page = wiki.get("legacy_page")
     assert page.title == "Legacy Page"
     assert page.fallback_language is None
+
+    try:
+        # served in the language it is assumed to be in, not in the reader's one
+        app.config["WIKI_CURRENT_LANGUAGE"] = lambda: "it"
+        page = wiki.get("legacy_page")
+        assert page.fallback_language == "en"
+    finally:
+        app.config["WIKI_CURRENT_LANGUAGE"] = original_language
 
 
 def test_wiki_fallback_languages_default(app):
@@ -328,6 +337,28 @@ def test_wiki_move(app):
             for p in (src_path, dst_path):
                 if os.path.isfile(p):
                     os.remove(p)
+
+
+def test_wiki_move_legacy_page(app):
+    """Test moving a page saved without a language code."""
+    with app.test_request_context():
+        content_dir = app.config["WIKI_CONTENT_DIR"]
+        wiki = WikiBase(content_dir)
+
+        src_path = os.path.join(content_dir, "legacy_moveme.md")
+        dst_path = os.path.join(content_dir, "legacy_moved_en.md")
+        try:
+            with open(src_path, "w") as f:
+                f.write("title: Move Me\n\n# Move\n\nContent.")
+
+            # the legacy page becomes the current language variant
+            wiki.move("legacy_moveme", "legacy_moved")
+            assert not os.path.isfile(src_path)
+            assert os.path.isfile(dst_path)
+        finally:
+            for path in (src_path, dst_path):
+                if os.path.isfile(path):
+                    os.remove(path)
 
 
 def test_wiki_move_path_traversal(app):
