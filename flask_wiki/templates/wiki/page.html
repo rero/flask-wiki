@@ -38,6 +38,11 @@
             </div>
             </footer>
         </header>
+        {% if page.fallback_language %}
+        <div class="alert alert-info" role="alert">
+            {{ _('This page does not exist yet in your language. It is displayed in %(language)s.', language=page.fallback_language | translate_ln) }}
+        </div>
+        {% endif %}
         <article class="content">
         {{ page }}
         </article>

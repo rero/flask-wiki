@@ -137,15 +137,18 @@ class TOC:
 class Page:
     """A page of the wiki."""
 
-    def __init__(self, path, url, *, new=False):
+    def __init__(self, path, url, *, new=False, fallback_language=None):
         """Initialize a wiki page.
 
         :param path: filesystem path to the page file
         :param str url: URL slug identifying the page
         :param bool new: if True, skip loading and rendering (page does not exist yet)
+        :param str fallback_language: language code of the variant served when the
+            page does not exist in the current language, None otherwise
         """
         self.path = path
         self.url = url
+        self.fallback_language = fallback_language
         self._meta = OrderedDict()
         self.toc = None
         if not new:
@@ -176,7 +179,7 @@ class Page:
         index_dir = index.open_dir(current_app.config.get("WIKI_INDEX_DIR"))
         writer = AsyncWriter(index_dir)
         writer.update_document(
-            url=self.url,
+            url=current_wiki.url_of(self.path),
             title=self.title,
             body=self.raw_body,
             tags=self.tags,
@@ -276,11 +279,11 @@ class Page:
     def language(self):
         """Return page language.
 
-        Returns the language in which a page has been saved
-        or returns default wiki language if page doesn't have a language.
+        Returns the language code carried by the file name, or the first
+        configured language for a legacy file that does not carry one.
         """
-        filename = Path(self.path).stem
-        return filename.split("_")[-1] if "_" in filename else next(iter(current_wiki.languages.keys()))
+        _, language = current_wiki.split_url(Path(self.path).stem)
+        return language or next(iter(current_wiki.languages))
 
 
 class WikiBase:
@@ -293,23 +296,67 @@ class WikiBase:
         """
         self.root = root
 
-    def path(self, url):
+    def split_url(self, url):
+        """Split a page URL into its slug and its language code.
+
+        The language code is None when the URL does not carry a configured one,
+        as for a legacy page saved before language codes became mandatory.
+
+        :param str url: the page URL slug, with or without a language code
+        :returns: the slug and the language code
+        :rtype: tuple
+        """
+        slug, _, language = url.rpartition("_")
+        return (slug, language) if slug and language in self.languages else (url, None)
+
+    def ln_url(self, url, language=None):
+        """Return the page URL carrying a language code.
+
+        The language code already carried by the URL wins over the given one,
+        which defaults to the current language.
+
+        :param str url: the page URL slug, with or without a language code
+        :param str language: the language code to add, defaults to the current one
+        :rtype: str
+        """
+        slug, url_language = self.split_url(url)
+        return f"{slug}_{url_language or language or self.current_language}"
+
+    def path(self, url, language=None):
         """Return the filesystem path for a given page URL.
 
-        :param str url: the page URL slug
+        Every page belongs to a language, so the language code is added to URLs
+        that do not carry one: ``page`` becomes ``page_en.md``.
+
+        :param str url: the page URL slug, with or without a language code
+        :param str language: the language code, defaults to the current language
         :returns: path to the corresponding .md file
+        :rtype: pathlib.Path
+        """
+        return Path(self.root) / f"{self.ln_url(url, language)}.md"
+
+    def legacy_path(self, url):
+        """Return the filesystem path of a page saved without a language code.
+
+        Such pages are only kept readable for wikis created before language codes
+        became mandatory, they are never written to.
+
+        :param str url: the page URL slug
         :rtype: pathlib.Path
         """
         return Path(self.root) / f"{url}.md"
 
-    def ln_path(self, url):
-        """Return the language-specific filesystem path for a given page URL.
+    def url_of(self, path):
+        """Return the page URL of a page file.
 
-        :param str url: the page URL slug
-        :returns: path to the language-variant .md file
-        :rtype: pathlib.Path
+        The URL is the path of the file relative to the content directory,
+        without its extension, and is the identifier used by the search index.
+
+        :param path: filesystem path to a page file
+        :rtype: str
         """
-        return Path(self.root) / f"{url}_{self.current_language}.md"
+        relative = Path(path).resolve().relative_to(Path(self.root).resolve())
+        return clean_url(str(relative.with_suffix("")))
 
     def exists(self, url):
         """Return True if a page with the given URL exists on disk.
@@ -319,21 +366,33 @@ class WikiBase:
         """
         return self.path(url).exists()
 
-    def get(self, url):
-        """Return the page for the given URL, preferring a language variant if available.
+    def get(self, url, *, fallback=True):
+        """Return the page for the given URL, in the current language if available.
 
-        Returns the language-specific file (e.g. ``page_fr.md``) when it exists,
-        otherwise falls back to the base file (e.g. ``page.md``).
-        Returns None if neither file exists.
+        Looks for the current language variant (e.g. ``page_it.md``), then, unless
+        ``fallback`` is False, for each language of ``WIKI_FALLBACK_LANGUAGES`` in
+        turn (e.g. ``page_en.md``, then ``page_fr.md``). A URL that carries its own
+        language code is never served in another language. A legacy page without a
+        language code (e.g. ``page.md``) is used as a last resort.
 
-        :param str url: the page URL slug
+        :param str url: the page URL slug, with or without a language code
+        :param bool fallback: if False, skip the fallback languages. Use it when the
+            page is meant to be written to, as saving a page served in another
+            language would overwrite that language variant.
         :returns: the page instance, or None if not found
         :rtype: Page or None
         """
-        path = self.ln_path(url)
+        path = self.path(url)
         if path.is_file():
             return Page(path, url)
-        path = self.path(url)
+        if fallback and not self.split_url(url)[1]:
+            for language in self.fallback_languages:
+                if language == self.current_language:
+                    continue
+                path = self.path(url, language)
+                if path.is_file():
+                    return Page(path, url, fallback_language=language)
+        path = self.legacy_path(url)
         return Page(path, url) if path.is_file() else None
 
     def get_or_404(self, url):
@@ -370,8 +429,8 @@ class WikiBase:
         :param str newurl: new URL slug for the page
         :raises RuntimeError: if the target path escapes the content directory
         """
-        source = Path(self.root) / f"{url}.md"
-        target = Path(self.root) / f"{newurl}.md"
+        source = self.path(url)
+        target = self.path(newurl)
         # resolve root to normalize any '../' in the configured path
         root = Path(self.root).resolve()
         # ensure target does not escape the root directory (path traversal guard)
@@ -388,17 +447,22 @@ class WikiBase:
     def delete(self, url):
         """Delete a page and remove it from the search index.
 
+        Deletes the current language variant of the page, or the legacy page
+        without a language code when there is no such variant.
+
         :param str url: URL slug of the page to delete
         :returns: True if deleted, False if the page did not exist
         :rtype: bool
         """
         path = self.path(url)
-        if not self.exists(url):
+        if not path.is_file():
+            path = self.legacy_path(url)
+        if not path.is_file():
             return False
         path.unlink()
         index_dir = index.open_dir(current_app.config.get("WIKI_INDEX_DIR"))
         writer = AsyncWriter(index_dir)
-        writer.delete_by_term("url", url)
+        writer.delete_by_term("url", self.url_of(path))
         writer.commit()
         return True
 
@@ -421,29 +485,46 @@ class WikiBase:
     def search(self, query, ix, searcher):
         """Search the whoosh index for a given query.
 
+        A page matching in several languages is returned once, in the current
+        language when it matches, otherwise in the first language of the fallback
+        cascade that matches. Every match is returned, as the search page lists
+        them all rather than paginating them.
+
         :param str query: the search query
         :param whoosh.index ix: the whoosh index to use
         :param whoosh.searcher searcher: an active whoosh searcher instance
 
-        :returns: a whoosh.results object instance
+        :returns: a list of whoosh.searching.Hit instances
         """
         # parse the query to search all fields present in the schema
         fields = ix.schema.names()
         query_parser = qparser.MultifieldParser(fields, schema=ix.schema, group=qparser.OrGroup)
         parsed_query = query_parser.parse(query)
-        # return a whoosh Results object to treat results
-        results = searcher.search(parsed_query)
+        # score every match: the whoosh default only scores the first ten, which
+        # the language variants collapsed below would shrink further
+        results = searcher.search(parsed_query, limit=None)
         # set highlights fragment size to 50 words
         results.fragmenter.surround = 50
         # set highlights separator for display
         results.formatter.between = "<strong> [...] </strong>"
-        # return the modified Results object
-        return results
+        # keep the best language variant of each page, in relevance order
+        languages = [self.current_language, *self.fallback_languages]
+        hits = {}
+        for hit in results:
+            slug, language = self.split_url(hit["url"])
+            rank = languages.index(language) if language in languages else len(languages)
+            if slug not in hits or rank < hits[slug][0]:
+                hits[slug] = (rank, hit)
+        return [hit for _, hit in hits.values()]
 
-    def list_pages(self):
-        """Build up a list of all the available pages.
+    def list_files(self):
+        """Build up a list of every page file, language variants included.
 
-        :returns: a list of all the wiki pages
+        The URL is carried along the path it was built from, as :meth:`url_of`
+        cleans it and is therefore not reversible.
+
+        :returns: a list of (path, URL) pairs, each URL carrying its language code
+            except for legacy pages saved before language codes became mandatory
         :rtype: list
         """
         # make sure we always have the absolute path for fixing the
@@ -455,14 +536,34 @@ class WikiBase:
             for cur_file in files:
                 if cur_file.endswith(".md"):
                     path = cur_dir_path / cur_file
-                    url = clean_url(str(cur_dir_path.relative_to(root) / cur_file[:-3]))
-                    page = Page(path, url)
-                    pages.append(page)
+                    pages.append((path, self.url_of(path)))
+        return pages
+
+    def list_all_pages(self):
+        """Build up a list of all the pages, one per file, language variants included.
+
+        :returns: a list of all the wiki pages
+        :rtype: list
+        """
+        pages = [Page(path, url) for path, url in self.list_files()]
+        return sorted(pages, key=lambda x: x.title.lower())
+
+    def list_pages(self):
+        """Build up a list of all the available pages, one per page slug.
+
+        Each page is listed in the current language, or in the first language of
+        the fallback cascade it has been translated into.
+
+        :returns: a list of all the wiki pages
+        :rtype: list
+        """
+        slugs = {self.split_url(url)[0] for _, url in self.list_files()}
+        pages = [page for page in map(self.get, slugs) if page]
         return sorted(pages, key=lambda x: x.title.lower())
 
     def index_all_pages(self):
         """Index all the pages for the current wiki."""
-        for page in self.list_pages():
+        for page in self.list_all_pages():
             Page.index(page)
 
     def index_by(self, key):
@@ -515,6 +616,16 @@ class WikiBase:
     def current_language(self):
         """Return the current language code from the application configuration."""
         return current_app.config.get("WIKI_CURRENT_LANGUAGE")()
+
+    @property
+    def fallback_languages(self):
+        """Return the language codes tried, in order, when a page has no current variant.
+
+        Defaults to every configured language when ``WIKI_FALLBACK_LANGUAGES`` is
+        left unset; an empty list disables the cascade.
+        """
+        languages = current_app.config.get("WIKI_FALLBACK_LANGUAGES")
+        return list(self.languages) if languages is None else languages
 
     @property
     def languages(self):

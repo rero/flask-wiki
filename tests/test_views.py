@@ -40,7 +40,7 @@ def test_edit_page_get(client):
 def test_edit_page_post(client, app):
     """Test POST to edit a page updates it."""
     # Capture original page content before modifying
-    original_path = os.path.join(app.config["WIKI_CONTENT_DIR"], "home.md")
+    original_path = os.path.join(app.config["WIKI_CONTENT_DIR"], "home_en.md")
     with open(original_path) as f:
         original_content = f.read()
 
@@ -60,7 +60,7 @@ def test_edit_page_post(client, app):
 
 def test_create_new_page(client, app):
     """Test creating a new page via POST."""
-    path = os.path.join(app.config["WIKI_CONTENT_DIR"], "brandnew.md")
+    path = os.path.join(app.config["WIKI_CONTENT_DIR"], "brandnew_en.md")
     try:
         res = client.post(
             "/help/edit/brandnew/",
@@ -69,6 +69,9 @@ def test_create_new_page(client, app):
         )
         assert res.status_code == 200
         assert b"Brand New" in res.data
+
+        # A page is never saved without a language code
+        assert not os.path.isfile(os.path.join(app.config["WIKI_CONTENT_DIR"], "brandnew.md"))
 
         # Verify page is accessible
         res = client.get("/help/brandnew/")
@@ -90,8 +93,50 @@ def test_delete_page(client, app):
     assert res.status_code == 200
 
     # Page should be gone
-    path = os.path.join(app.config["WIKI_CONTENT_DIR"], "todelete.md")
+    path = os.path.join(app.config["WIKI_CONTENT_DIR"], "todelete_en.md")
     assert not os.path.isfile(path)
+
+
+def test_page_fallback_banner(client, app):
+    """Test that a page served in a fallback language displays a banner."""
+    banner = b"does not exist yet in your language"
+
+    # the page exists in english, the current language
+    res = client.get("/help/sample/")
+    assert banner not in res.data
+
+    try:
+        app.config["WIKI_CURRENT_LANGUAGE"] = lambda: "it"
+        res = client.get("/help/sample/")
+        assert res.status_code == 200
+        assert banner in res.data
+    finally:
+        app.config["WIKI_CURRENT_LANGUAGE"] = lambda: "en"
+
+
+def test_edit_legacy_page(client, app):
+    """Test that editing a legacy page writes a language variant and leaves it alone."""
+    content_dir = app.config["WIKI_CONTENT_DIR"]
+    legacy_path = os.path.join(content_dir, "legacy_page.md")
+    variant_path = os.path.join(content_dir, "legacy_page_en.md")
+    with open(legacy_path) as f:
+        original_content = f.read()
+
+    try:
+        res = client.post(
+            "/help/edit/legacy_page/",
+            data={"title": "Legacy Page", "body": "# Legacy\n\nEdited.", "tags": "legacy"},
+            follow_redirects=True,
+        )
+        assert res.status_code == 200
+        assert os.path.isfile(variant_path)
+
+        # the legacy page is read-only
+        with open(legacy_path) as f:
+            assert f.read() == original_content
+    finally:
+        if os.path.isfile(variant_path):
+            os.remove(variant_path)
 
 
 def test_preview(client):

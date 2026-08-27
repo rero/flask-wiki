@@ -158,11 +158,11 @@ def edit(url):
 
     :param str url: URL slug of the page to edit or create
     """
-    page = current_wiki.get(url)
+    page = current_wiki.get(url, fallback=False)
     form = EditorForm(obj=page)
     if form.validate_on_submit():
-        if not page:
-            page = current_wiki.get_bare(url)
+        # always write to the current language variant, never over a legacy page
+        page = current_wiki.get_bare(url) or page
         form.populate_obj(page)
         page.save()
         flash(_("Saved"), category="success")
