@@ -51,7 +51,8 @@ def app(tmp_path_factory):
         WIKI_UPLOAD_FOLDER=str(upload_dir),
         WIKI_INDEX_DIR=str(index_dir),
         WIKI_CURRENT_LANGUAGE=lambda: "en",
-        WIKI_LANGUAGES={"en": "English", "fr": "French"},
+        WIKI_LANGUAGES={"en": "English", "fr": "French", "it": "Italian"},
+        WIKI_FALLBACK_LANGUAGES=["en", "fr"],
     )
     app.config["SERVER_NAME"] = "localhost"
     Bootstrap4(app)

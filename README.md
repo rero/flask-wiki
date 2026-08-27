@@ -63,7 +63,7 @@ flask flask_wiki index
 
 ## How it works
 
-Wiki pages are plain Markdown files stored in a content directory (`./data` by default). The URL structure mirrors the filesystem: `/help/guides/setup` maps to `data/guides/setup.md`.
+Wiki pages are plain Markdown files stored in a content directory (`./data` by default). The URL structure mirrors the filesystem, and every page belongs to a language: `/help/guides/setup` maps to `data/guides/setup_en.md` for an English reader. See [Internationalization](#internationalization).
 
 Each page file has an optional metadata header followed by the Markdown body:
 
@@ -138,8 +138,15 @@ All templates can be overridden by setting these config values to your own templ
 |-----|---------|-------------|
 | `WIKI_CURRENT_LANGUAGE` | `lambda: 'en'` | Callable returning the current language code |
 | `WIKI_LANGUAGES` | `{'en': 'English', 'fr': 'French', 'de': 'German', 'it': 'Italian'}` | Available languages |
+| `WIKI_FALLBACK_LANGUAGES` | every language of `WIKI_LANGUAGES`, in order | Languages tried, in order, when a page has no variant in the current language |
 
-Pages can have per-language variants using filename suffixes: `page_fr.md`, `page_de.md`, etc. The wiki automatically loads the correct variant based on `WIKI_CURRENT_LANGUAGE`.
+Every page belongs to a language: its filename carries a language code (`page_fr.md`, `page_de.md`), and `/help/page` serves the variant matching `WIKI_CURRENT_LANGUAGE`. Pages created or edited through the wiki are always saved with a language code.
+
+When a page has no variant in the current language, the wiki walks `WIKI_FALLBACK_LANGUAGES` in order and serves the first translation it finds, with a banner telling the reader which language the page is displayed in. A page is only a 404 when it exists in no language at all. Set `WIKI_FALLBACK_LANGUAGES = []` to disable the cascade.
+
+Page listings (index, tags) and search results follow the same cascade: one entry per page, in the current language when it exists.
+
+Files without a language code (`page.md`) are still served, as a last resort, for wikis created before language codes became mandatory. They are read-only: editing one writes the variant of the current language and leaves the original untouched. To migrate such a wiki, rename its files to `page_<language>.md` and re-run `flask flask_wiki index`.
 
 ### Markdown
 
