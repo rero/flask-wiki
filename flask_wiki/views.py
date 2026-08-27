@@ -75,22 +75,15 @@ def translate_ln(ln):
 
 @blueprint.app_template_filter()
 def edit_path_list(path):
-    """Return language-variant edit paths for a page, excluding the current one.
+    """Return language-variant edit paths for a page, excluding the edited one.
 
     :param str path: the current page path (URL slug, possibly with language suffix)
     :returns: list of dicts with ``ln`` and ``path`` keys for each other language variant
     :rtype: list[dict]
     """
-    ln = path.split("_")[-1]
-    base_path = path
-    if ln in current_wiki.languages:
-        base_path = path.rsplit("_", 1)[0]
-    return list(
-        filter(
-            lambda v: v["path"] != path,
-            [{"ln": ln, "path": f"{base_path}_{ln}"} for ln in current_wiki.languages],
-        )
-    )
+    slug, _ = current_wiki.split_url(path)
+    edited = current_wiki.ln_url(path)
+    return [{"ln": ln, "path": f"{slug}_{ln}"} for ln in current_wiki.languages if f"{slug}_{ln}" != edited]
 
 
 @blueprint.app_template_filter()
@@ -158,6 +151,7 @@ def edit(url):
 
     :param str url: URL slug of the page to edit or create
     """
+    language = current_wiki.split_url(url)[1] or current_wiki.current_language
     page = current_wiki.get(url, fallback=False)
     form = EditorForm(obj=page)
     if form.validate_on_submit():
@@ -167,7 +161,9 @@ def edit(url):
         page.save()
         flash(_("Saved"), category="success")
         return redirect(url_for("wiki.page", url=url))
-    return render_template(current_app.config.get("WIKI_EDITOR_TEMPLATE"), form=form, page=page, path=url)
+    return render_template(
+        current_app.config.get("WIKI_EDITOR_TEMPLATE"), form=form, page=page, path=url, language=language
+    )
 
 
 @blueprint.route("/preview/", methods=["POST"])
