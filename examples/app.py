@@ -31,6 +31,7 @@ def create_app(test_config=None):
             "de": "German",
             "it": "Italian",
         },
+        WIKI_FALLBACK_LANGUAGES=["en", "fr", "de", "it"],
         BABEL_TRANSLATION_DIRECTORIES=str(importlib.resources.files("flask_wiki") / "translations"),
         BABEL_DEFAULT_LOCALE="fr",
         DEBUG=True,
