@@ -19,6 +19,12 @@
           data-preview-url="{{ url_for('wiki.preview') }}" aria-controls="profile"
           aria-selected="false">{{ _('Preview') }}</a>
       </li>
+      <li class="nav-item d-flex align-items-center ml-3">
+        <span class="wiki-editor-language text-muted small">
+          <i class="fa fa-language" aria-hidden="true"></i>
+          {{ _('Editing in %(language)s', language=language | translate_ln) }}
+        </span>
+      </li>
       <li class="ml-auto">
         <div class="editor-btns text-right align-self-center">
           <button type="button" class="btn btn-outline-danger btn-sm ml-1" data-toggle="modal" data-target="#deleteModal">
@@ -38,9 +44,9 @@
               {%- endfor -%}
             </div>
           </div>
+          {%- endif %}
           <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i> {{ _('Save')
             }}</button>
-          {%- endif -%}
         </div>
       </li>
     </ul>

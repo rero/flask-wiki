@@ -37,6 +37,21 @@ def test_edit_page_get(client):
     assert b"body" in res.data
 
 
+def test_edit_page_language(client):
+    """Test that the editor tells which language variant is being edited."""
+    res = client.get("/help/edit/home/")
+    assert b"Editing in English" in res.data
+    # the language being edited is not offered by the "Edit in" dropdown
+    assert b"/help/edit/home_en/" not in res.data
+    assert b"/help/edit/home_fr/" in res.data
+
+    # a URL carrying a language code is edited in that language
+    res = client.get("/help/edit/home_fr/")
+    assert b"Editing in French" in res.data
+    assert b"/help/edit/home_fr/" not in res.data
+    assert b"/help/edit/home_en/" in res.data
+
+
 def test_edit_page_post(client, app):
     """Test POST to edit a page updates it."""
     # Capture original page content before modifying
