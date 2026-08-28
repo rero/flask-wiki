@@ -205,7 +205,7 @@ The extensions `toc`, `meta`, `tables`, and a built-in Bootstrap extension are a
 
 ### Requirements
 
-- Python >=3.10,<3.15
+- Python >=3.14,<3.15
 - [uv](https://docs.astral.sh/uv/)
 
 ### Setup
