@@ -1,0 +1,18 @@
+{# SPDX-FileCopyrightText: Fondation RERO+ #}
+{# SPDX-License-Identifier: BSD-3-Clause #}
+
+{# Bootstrap Icons glyphs, from the sprite shipped by bootstrap-flask. #}
+
+{% from 'bootstrap4/utils.html' import render_icon %}
+
+{% set GLYPHS = {
+  'copy': 'clipboard',
+  'delete': 'trash',
+  'edit': 'pencil',
+  'language': 'translate',
+  'save': 'floppy',
+  'search': 'search',
+  'upload': 'upload'
+} %}
+
+{% macro icon(name) %}{{ render_icon(GLYPHS[name]) }}{% endmacro %}

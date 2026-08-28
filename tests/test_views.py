@@ -245,3 +245,33 @@ def test_icons_come_from_the_bootstrap_sprite(client):
     assert "fa fa-" not in html
     for name in ("search", "clipboard", "pencil"):
         assert f"icons/bootstrap-icons.svg#{name}" in html
+
+
+def test_icon_template_can_be_swapped(app):
+    """Test that WIKI_ICON_TEMPLATE selects the markup used for template icons."""
+    try:
+        app.config["WIKI_ICON_TEMPLATE"] = "wiki/icons/fontawesome.html"
+        with app.test_client() as c:
+            page = c.get("/help/home/").data.decode()
+            editor = c.get("/help/edit/home/").data.decode()
+        assert "bootstrap-icons.svg#" not in page
+        for name in ("magnifying-glass", "clipboard", "pencil"):
+            assert f'<i class="fa-solid fa-{name}"></i>' in page
+        for name in ("floppy-disk", "language", "trash"):
+            assert f'<i class="fa-solid fa-{name}"></i>' in editor
+    finally:
+        app.config["WIKI_ICON_TEMPLATE"] = "wiki/icons/bootstrap.html"
+
+
+def test_icon_only_buttons_have_an_accessible_name(client, app):
+    """Test that buttons rendered as a bare icon carry an aria-label."""
+    assert 'aria-label="Search"' in client.get("/help/home/").data.decode()
+
+    data = {"file": (io.BytesIO(TINY_PNG), "aria_test.png")}
+    client.post("/help/files", data=data, content_type="multipart/form-data", follow_redirects=True)
+    try:
+        html = client.get("/help/files").data.decode()
+        assert 'aria-label="Copy Markdown code"' in html
+        assert 'aria-label="Delete file"' in html
+    finally:
+        client.get("/help/file/delete/aria_test.png", follow_redirects=True)

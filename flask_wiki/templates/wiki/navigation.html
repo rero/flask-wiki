@@ -1,11 +1,11 @@
 {# SPDX-FileCopyrightText: Fondation RERO+ #}
 {# SPDX-License-Identifier: BSD-3-Clause #}
 
-{% from 'bootstrap4/utils.html' import render_icon %}
+{% from config.get('WIKI_ICON_TEMPLATE') import icon %}
 
 <header class="row">
     <nav class="navbar navbar-expand-lg navbar-light bg-light col-lg-12 justify-content-end">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="{{ _('Toggle navigation') }}">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
@@ -26,8 +26,8 @@
                    name="q" placeholder="{{ _('Search') }}"
                    aria-label="{{ _('Search') }}" />
             <div class="input-group-append">
-            <button class="btn btn-outline-primary" type="submit">
-                {{ render_icon('search') }}
+            <button class="btn btn-outline-primary" type="submit" aria-label="{{ _('Search') }}">
+                {{ icon('search') }}
             </button>
             </div>
             </div>

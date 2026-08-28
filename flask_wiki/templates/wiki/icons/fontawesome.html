@@ -1,0 +1,17 @@
+{# SPDX-FileCopyrightText: Fondation RERO+ #}
+{# SPDX-License-Identifier: BSD-3-Clause #}
+
+{# Font Awesome 7 Free class names. The application supplies the assets; this
+   template only names the glyphs. #}
+
+{% set GLYPHS = {
+  'copy': 'clipboard',
+  'delete': 'trash',
+  'edit': 'pencil',
+  'language': 'language',
+  'save': 'floppy-disk',
+  'search': 'magnifying-glass',
+  'upload': 'upload'
+} %}
+
+{% macro icon(name) %}<i class="fa-solid fa-{{ GLYPHS[name] }}"></i>{% endmacro %}

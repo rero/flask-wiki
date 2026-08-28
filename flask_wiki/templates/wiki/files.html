@@ -1,7 +1,7 @@
 {# SPDX-FileCopyrightText: Fondation RERO+ #}
 {# SPDX-License-Identifier: BSD-3-Clause #}
 
-{% from 'bootstrap4/utils.html' import render_icon %}
+{% from config.get('WIKI_ICON_TEMPLATE') import icon %}
 
 {% extends config.get('WIKI_BASE_TEMPLATE') %}
 {% set active_page = "files" %}
@@ -15,7 +15,7 @@
             {% if can_edit_wiki %}
             <form class="" method="post" enctype="multipart/form-data">
                 <div class="custom-file">
-                    <button class="btn btn-outline-primary btn-sm">{{ render_icon('upload') }} {{ _('Upload a file') }}</button>
+                    <button class="btn btn-outline-primary btn-sm">{{ icon('upload') }} {{ _('Upload a file') }}</button>
                     <input class="custom-file-input" type="file" name="file" accept="image/*" />
                 </div>
             </form>
@@ -29,11 +29,13 @@
                 <figcaption class="figure-caption text-center">
                     <a href="{{ url_for('uploaded_files', filename=file) }}">{{ file }}</a>
                     <button data-name="{{ file }}" data-link="{{ url_for('uploaded_files', filename=file) }}"
-                                                   class="copy-md-code btn btn-sm btn-outline-primary">
-                        {{ render_icon('clipboard') }}
+                                                   class="copy-md-code btn btn-sm btn-outline-primary"
+                                                   aria-label="{{ _('Copy Markdown code') }}">
+                        {{ icon('copy') }}
                     </button>
-                    <button data-toggle="modal" data-target="#deleteModal" id="{{file}}" class="delete-file btn btn-sm btn-outline-danger">
-                        {{ render_icon('trash') }}
+                    <button data-toggle="modal" data-target="#deleteModal" id="{{file}}" class="delete-file btn btn-sm btn-outline-danger"
+                                                   aria-label="{{ _('Delete file') }}">
+                        {{ icon('delete') }}
                     </button>
                 </figcaption>
             </figure>
@@ -49,7 +51,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="deleteModalCenterTitle">{{ _('Delete file') }}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="{{ _('Close') }}">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>

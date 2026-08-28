@@ -132,6 +132,7 @@ All templates can be overridden by setting these config values to your own templ
 | `WIKI_FILES_TEMPLATE` | `'wiki/files.html'` |
 | `WIKI_NOT_FOUND_TEMPLATE` | `'wiki/404.html'` |
 | `WIKI_FORBIDDEN_TEMPLATE` | `'wiki/403.html'` |
+| `WIKI_ICON_TEMPLATE` | `'wiki/icons/bootstrap.html'` |
 
 ### Front-end assets
 
@@ -150,10 +151,27 @@ instead of a CDN, which is what makes the wiki work without internet access:
 app.config["BOOTSTRAP_SERVE_LOCAL"] = True
 ```
 
-Icons are inline SVG referencing the Bootstrap Icons sprite, so no icon font is
-required. Templates use the `render_icon()` macro of `bootstrap-flask`. An
-application providing its own `WIKI_BASE_TEMPLATE` therefore has nothing to add
-for icons, as long as it initializes `bootstrap-flask`.
+#### Icons
+
+Templates never name a glyph directly. They ask for an *intent* — `search`,
+`copy`, `edit`, `upload`, `delete`, `language`, `save` — and `WIKI_ICON_TEMPLATE`
+supplies the markup for it:
+
+| Value | Markup | Assets needed |
+|-------|--------|---------------|
+| `'wiki/icons/bootstrap.html'` (default) | inline SVG using the Bootstrap Icons sprite | none, `bootstrap-flask` ships it |
+| `'wiki/icons/fontawesome.html'` | `<i class="fa-solid fa-...">` | Font Awesome 7, supplied by your application |
+
+The Font Awesome variant emits class names only; it bundles nothing. Use it in
+an application that already ships Font Awesome — through a webpack bundle, for
+instance — and the wiki icons match the rest of that application:
+
+```python
+app.config["WIKI_ICON_TEMPLATE"] = "wiki/icons/fontawesome.html"
+```
+
+Any template exposing an `icon(name)` macro works, so an application needing
+different styles or a third icon set can point the key at its own file.
 
 Pages are edited in a plain `<textarea>`; the *Preview* tab posts the body to
 `wiki.preview` and renders it with the same Markdown pipeline as a saved page,

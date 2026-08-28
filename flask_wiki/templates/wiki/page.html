@@ -1,7 +1,7 @@
 {# SPDX-FileCopyrightText: Fondation RERO+ #}
 {# SPDX-License-Identifier: BSD-3-Clause #}
 
-{% from 'bootstrap4/utils.html' import render_icon %}
+{% from config.get('WIKI_ICON_TEMPLATE') import icon %}
 
 {% extends config.get('WIKI_BASE_TEMPLATE') %}
 {% set active_page = "page" %}
@@ -18,11 +18,11 @@
                 <button data-name="{{ page.title }}"
                         data-link="{{ url_for('wiki.page', url=page.url) }}"
                         class="copy-file-code btn btn-sm btn-outline-primary">
-                    {{ render_icon('clipboard') }} {{ _('Copy link') }}
+                    {{ icon('copy') }} {{ _('Copy link') }}
                 </button>
                 <a type="button" class="btn btn-outline-primary btn-sm"
                    href="{{ url_for('wiki.edit', url=page.url) }}">
-                   {{ render_icon('pencil') }} {{ _('Edit') }}
+                   {{ icon('edit') }} {{ _('Edit') }}
                 </a>
             </div>
             {% endif %}
