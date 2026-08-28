@@ -14,6 +14,8 @@ WIKI_FORBIDDEN_TEMPLATE = "wiki/403.html"
 WIKI_EDITOR_TEMPLATE = "wiki/editor.html"
 WIKI_FILES_TEMPLATE = "wiki/files.html"
 WIKI_PAGE_TEMPLATE = "wiki/page.html"
+# Supplies the icon() macro; swap for wiki/icons/fontawesome.html or your own
+WIKI_ICON_TEMPLATE = "wiki/icons/bootstrap.html"
 
 
 # MISCS

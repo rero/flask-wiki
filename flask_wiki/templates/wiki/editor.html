@@ -1,7 +1,7 @@
 {# SPDX-FileCopyrightText: Fondation RERO+ #}
 {# SPDX-License-Identifier: BSD-3-Clause #}
 
-{% from 'bootstrap4/utils.html' import render_icon %}
+{% from config.get('WIKI_ICON_TEMPLATE') import icon %}
 
 {% from 'bootstrap4/form.html' import render_form_row %}
 
@@ -23,19 +23,19 @@
       </li>
       <li class="nav-item d-flex align-items-center ml-3">
         <span class="wiki-editor-language text-muted small">
-          {{ render_icon('translate') }}
+          {{ icon('language') }}
           {{ _('Editing in %(language)s', language=language | translate_ln) }}
         </span>
       </li>
       <li class="ml-auto">
         <div class="editor-btns text-right align-self-center">
           <button type="button" class="btn btn-outline-danger btn-sm ml-1" data-toggle="modal" data-target="#deleteModal">
-            {{ render_icon('trash') }} {{ _('Delete') }}
+            {{ icon('delete') }} {{ _('Delete') }}
           </button>
           {%- set pathes = path | edit_path_list -%}
           {%- if pathes %}
           <div class="btn-group">
-            <button type="button" class="btn btn-outline-primary btn-sm">{{ render_icon('translate') }} {{
+            <button type="button" class="btn btn-outline-primary btn-sm">{{ icon('language') }} {{
               _('Edit in') }}</button>
             <button type="button" class="btn btn-outline-primary btn-sm dropdown-toggle dropdown-toggle-split"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -47,7 +47,7 @@
             </div>
           </div>
           {%- endif %}
-          <button class="btn btn-sm btn-primary" type="submit">{{ render_icon('floppy') }} {{ _('Save')
+          <button class="btn btn-sm btn-primary" type="submit">{{ icon('save') }} {{ _('Save')
             }}</button>
         </div>
       </li>
@@ -71,7 +71,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="deleteModalCenterTitle">{{ _('Delete page') }}</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" aria-label="{{ _('Close') }}">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
