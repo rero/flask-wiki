@@ -5,8 +5,36 @@
 
 import io
 import os
+from html.parser import HTMLParser
 
 from tests.conftest import TINY_PNG
+
+# Attribute carrying the resource URL, per tag that loads one.
+RESOURCE_ATTRIBUTES = {"img": "src", "script": "src", "source": "src", "link": "href"}
+
+
+class AssetCollector(HTMLParser):
+    """Collect the URLs a page loads resources from."""
+
+    def __init__(self):
+        """Initialize the collected URL list."""
+        super().__init__()
+        self.urls = []
+
+    def handle_starttag(self, tag, attrs):
+        """Record the resource URL carried by the tag, if any."""
+        attrs = dict(attrs)
+        if tag == "link" and "stylesheet" not in attrs.get("rel", ""):
+            return
+        if url := attrs.get(RESOURCE_ATTRIBUTES.get(tag, "")):
+            self.urls.append(url)
+
+
+def asset_urls(html):
+    """Return the CSS, JavaScript and image URLs referenced by the HTML."""
+    collector = AssetCollector()
+    collector.feed(html)
+    return collector.urls
 
 
 def test_index_redirect(client):
@@ -233,10 +261,10 @@ def test_permissions_edit_denied(app):
 
 def test_pages_do_not_reference_external_assets(client):
     """Test that no page pulls an asset from a third-party host."""
-    for url in ("/help/home/", "/help/edit/home/", "/help/files", "/help/search?query=home"):
+    for url in ("/help/home/", "/help/edit/home/", "/help/files", "/help/search?q=home"):
         html = client.get(url).data.decode()
-        assert "http://" not in html, url
-        assert "https://" not in html, url
+        for asset in asset_urls(html):
+            assert not asset.startswith(("http://", "https://", "//")), f"{url}: {asset}"
 
 
 def test_icons_come_from_the_bootstrap_sprite(client):
