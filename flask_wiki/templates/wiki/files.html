@@ -1,6 +1,8 @@
 {# SPDX-FileCopyrightText: Fondation RERO+ #}
 {# SPDX-License-Identifier: BSD-3-Clause #}
 
+{% from 'bootstrap4/utils.html' import render_icon %}
+
 {% extends config.get('WIKI_BASE_TEMPLATE') %}
 {% set active_page = "files" %}
 
@@ -13,7 +15,7 @@
             {% if can_edit_wiki %}
             <form class="" method="post" enctype="multipart/form-data">
                 <div class="custom-file">
-                    <button class="btn btn-outline-primary btn-sm"><i class="fa fa-upload" aria-hidden="true"></i> {{ _('Upload a file') }}</button>
+                    <button class="btn btn-outline-primary btn-sm">{{ render_icon('upload') }} {{ _('Upload a file') }}</button>
                     <input class="custom-file-input" type="file" name="file" accept="image/*" />
                 </div>
             </form>
@@ -28,10 +30,10 @@
                     <a href="{{ url_for('uploaded_files', filename=file) }}">{{ file }}</a>
                     <button data-name="{{ file }}" data-link="{{ url_for('uploaded_files', filename=file) }}"
                                                    class="copy-md-code btn btn-sm btn-outline-primary">
-                        <i class="fa fa-clipboard"></i>
+                        {{ render_icon('clipboard') }}
                     </button>
                     <button data-toggle="modal" data-target="#deleteModal" id="{{file}}" class="delete-file btn btn-sm btn-outline-danger">
-                        <i class="fa fa-trash"></i>
+                        {{ render_icon('trash') }}
                     </button>
                 </figcaption>
             </figure>

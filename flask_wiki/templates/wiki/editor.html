@@ -1,6 +1,8 @@
 {# SPDX-FileCopyrightText: Fondation RERO+ #}
 {# SPDX-License-Identifier: BSD-3-Clause #}
 
+{% from 'bootstrap4/utils.html' import render_icon %}
+
 {% from 'bootstrap4/form.html' import render_form_row %}
 
 {% extends config.get('WIKI_BASE_TEMPLATE') %}
@@ -21,19 +23,19 @@
       </li>
       <li class="nav-item d-flex align-items-center ml-3">
         <span class="wiki-editor-language text-muted small">
-          <i class="fa fa-language" aria-hidden="true"></i>
+          {{ render_icon('translate') }}
           {{ _('Editing in %(language)s', language=language | translate_ln) }}
         </span>
       </li>
       <li class="ml-auto">
         <div class="editor-btns text-right align-self-center">
           <button type="button" class="btn btn-outline-danger btn-sm ml-1" data-toggle="modal" data-target="#deleteModal">
-            <i class="fa fa-trash" aria-hidden="true"></i> {{ _('Delete') }}
+            {{ render_icon('trash') }} {{ _('Delete') }}
           </button>
           {%- set pathes = path | edit_path_list -%}
           {%- if pathes %}
           <div class="btn-group">
-            <button type="button" class="btn btn-outline-primary btn-sm"><i class="fa fa-language" aria-hidden="true"></i> {{
+            <button type="button" class="btn btn-outline-primary btn-sm">{{ render_icon('translate') }} {{
               _('Edit in') }}</button>
             <button type="button" class="btn btn-outline-primary btn-sm dropdown-toggle dropdown-toggle-split"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -45,7 +47,7 @@
             </div>
           </div>
           {%- endif %}
-          <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i> {{ _('Save')
+          <button class="btn btn-sm btn-primary" type="submit">{{ render_icon('floppy') }} {{ _('Save')
             }}</button>
         </div>
       </li>

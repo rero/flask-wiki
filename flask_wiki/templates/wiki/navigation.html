@@ -1,6 +1,8 @@
 {# SPDX-FileCopyrightText: Fondation RERO+ #}
 {# SPDX-License-Identifier: BSD-3-Clause #}
 
+{% from 'bootstrap4/utils.html' import render_icon %}
+
 <header class="row">
     <nav class="navbar navbar-expand-lg navbar-light bg-light col-lg-12 justify-content-end">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,7 +27,7 @@
                    aria-label="{{ _('Search') }}" />
             <div class="input-group-append">
             <button class="btn btn-outline-primary" type="submit">
-                <i class="fa fa-search"></i>
+                {{ render_icon('search') }}
             </button>
             </div>
             </div>

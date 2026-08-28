@@ -24,6 +24,9 @@ def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         SECRET_KEY="dev",
+        # serve Bootstrap, jQuery, Popper and the Bootstrap Icons sprite from the
+        # package instead of a CDN, so the wiki works without internet access
+        BOOTSTRAP_SERVE_LOCAL=True,
         WIKI_CURRENT_LANGUAGE=lambda: session.get("language", app.config.get("BABEL_DEFAULT_LOCALE")),
         WIKI_LANGUAGES={
             "en": "English",

@@ -15,6 +15,7 @@ A lightweight, file-based wiki system built as a Flask extension. Create, edit, 
 - WikiLinks (`[[Page Name]]` syntax)
 - Multilingual support
 - Markdown editor with a server-rendered preview tab
+- No CDN: every front-end asset is served by the application
 - Customizable templates and permissions
 
 ## Installation
@@ -131,6 +132,32 @@ All templates can be overridden by setting these config values to your own templ
 | `WIKI_FILES_TEMPLATE` | `'wiki/files.html'` |
 | `WIKI_NOT_FOUND_TEMPLATE` | `'wiki/404.html'` |
 | `WIKI_FORBIDDEN_TEMPLATE` | `'wiki/403.html'` |
+
+### Front-end assets
+
+The wiki needs no build step, no CDN and no vendored third-party asset. Its
+whole front-end comes from `bootstrap-flask`:
+
+| Asset | Origin |
+|-------|--------|
+| Bootstrap 4, jQuery, Popper | shipped by `bootstrap-flask` |
+| Bootstrap Icons (SVG sprite) | shipped by `bootstrap-flask` |
+
+Set `BOOTSTRAP_SERVE_LOCAL = True` so `bootstrap-flask` serves its own assets
+instead of a CDN, which is what makes the wiki work without internet access:
+
+```python
+app.config["BOOTSTRAP_SERVE_LOCAL"] = True
+```
+
+Icons are inline SVG referencing the Bootstrap Icons sprite, so no icon font is
+required. Templates use the `render_icon()` macro of `bootstrap-flask`. An
+application providing its own `WIKI_BASE_TEMPLATE` therefore has nothing to add
+for icons, as long as it initializes `bootstrap-flask`.
+
+Pages are edited in a plain `<textarea>`; the *Preview* tab posts the body to
+`wiki.preview` and renders it with the same Markdown pipeline as a saved page,
+so WikiLinks, captions and syntax highlighting show up exactly as they will.
 
 ### Internationalization
 

@@ -53,6 +53,7 @@ def app(tmp_path_factory):
         WIKI_CURRENT_LANGUAGE=lambda: "en",
         WIKI_LANGUAGES={"en": "English", "fr": "French", "it": "Italian"},
         WIKI_FALLBACK_LANGUAGES=["en", "fr"],
+        BOOTSTRAP_SERVE_LOCAL=True,
     )
     app.config["SERVER_NAME"] = "localhost"
     Bootstrap4(app)
