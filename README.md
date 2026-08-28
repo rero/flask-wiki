@@ -14,7 +14,7 @@ A lightweight, file-based wiki system built as a Flask extension. Create, edit, 
 - File/image uploads
 - WikiLinks (`[[Page Name]]` syntax)
 - Multilingual support
-- Rich editor with live preview (EasyMDE)
+- Markdown editor with a server-rendered preview tab
 - Customizable templates and permissions
 
 ## Installation
