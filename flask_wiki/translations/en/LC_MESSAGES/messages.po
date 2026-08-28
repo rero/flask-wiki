@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Flask-Admin VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-27 13:46+0200\n"
+"POT-Creation-Date: 2026-08-28 09:51+0200\n"
 "PO-Revision-Date: 2020-01-30 11:47+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -88,115 +88,134 @@ msgstr ""
 msgid "Create a new page"
 msgstr ""
 
-#: flask_wiki/templates/wiki/base.html:25
-#: flask_wiki/templates/wiki/base.html:31
+#: flask_wiki/templates/wiki/base.html:21
+#: flask_wiki/templates/wiki/base.html:27
 msgid "Flask-Wiki"
 msgstr ""
 
-#: flask_wiki/templates/wiki/base.html:43
+#: flask_wiki/templates/wiki/base.html:39
 msgid "Link copied to your clipboard"
 msgstr ""
 
-#: flask_wiki/templates/wiki/base.html:51
+#: flask_wiki/templates/wiki/base.html:47
 msgid "Failed to copy link to your clipboard"
 msgstr ""
 
-#: flask_wiki/templates/wiki/editor.html:15
-#: flask_wiki/templates/wiki/page.html:23
-#: flask_wiki/templates/wiki/search.html:50
+#: flask_wiki/templates/wiki/base.html:56
+msgid "Powered by"
+msgstr ""
+
+#: flask_wiki/templates/wiki/editor.html:17
+#: flask_wiki/templates/wiki/page.html:25
+#: flask_wiki/templates/wiki/search.html:52
 msgid "Edit"
 msgstr ""
 
-#: flask_wiki/templates/wiki/editor.html:20
+#: flask_wiki/templates/wiki/editor.html:22
 msgid "Preview"
 msgstr ""
 
-#: flask_wiki/templates/wiki/editor.html:25
+#: flask_wiki/templates/wiki/editor.html:27
 #, python-format
 msgid "Editing in %(language)s"
 msgstr ""
 
-#: flask_wiki/templates/wiki/editor.html:31
+#: flask_wiki/templates/wiki/editor.html:33
 msgid "Delete"
 msgstr ""
 
-#: flask_wiki/templates/wiki/editor.html:37
+#: flask_wiki/templates/wiki/editor.html:39
 msgid "Edit in"
 msgstr ""
 
-#: flask_wiki/templates/wiki/editor.html:48
+#: flask_wiki/templates/wiki/editor.html:50
 msgid "Save"
 msgstr ""
 
-#: flask_wiki/templates/wiki/editor.html:71
-#: flask_wiki/templates/wiki/editor.html:80
+#: flask_wiki/templates/wiki/editor.html:73
+#: flask_wiki/templates/wiki/editor.html:82
 msgid "Delete page"
 msgstr ""
 
-#: flask_wiki/templates/wiki/editor.html:77
+#: flask_wiki/templates/wiki/editor.html:74
+#: flask_wiki/templates/wiki/files.html:54
+msgid "Close"
+msgstr ""
+
+#: flask_wiki/templates/wiki/editor.html:79
 msgid ""
 "Are you sure you want to delete this page? Be warned that links pointing "
 "to this page will stop working."
 msgstr ""
 
-#: flask_wiki/templates/wiki/editor.html:81
-#: flask_wiki/templates/wiki/files.html:60
+#: flask_wiki/templates/wiki/editor.html:83
+#: flask_wiki/templates/wiki/files.html:64
 msgid "Back"
 msgstr ""
 
-#: flask_wiki/templates/wiki/files.html:12
+#: flask_wiki/templates/wiki/files.html:14
 msgid "List of Uploaded Files"
 msgstr ""
 
-#: flask_wiki/templates/wiki/files.html:16
+#: flask_wiki/templates/wiki/files.html:18
 msgid "Upload a file"
 msgstr ""
 
-#: flask_wiki/templates/wiki/files.html:49
-#: flask_wiki/templates/wiki/files.html:59
+#: flask_wiki/templates/wiki/files.html:33
+msgid "Copy Markdown code"
+msgstr ""
+
+#: flask_wiki/templates/wiki/files.html:37
+#: flask_wiki/templates/wiki/files.html:53
+#: flask_wiki/templates/wiki/files.html:63
 msgid "Delete file"
 msgstr ""
 
-#: flask_wiki/templates/wiki/files.html:55
+#: flask_wiki/templates/wiki/files.html:59
 msgid ""
 "Are you sure you want to delete this file? Be warned that links from "
 "existing pages will be broken."
 msgstr ""
 
-#: flask_wiki/templates/wiki/navigation.html:12
+#: flask_wiki/templates/wiki/navigation.html:8
+msgid "Toggle navigation"
+msgstr ""
+
+#: flask_wiki/templates/wiki/navigation.html:14
 msgid "Home"
 msgstr ""
 
-#: flask_wiki/templates/wiki/navigation.html:16
+#: flask_wiki/templates/wiki/navigation.html:18
 msgid "Files"
 msgstr ""
 
-#: flask_wiki/templates/wiki/navigation.html:24
-#: flask_wiki/templates/wiki/navigation.html:25
+#: flask_wiki/templates/wiki/navigation.html:26
+#: flask_wiki/templates/wiki/navigation.html:27
+#: flask_wiki/templates/wiki/navigation.html:29
 msgid "Search"
 msgstr ""
 
-#: flask_wiki/templates/wiki/page.html:19
-#: flask_wiki/templates/wiki/search.html:46
+#: flask_wiki/templates/wiki/page.html:21
+#: flask_wiki/templates/wiki/search.html:48
 msgid "Copy link"
 msgstr ""
 
-#: flask_wiki/templates/wiki/page.html:37
+#: flask_wiki/templates/wiki/page.html:39
 msgid "Last updated:"
 msgstr ""
 
-#: flask_wiki/templates/wiki/page.html:43
+#: flask_wiki/templates/wiki/page.html:45
 #, python-format
 msgid ""
 "This page does not exist yet in your language. It is displayed in "
 "%(language)s."
 msgstr ""
 
-#: flask_wiki/templates/wiki/page.html:53
+#: flask_wiki/templates/wiki/page.html:55
 msgid "Table of contents"
 msgstr ""
 
-#: flask_wiki/templates/wiki/search.html:15
+#: flask_wiki/templates/wiki/search.html:17
 msgid "result"
 msgid_plural "results"
 msgstr[0] ""
