@@ -15,8 +15,6 @@
   {% block styles %}
   <!-- Bootstrap CSS -->
   {{ bootstrap.load_css() }}
-  <!--font awesome -->
-  <link href="{{ url_for('wiki.static', filename='css/font-awesome.min.css') }}" rel="stylesheet" />
   <link href="{{ url_for('wiki.static', filename='css/wiki.css') }}" rel="stylesheet" />
   {% endblock %}
 

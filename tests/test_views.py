@@ -229,3 +229,19 @@ def test_permissions_edit_denied(app):
             assert res.status_code == 403
     finally:
         app.config["WIKI_EDIT_VIEW_PERMISSION"] = lambda: True
+
+
+def test_pages_do_not_reference_external_assets(client):
+    """Test that no page pulls an asset from a third-party host."""
+    for url in ("/help/home/", "/help/edit/home/", "/help/files", "/help/search?query=home"):
+        html = client.get(url).data.decode()
+        assert "http://" not in html, url
+        assert "https://" not in html, url
+
+
+def test_icons_come_from_the_bootstrap_sprite(client):
+    """Test that template icons are inline SVG from the Bootstrap Icons sprite."""
+    html = client.get("/help/home/").data.decode()
+    assert "fa fa-" not in html
+    for name in ("search", "clipboard", "pencil"):
+        assert f"icons/bootstrap-icons.svg#{name}" in html
