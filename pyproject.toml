@@ -30,7 +30,6 @@ dev = [
     "pip-audit",
     "pytest",
     "ruff>=0.12.3",
-    "python-semantic-release>=10.5.3",
 ]
 
 [project.entry-points."flask.commands"]
@@ -86,17 +85,18 @@ lint = {cmd = "ruff check", help = "Checks linting"}
 run_tests = {cmd = "./scripts/test", help = "Runs all tests"}
 update_catalog = "pybabel update -i flask_wiki/translations/messages.pot -d flask_wiki/translations --no-fuzzy-matching --ignore-obsolete true"
 
-# Release management
+# Release management. python-semantic-release runs in an isolated uvx environment:
+# its dependency tree (which caps click) has no reason to constrain ours.
 [tool.poe.tasks.changelog]
-cmd = "semantic-release changelog"
+cmd = "uvx --from python-semantic-release@latest semantic-release changelog"
 help = "Preview the next changelog without making changes"
 
 [tool.poe.tasks.version]
-cmd = "semantic-release version --print"
+cmd = "uvx --from python-semantic-release@latest semantic-release version --print"
 help = "Print the next version number without making changes"
 
 [tool.poe.tasks.release]
-cmd = "semantic-release version --no-push --no-tag --no-commit"
+cmd = "uvx --from python-semantic-release@latest semantic-release version --no-push --no-tag --no-commit"
 help = "Generate changelog and bump version locally (does not push, tag, or commit - for local testing only)"
 
 [tool.semantic_release]
