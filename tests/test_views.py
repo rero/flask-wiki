@@ -5,7 +5,9 @@
 
 import io
 import os
+import re
 from html.parser import HTMLParser
+from pathlib import Path
 
 from tests.conftest import TINY_PNG
 
@@ -265,6 +267,24 @@ def test_pages_do_not_reference_external_assets(client):
         html = client.get(url).data.decode()
         for asset in asset_urls(html):
             assert not asset.startswith(("http://", "https://", "//")), f"{url}: {asset}"
+
+
+def test_toasts_are_placed_by_their_own_wrapper(client, app):
+    """Test that the toasts are positioned by a wiki class instead of `.toast`.
+
+    Styling the Bootstrap component itself leaks into the host application, which
+    places the wiki toasts with its own rules.
+    """
+    assert 'class="wiki-toasts"' in client.get("/help/home/").data.decode()
+
+    stylesheet = Path(app.blueprints["wiki"].static_folder, "css", "wiki.css")
+    css = re.sub(r"/\*.*?\*/", "", stylesheet.read_text(), flags=re.DOTALL)
+    selectors = {
+        selector.strip() for rule in css.split("}") if "{" in rule for selector in rule.rsplit("{", 1)[0].split(",")
+    }
+    assert ".wiki-toasts" in selectors
+    for selector in selectors:
+        assert "toast" not in re.findall(r"\.([-\w]+)", selector), selector
 
 
 def test_icons_come_from_the_bootstrap_sprite(client):

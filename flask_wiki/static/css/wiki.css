@@ -27,6 +27,26 @@ h1 {
   max-width: 55rem;
 }
 
+/* Figures, as rendered for an image carrying a title. */
+.content figure {
+  max-width: 85%;
+  margin: 0 auto;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+}
+
+.content figure img {
+  border-radius: 5px;
+}
+
+.content figcaption {
+  padding-top: 0.5rem;
+  text-align: center;
+  font-size: 90%;
+  color: #6c757d;
+}
+
 .wiki-page .toc ul {
   padding-left: 1rem;
 }
@@ -39,10 +59,11 @@ h1 {
   height: 400px;
 }
 
-.toast {
-  position: absolute;
+.wiki-toasts {
+  position: fixed;
   top: 50px;
   left: 15px;
+  z-index: 1090;
 }
 
 .wiki-files,

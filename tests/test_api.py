@@ -58,6 +58,36 @@ def test_processor_table_bootstrap(app):
         assert "table-striped" in html
 
 
+def test_processor_figure(app):
+    """Test that a titled image standing alone in its paragraph becomes a figure."""
+    with app.test_request_context():
+        text = 'title: T\n\n![Alt text](image.png "A caption")'
+        processor = Processor(text)
+        html, _body, _meta, _toc = processor.process()
+
+        assert "<figure>" in html
+        assert "<figcaption>A caption</figcaption>" in html
+        # the figure is a block of its own, not nested in a paragraph
+        assert "<p>" not in html
+        # the alt text keeps describing the image, the title is consumed
+        assert 'alt="Alt text"' in html
+        assert "title=" not in html
+
+
+def test_processor_image_left_alone(app):
+    """Test that an image is only made a figure when it can be a captioned block."""
+    with app.test_request_context():
+        # without a title there is nothing to caption the image with
+        html, _body, _meta, _toc = Processor("title: T\n\n![Alt text](image.png)").process()
+        assert "<figure>" not in html
+
+        # an image inside a sentence stays inline, a figure being a block
+        text = 'title: T\n\nSee ![Alt text](image.png "A caption") here.'
+        html, _body, _meta, _toc = Processor(text).process()
+        assert "<figure>" not in html
+        assert 'title="A caption"' in html
+
+
 def test_page_load_and_render(app):
     """Test loading and rendering a page from disk."""
     with app.test_request_context():

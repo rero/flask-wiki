@@ -201,6 +201,11 @@ Files without a language code (`page.md`) are still served, as a last resort, fo
 
 The extensions `toc`, `meta`, `tables`, and a built-in Bootstrap extension are always loaded.
 
+An image that carries a title and stands alone in its paragraph is rendered as a
+captioned `<figure>`: the title becomes the caption, and the alt text keeps describing
+the image for those who cannot see it. An image without a title, or one sitting inside a
+sentence, is rendered as a plain `<img>`.
+
 ## Development
 
 ### Requirements
