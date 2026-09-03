@@ -371,6 +371,30 @@ def test_icon_template_can_be_swapped(app):
         app.config["WIKI_ICON_TEMPLATE"] = "wiki/icons/bootstrap.html"
 
 
+def test_toasts_are_rendered_for_the_browser_to_reveal(client):
+    """Test that a page carries the toasts wiki.js reveals through their id."""
+    html = client.get("/help/home/").data.decode()
+    assert 'id="copy-success"' in html
+    assert 'id="copy-error"' in html
+
+
+def test_toast_template_can_be_swapped(app):
+    """Test that WIKI_TOAST_TEMPLATE selects the markup used for every toast."""
+    try:
+        app.config["WIKI_TOAST_TEMPLATE"] = "custom_toast.html"
+        with app.test_client() as c:
+            with c.session_transaction() as session:
+                session["_flashes"] = [("success", "a flashed message")]
+            html = c.get("/help/home/").data.decode()
+        # the toasts of the wiki are rendered by the macro of the application
+        assert '<div class="app-toast app-toast-success" id="copy-success"' in html
+        assert '<div class="app-toast app-toast-error" id="copy-error"' in html
+        # and so are the messages it flashes
+        assert '<div class="app-toast app-toast-success" data-autoshow>a flashed message' in html
+    finally:
+        app.config["WIKI_TOAST_TEMPLATE"] = "wiki/toast.html"
+
+
 def test_icon_only_buttons_have_an_accessible_name(client, app):
     """Test that buttons rendered as a bare icon carry an aria-label."""
     assert 'aria-label="Search"' in client.get("/help/home/").data.decode()

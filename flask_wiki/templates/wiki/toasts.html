@@ -1,0 +1,11 @@
+{# SPDX-FileCopyrightText: Fondation RERO+ #}
+{# SPDX-License-Identifier: BSD-3-Clause #}
+
+{# The toasts the wiki raises from the browser, which wiki.js reveals through
+   their id. An application rendering its own toast stack includes this file
+   inside it, and never has to know these ids nor repeat their messages. #}
+
+{% from config.get('WIKI_TOAST_TEMPLATE') import toast %}
+
+{{ toast(_('Link copied to your clipboard'), 'success', id='copy-success') }}
+{{ toast(_('Failed to copy link to your clipboard'), 'error', id='copy-error') }}

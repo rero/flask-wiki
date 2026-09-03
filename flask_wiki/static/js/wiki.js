@@ -3,7 +3,7 @@
 
 $(document).ready(function () {
   // reveal the messages flashed by the server
-  $('.wiki-toasts .toast[data-autoshow]').toast('show');
+  $('.toast[data-autoshow]').toast('show');
 
   // ask the backend for the preview and render it
   $('#preview-tab').on('click', function () {

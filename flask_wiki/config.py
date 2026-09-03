@@ -16,6 +16,8 @@ WIKI_FILES_TEMPLATE = "wiki/files.html"
 WIKI_PAGE_TEMPLATE = "wiki/page.html"
 # Supplies the icon() macro; swap for wiki/icons/fontawesome.html or your own
 WIKI_ICON_TEMPLATE = "wiki/icons/bootstrap.html"
+# Supplies the toast() macro; swap for the one of the embedding application
+WIKI_TOAST_TEMPLATE = "wiki/toast.html"
 
 
 # MISCS
