@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Flask-Wiki VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-28 09:51+0200\n"
+"POT-Creation-Date: 2026-09-03 14:25+0200\n"
 "PO-Revision-Date: 2022-07-12 10:52+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hu\n"
@@ -92,56 +92,65 @@ msgstr "Új oldal létrehozása"
 msgid "Flask-Wiki"
 msgstr "Flask-Wiki"
 
-#: flask_wiki/templates/wiki/base.html:39
+#: flask_wiki/templates/wiki/base.html:34
 msgid "Link copied to your clipboard"
 msgstr "Vágólapra másolva"
 
-#: flask_wiki/templates/wiki/base.html:47
+#: flask_wiki/templates/wiki/base.html:35
 msgid "Failed to copy link to your clipboard"
 msgstr "Nem sikerült a vágólapra másolni"
 
-#: flask_wiki/templates/wiki/base.html:56
+#: flask_wiki/templates/wiki/base.html:46
 msgid "Powered by"
 msgstr "Működteti"
 
 #: flask_wiki/templates/wiki/editor.html:17
-#: flask_wiki/templates/wiki/page.html:25
-#: flask_wiki/templates/wiki/search.html:52
+#: flask_wiki/templates/wiki/page.html:30
+#: flask_wiki/templates/wiki/search.html:49
 msgid "Edit"
 msgstr "Szerkesztés"
 
 #: flask_wiki/templates/wiki/editor.html:22
+msgid "Loading..."
+msgstr "Betöltés…"
+
+#: flask_wiki/templates/wiki/editor.html:23
+msgid "There was a problem with the preview."
+msgstr "Az előnézet nem hozható létre."
+
+#: flask_wiki/templates/wiki/editor.html:24
 msgid "Preview"
 msgstr "Előnézet"
 
-#: flask_wiki/templates/wiki/editor.html:27
+#: flask_wiki/templates/wiki/editor.html:29
 #, python-format
 msgid "Editing in %(language)s"
 msgstr "Szerkesztés %(language)s nyelven"
 
-#: flask_wiki/templates/wiki/editor.html:33
+#: flask_wiki/templates/wiki/editor.html:35
 msgid "Delete"
 msgstr "Törlés"
 
-#: flask_wiki/templates/wiki/editor.html:39
+#: flask_wiki/templates/wiki/editor.html:41
 msgid "Edit in"
 msgstr "Szerkesztés a következővel"
 
-#: flask_wiki/templates/wiki/editor.html:50
+#: flask_wiki/templates/wiki/editor.html:52
 msgid "Save"
 msgstr "Mentés"
 
-#: flask_wiki/templates/wiki/editor.html:73
-#: flask_wiki/templates/wiki/editor.html:82
+#: flask_wiki/templates/wiki/editor.html:75
+#: flask_wiki/templates/wiki/editor.html:84
 msgid "Delete page"
 msgstr "Oldal törlése"
 
-#: flask_wiki/templates/wiki/editor.html:74
+#: flask_wiki/templates/wiki/editor.html:76
 #: flask_wiki/templates/wiki/files.html:54
+#: flask_wiki/templates/wiki/toast.html:14
 msgid "Close"
 msgstr "Bezárás"
 
-#: flask_wiki/templates/wiki/editor.html:79
+#: flask_wiki/templates/wiki/editor.html:81
 msgid ""
 "Are you sure you want to delete this page? Be warned that links pointing "
 "to this page will stop working."
@@ -149,26 +158,26 @@ msgstr ""
 "Biztosan törlöd az oldalt? Ne felejtsd el, hogy az erre az oldalra mutató"
 " linkek ezután nem fognak működni."
 
-#: flask_wiki/templates/wiki/editor.html:83
-#: flask_wiki/templates/wiki/files.html:64
+#: flask_wiki/templates/wiki/editor.html:85
+#: flask_wiki/templates/wiki/files.html:63
 msgid "Back"
 msgstr "Vissza"
 
-#: flask_wiki/templates/wiki/files.html:14
+#: flask_wiki/templates/wiki/files.html:13
 msgid "List of Uploaded Files"
 msgstr "Feltöltött fájlok listája"
 
-#: flask_wiki/templates/wiki/files.html:18
+#: flask_wiki/templates/wiki/files.html:17
 msgid "Upload a file"
 msgstr "Fájl feltöltése"
 
-#: flask_wiki/templates/wiki/files.html:33
+#: flask_wiki/templates/wiki/files.html:32
 msgid "Copy Markdown code"
 msgstr "Markdown-kód másolása"
 
 #: flask_wiki/templates/wiki/files.html:37
 #: flask_wiki/templates/wiki/files.html:53
-#: flask_wiki/templates/wiki/files.html:63
+#: flask_wiki/templates/wiki/files.html:62
 msgid "Delete file"
 msgstr "Fájl törlése"
 
@@ -198,16 +207,20 @@ msgstr "Fájlok"
 msgid "Search"
 msgstr "Keresés"
 
-#: flask_wiki/templates/wiki/page.html:21
-#: flask_wiki/templates/wiki/search.html:48
+#: flask_wiki/templates/wiki/page.html:13
+msgid "Table of contents"
+msgstr "Tartalomjegyzék"
+
+#: flask_wiki/templates/wiki/page.html:26
+#: flask_wiki/templates/wiki/search.html:45
 msgid "Copy link"
 msgstr "Link másolása"
 
-#: flask_wiki/templates/wiki/page.html:39
+#: flask_wiki/templates/wiki/page.html:44
 msgid "Last updated:"
 msgstr "Utoljára módosítva:"
 
-#: flask_wiki/templates/wiki/page.html:45
+#: flask_wiki/templates/wiki/page.html:50
 #, python-format
 msgid ""
 "This page does not exist yet in your language. It is displayed in "
@@ -216,11 +229,7 @@ msgstr ""
 "Ez az oldal még nem érhető el a nyelveden. %(language)s nyelven jelenik "
 "meg."
 
-#: flask_wiki/templates/wiki/page.html:55
-msgid "Table of contents"
-msgstr "Tartalomjegyzék"
-
-#: flask_wiki/templates/wiki/search.html:17
+#: flask_wiki/templates/wiki/search.html:14
 msgid "result"
 msgid_plural "results"
 msgstr[0] "találat"
