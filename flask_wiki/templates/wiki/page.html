@@ -7,9 +7,14 @@
 {% set active_page = "page" %}
 
 {% block content %}
-{{ super() }}
-<main class="row mt-4 wiki-page">
-    <div class="col-md-7 offset-md-2">
+<main class="wiki-page mt-4">
+    {% if page.toc %}
+    <nav class="wiki-toc" aria-label="{{ _('Table of contents') }}">
+        <p class="h5">{{ _('Table of contents') }}</p>
+        {{ page.toc }}
+    </nav>
+    {% endif %}
+    <div class="wiki-content">
         <header class="d-flex flex-column justify-content-lg-between mb-4 pb-2 border-bottom">
             <header class="wiki-page-header d-flex flex-column flex-lg-row justify-content-lg-between mb-2 mb-lg-0">
             <h1 class="wiki-page-title mb-0">{{page.title}}</h1>
@@ -49,13 +54,5 @@
         {{ page }}
         </article>
     </div>
-    <aside class="col-md-3">
-        <div class="toc sticky-top pt-3">
-            {% if page.toc %}
-            <h5>{{ _('Table of contents') }}</h5>
-            {{ page.toc }}
-            {% endif %}
-        </div>
-    </aside>
 </main>
 {% endblock %}

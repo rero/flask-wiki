@@ -3,15 +3,12 @@
 
 {% from config.get('WIKI_ICON_TEMPLATE') import icon %}
 
-{% from 'bootstrap4/form.html' import render_form_row %}
-
 {% extends config.get('WIKI_BASE_TEMPLATE') %}
 {% set active_page = "search" %}
 
 {% block content %}
-{{ super() }}
-<main class="row mt-4 wiki-page">
-    <div class="col-md-7 offset-md-2">
+<main class="wiki-page mt-4">
+    <div class="wiki-content">
         <header>
             <div class="pb-3">
                 {{ results | length }} {{ ngettext('result', 'results', results | length) }}

@@ -53,6 +53,21 @@ def test_page_display(client):
     assert b"Home" in res.data
 
 
+def test_page_outline_precedes_the_article(client):
+    """Test that the outline is rendered before the article, and only when it has entries.
+
+    The two are placed side by side on a wide screen, so the source order is the one a
+    narrow screen gets: the outline first, where it is of some use.
+    """
+    html = client.get("/help/sample/").data.decode()
+    assert html.index('class="wiki-toc"') < html.index('class="wiki-content"')
+
+    # a page without headings gets no outline at all, hence no empty column
+    html = client.get("/help/plain/").data.decode()
+    assert 'class="wiki-toc"' not in html
+    assert 'class="wiki-content"' in html
+
+
 def test_page_not_found(client):
     """Test that a missing page returns 404."""
     res = client.get("/help/nonexistent/")
@@ -292,6 +307,26 @@ def test_pages_do_not_reference_external_assets(client):
         html = client.get(url).data.decode()
         for asset in asset_urls(html):
             assert not asset.startswith(("http://", "https://", "//")), f"{url}: {asset}"
+
+
+def test_flashed_message_joins_the_toast_stack(client, app):
+    """Test that a message flashed by the server is rendered as a toast.
+
+    Server feedback then looks like clipboard feedback, and no full-width banner sits
+    between the navigation and the top of the application.
+    """
+    path = os.path.join(app.config["WIKI_CONTENT_DIR"], "flashed_en.md")
+    try:
+        html = client.post(
+            "/help/edit/flashed/",
+            data={"title": "Flashed", "body": "# Flashed\n\nContent.", "tags": "test"},
+            follow_redirects=True,
+        ).data.decode()
+        assert "alert-success" not in html
+        assert html.index("data-autoshow") < html.index("Saved") < html.index("copy-success")
+    finally:
+        if os.path.isfile(path):
+            os.remove(path)
 
 
 def test_toasts_are_placed_by_their_own_wrapper(client, app):

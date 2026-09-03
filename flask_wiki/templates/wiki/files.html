@@ -7,9 +7,8 @@
 {% set active_page = "files" %}
 
 {% block content %}
-{{ super() }}
-<main class="row mt-4 wiki-files">
-    <article class="offset-md-1 col-md-10">
+<main class="wiki-page wiki-files mt-4">
+    <article class="wiki-content">
         <header class="d-flex flex-column flex-lg-row justify-content-lg-between">
             <h1>{{ _('List of Uploaded Files') }}</h1>
             {% if can_edit_wiki %}
