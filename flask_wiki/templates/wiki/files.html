@@ -15,7 +15,7 @@
             {% if can_edit_wiki %}
             <form class="" method="post" enctype="multipart/form-data">
                 <div class="custom-file">
-                    <button class="btn btn-outline-primary btn-sm">{{ icon('upload') }} {{ _('Upload a file') }}</button>
+                    <button type="button" class="btn btn-outline-primary btn-sm">{{ icon('upload') }} {{ _('Upload a file') }}</button>
                     <input class="custom-file-input" type="file" name="file" accept="image/*" />
                 </div>
             </form>
@@ -33,7 +33,8 @@
                                                    aria-label="{{ _('Copy Markdown code') }}">
                         {{ icon('copy') }}
                     </button>
-                    <button data-toggle="modal" data-target="#deleteModal" id="{{file}}" class="delete-file btn btn-sm btn-outline-danger"
+                    <button data-toggle="modal" data-target="#deleteModal" class="delete-file btn btn-sm btn-outline-danger"
+                                                   data-delete-url="{{ url_for('wiki.delete_file', filename=file) }}"
                                                    aria-label="{{ _('Delete file') }}">
                         {{ icon('delete') }}
                     </button>
@@ -59,8 +60,7 @@
                 {{ _('Are you sure you want to delete this file? Be warned that links from existing pages will be broken.') }}
             </div>
             <div class="modal-footer">
-                <a id="confirm" href="{{ url_for('wiki.delete_file', filename=file) }}" type="button"
-                    class="btn btn-danger">{{ _('Delete file') }}</a>
+                <a id="confirm" href="#" class="btn btn-danger">{{ _('Delete file') }}</a>
                 <button type="button" class="btn btn-outline-primary" data-dismiss="modal">{{ _('Back') }}</button>
             </div>
         </div>
