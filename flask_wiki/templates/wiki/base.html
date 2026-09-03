@@ -1,7 +1,7 @@
 {# SPDX-FileCopyrightText: Fondation RERO+ #}
 {# SPDX-License-Identifier: BSD-3-Clause #}
 
-{% from 'bootstrap4/utils.html' import render_messages %}
+{% from 'wiki/toast.html' import toast %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -27,29 +27,17 @@
     <a class="navbar-brand" href="#">{{ _('Flask-Wiki') }}</a>
   </nav>
 
-  <div class="container-fluid py-4">
-    {{ render_messages(dismissible=True, dismiss_animate=True) }}
+  <div class="wiki-toasts">
+    {% for category, message in get_flashed_messages(with_categories=True) %}
+    {{ toast(message, category, autoshow=True) }}
+    {% endfor %}
+    {{ toast(_('Link copied to your clipboard'), 'success', id='copy-success') }}
+    {{ toast(_('Failed to copy link to your clipboard'), 'error', id='copy-error') }}
+  </div>
+
+  <div class="container-fluid pb-4">
     {% block navigation %} {%- include "wiki/navigation.html" %} {% endblock %}
-    {% block content %}
-    <div class="wiki-toasts">
-      <div data-delay="2500" id="copy-success" class="toast hide">
-        <div class="toast-header text-primary font-weight-bold">
-            Markdown
-        </div>
-        <div class="toast-body">
-            {{ _('Link copied to your clipboard') }}
-        </div>
-      </div>
-      <div data-delay="2500" id="copy-error" class="toast hide">
-        <div class="toast-header text-primary font-weight-bold">
-            Markdown
-        </div>
-        <div class="toast-body">
-            {{ _('Failed to copy link to your clipboard') }}
-        </div>
-      </div>
-    </div>
-    {% endblock %}
+    {% block content %}{% endblock %}
   </div>
 
   <footer class="container py-5">

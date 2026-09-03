@@ -151,6 +151,39 @@ instead of a CDN, which is what makes the wiki work without internet access:
 app.config["BOOTSTRAP_SERVE_LOCAL"] = True
 ```
 
+#### Page layout
+
+Every page — article, editor, file listing, search results, error — is laid out
+by the same three class names, which an application overriding one of the page
+templates has to keep:
+
+| Class | Role |
+|-------|------|
+| `wiki-page` | the grid: one column on a narrow screen, article plus outline from 768px up |
+| `wiki-toc` | the table of contents, first in the source, placed on the right on a wide screen |
+| `wiki-content` | the main column: article, editor form or listing, with its header |
+
+The TOC precedes the article in the source so a narrow screen shows it
+first, and the grid moves it to the right-hand column on a wide one. It is
+pinned with `position: sticky` and scrolls on its own once it outgrows the
+viewport. A page without headings renders no `wiki-toc` at all, and the grid
+falls back to a single centered column.
+
+Feedback shares one channel: the messages flashed by the server and the ones the
+browser raises on its own are rendered by the `toast` macro of
+`wiki/toast.html`, in a `wiki-toasts` stack fixed to the top right. An
+application overriding `WIKI_BASE_TEMPLATE` renders the flashed messages itself,
+and keeps the same look by importing that macro:
+
+```jinja
+{% raw %}{% from 'wiki/toast.html' import toast %}
+<div class="wiki-toasts">
+  {% for category, message in get_flashed_messages(with_categories=True) %}
+  {{ toast(message, category, autoshow=True) }}
+  {% endfor %}
+</div>{% endraw %}
+```
+
 #### Icons
 
 Templates never name a glyph directly. They ask for an *intent* — `search`,

@@ -1,0 +1,19 @@
+{# SPDX-FileCopyrightText: Fondation RERO+ #}
+{# SPDX-License-Identifier: BSD-3-Clause #}
+
+{# Feedback toast, used both for the messages flashed by the server and for the
+   ones the browser raises on its own. `autoshow` marks a toast that wiki.js
+   reveals as soon as the page is ready; the others are revealed by their id. #}
+{% macro toast(message, category='message', id=None, autoshow=False) %}
+{% set colors = {'success': 'text-success', 'error': 'text-danger', 'danger': 'text-danger'} %}
+<div class="toast hide"{% if id %} id="{{ id }}"{% endif %}{% if autoshow %} data-autoshow{% endif %}
+     data-delay="4000" data-autohide="{{ 'false' if category in ('error', 'danger') else 'true' }}"
+     role="alert" aria-live="assertive" aria-atomic="true">
+  <div class="d-flex align-items-center">
+    <div class="toast-body {{ colors.get(category, '') }}">{{ message }}</div>
+    <button type="button" class="close mr-2 ml-auto" data-dismiss="toast" aria-label="{{ _('Close') }}">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+</div>
+{% endmacro %}

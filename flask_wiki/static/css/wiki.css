@@ -47,12 +47,50 @@ h1 {
   color: #6c757d;
 }
 
-.wiki-page .toc ul {
+/* Article and table of contents: one column on a small screen, two on a wide
+   one. */
+.wiki-page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem 2.5rem;
+  max-width: 75rem;
+  margin-inline: auto;
+}
+
+/* Anchors land a little under the top of the viewport, not flush against it. */
+.content h1, .content h2, .content h3,
+.content h4, .content h5, .content h6 {
+  scroll-margin-top: 1rem;
+}
+
+/* The TOC comes first in the source, so it comes first on a narrow screen,
+   where it must not push the article out of sight. */
+.wiki-toc {
+  max-height: 30vh;
+  overflow-y: auto;
+}
+
+.wiki-toc ul {
   padding-left: 1rem;
 }
 
-.wiki-page .toc {
-  z-index: 1000;
+@media (min-width: 768px) {
+  /* The second column exists only on a page that has an outline. */
+  .wiki-page:has(.wiki-toc) {
+    grid-template-columns: minmax(0, 1fr) 15rem;
+  }
+
+  .wiki-content {
+    grid-area: 1 / 1;
+  }
+
+  .wiki-toc {
+    grid-area: 1 / 2;
+    align-self: start; /* a stretched item has no room to stick */
+    position: sticky;
+    top: 1rem;
+    max-height: calc(100vh - 2rem);
+  }
 }
 
 .wiki-editor textarea {
@@ -61,8 +99,8 @@ h1 {
 
 .wiki-toasts {
   position: fixed;
-  top: 50px;
-  left: 15px;
+  top: 1rem;
+  right: 1rem;
   z-index: 1090;
 }
 
