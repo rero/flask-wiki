@@ -1,7 +1,7 @@
 {# SPDX-FileCopyrightText: Fondation RERO+ #}
 {# SPDX-License-Identifier: BSD-3-Clause #}
 
-{% from 'wiki/toast.html' import toast %}
+{% from config.get('WIKI_TOAST_TEMPLATE') import toast %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -31,8 +31,7 @@
     {% for category, message in get_flashed_messages(with_categories=True) %}
     {{ toast(message, category, autoshow=True) }}
     {% endfor %}
-    {{ toast(_('Link copied to your clipboard'), 'success', id='copy-success') }}
-    {{ toast(_('Failed to copy link to your clipboard'), 'error', id='copy-error') }}
+    {%- include "wiki/toasts.html" %}
   </div>
 
   <div class="container-fluid pb-4">

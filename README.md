@@ -133,6 +133,7 @@ All templates can be overridden by setting these config values to your own templ
 | `WIKI_NOT_FOUND_TEMPLATE` | `'wiki/404.html'` |
 | `WIKI_FORBIDDEN_TEMPLATE` | `'wiki/403.html'` |
 | `WIKI_ICON_TEMPLATE` | `'wiki/icons/bootstrap.html'` |
+| `WIKI_TOAST_TEMPLATE` | `'wiki/toast.html'` |
 
 ### Front-end assets
 
@@ -169,19 +170,36 @@ pinned with `position: sticky` and scrolls on its own once it outgrows the
 viewport. A page without headings renders no `wiki-toc` at all, and the grid
 falls back to a single centered column.
 
+#### Feedback
+
 Feedback shares one channel: the messages flashed by the server and the ones the
-browser raises on its own are rendered by the `toast` macro of
-`wiki/toast.html`, in a `wiki-toasts` stack fixed to the top right. An
-application overriding `WIKI_BASE_TEMPLATE` renders the flashed messages itself,
-and keeps the same look by importing that macro:
+browser raises on its own are all toasts, stacked in a `wiki-toasts` container
+fixed to the top right. Their markup comes from the `toast` macro of
+`WIKI_TOAST_TEMPLATE`, and the toasts the wiki raises by itself live in
+`wiki/toasts.html`.
+
+An application overriding `WIKI_BASE_TEMPLATE` renders its own stack. It
+includes `wiki/toasts.html` in it, so it never has to know the ids `wiki.js`
+reveals nor repeat their messages, and it renders the flashed messages itself if
+nothing else in the application already does:
 
 ```jinja
-{% raw %}{% from 'wiki/toast.html' import toast %}
-<div class="wiki-toasts">
+{% raw %}<div class="wiki-toasts">
   {% for category, message in get_flashed_messages(with_categories=True) %}
   {{ toast(message, category, autoshow=True) }}
   {% endfor %}
+  {%- include "wiki/toasts.html" %}
 </div>{% endraw %}
+```
+
+To render those toasts as the rest of the application does, point
+`WIKI_TOAST_TEMPLATE` at a template of its own supplying a macro with the same
+signature — `toast(message, category='message', id=None, autoshow=False)`, where
+`id` marks a toast kept hidden until a script reveals it, and `autoshow` one
+`wiki.js` reveals as soon as the page is ready:
+
+```python
+app.config["WIKI_TOAST_TEMPLATE"] = "myapp/macros/toast.html"
 ```
 
 #### Icons

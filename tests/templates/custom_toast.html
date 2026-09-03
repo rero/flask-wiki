@@ -1,0 +1,9 @@
+{# SPDX-FileCopyrightText: Fondation RERO+ #}
+{# SPDX-License-Identifier: BSD-3-Clause #}
+
+{# The toast markup an embedding application would supply of its own. #}
+
+{% macro toast(message, category='message', id=None, autoshow=False) %}
+<div class="app-toast app-toast-{{ category }}"{% if id %} id="{{ id }}"{% endif %}
+     {%- if autoshow %} data-autoshow{% endif %}>{{ message }}</div>
+{% endmacro %}
