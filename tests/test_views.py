@@ -225,6 +225,31 @@ def test_file_upload_and_delete(client, app):
     assert not os.path.isfile(upload_path)
 
 
+def test_delete_button_carries_the_url_of_its_own_file(client, app):
+    """Test that each delete button names the file it deletes.
+
+    The confirmation link used to be completed in JavaScript from a shared base URL,
+    which appended a second name when the reader opened the dialog twice in a row.
+    """
+    data = {"file": (io.BytesIO(TINY_PNG), "delete_target.png")}
+    upload_path = os.path.join(app.config["WIKI_UPLOAD_FOLDER"], "delete_target.png")
+    try:
+        client.post("/help/files", data=data, content_type="multipart/form-data", follow_redirects=True)
+        html = client.get("/help/files").data.decode()
+        assert 'data-delete-url="/help/file/delete/delete_target.png"' in html
+        assert 'id="confirm" href="#"' in html
+    finally:
+        if os.path.isfile(upload_path):
+            os.remove(upload_path)
+
+
+def test_preview_tab_carries_its_own_messages(client):
+    """Test that the preview feedback is translated by the server, not hard-coded in JS."""
+    html = client.get("/help/edit/home/").data.decode()
+    assert 'data-loading-text="Loading..."' in html
+    assert 'data-error-text="There was a problem with the preview."' in html
+
+
 def test_file_upload_invalid_extension(client, app):
     """Test that uploading a disallowed file type is rejected."""
     data = {"file": (io.BytesIO(b"not a real exe"), "malware.exe")}
