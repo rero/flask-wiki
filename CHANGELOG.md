@@ -7,6 +7,36 @@ SPDX-License-Identifier: BSD-3-Clause
 
 <!-- version list -->
 
+## v4.0.0 (2026-09-04)
+
+### Bug Fixes
+
+- Repair the page lookups that never ran
+  ([`d24dc56`](https://github.com/rero/flask-wiki/commit/d24dc567ef746809cd74a015eeb656f52767bfa1))
+
+- Scope the JS handlers to what was clicked, and tidy the rest
+  ([`b791f93`](https://github.com/rero/flask-wiki/commit/b791f936942edabf3af3820395395b6653c5823a))
+
+### Chores
+
+- **i18n**: Translate the preview messages and refresh catalogs
+  ([`e78a8d7`](https://github.com/rero/flask-wiki/commit/e78a8d7b1cea6cb9830f98d720af9a2400fcf54f))
+
+### Features
+
+- Let WIKI_URL_PREFIX carry a variable part
+  ([`15df243`](https://github.com/rero/flask-wiki/commit/15df243f5873bbd775c6922b42edf72bf65334d8))
+
+- Make the toast markup swappable, like the icons
+  ([`6af5d9b`](https://github.com/rero/flask-wiki/commit/6af5d9bf35f9c9d21b2564a10b99225bbefa42fb))
+
+- One grid and one toast stack for every page
+  ([`1a8fc03`](https://github.com/rero/flask-wiki/commit/1a8fc03a4fd63693154c299cde8e8344a74fc400))
+
+- Render captioned figures and own toast placement
+  ([`eb65df1`](https://github.com/rero/flask-wiki/commit/eb65df15b56483884803057c4e0fa0574764bab0))
+
+
 ## v3.0.0 (2026-09-03)
 
 ### Bug Fixes

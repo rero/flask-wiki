@@ -1,6 +1,6 @@
 [project]
 name = "flask-wiki"
-version = "3.0.0"
+version = "4.0.0"
 description = "Simple file-based wiki for Flask"
 readme = "README.md"
 authors = [{name = "RERO+", email = "software@rero.ch"}]
