@@ -420,11 +420,33 @@ def test_wiki_get_tags(wiki):
     assert "welcome" in tags
 
 
+def test_wiki_get_by_title(wiki):
+    """Test retrieving a page by its title."""
+    assert wiki.get_by_title("Sample Page").url == "sample"
+    assert wiki.get_by_title("No Such Page") is None
+
+
+def test_wiki_index_by(wiki):
+    """Test grouping the pages by the value of one of their attributes."""
+    grouped = wiki.index_by("title")
+    assert [page.url for page in grouped["Sample Page"]] == ["sample"]
+
+
 def test_wiki_list_tagged_pages(wiki):
     """Test filtering pages by tag."""
     pages = wiki.list_tagged_pages("test")
     titles = [p.title for p in pages]
     assert "Sample Page" in titles
+
+
+def test_wiki_list_tagged_pages_matches_a_whole_tag(wiki):
+    """Test that a tag matches a whole tag, never a fragment of one."""
+    # 'welcome' is a tag of the home page, 'come' is only a fragment of it
+    assert [page.url for page in wiki.list_tagged_pages("welcome")] == ["home"]
+    assert wiki.list_tagged_pages("come") == []
+
+    # a tag written after a comma and a space is matched all the same
+    assert "Sample Page" in [page.title for page in wiki.list_tagged_pages("example")]
 
 
 def test_wiki_search(app):
