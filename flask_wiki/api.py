@@ -273,6 +273,14 @@ class Page:
         self["tags"] = value
 
     @property
+    def tag_list(self):
+        """Return the page tags as a list, blank entries left out.
+
+        :rtype: list
+        """
+        return [tag.strip() for tag in self.tags.split(",") if tag.strip()]
+
+    @property
     def raw_body(self):
         """Return raw text of the body.
 
@@ -591,7 +599,7 @@ class WikiBase:
     def index_all_pages(self):
         """Index all the pages for the current wiki."""
         for page in self.list_all_pages():
-            Page.index(page)
+            page.index()
 
     def index_by(self, key):
         """Get an index based on the given key.
@@ -606,37 +614,29 @@ class WikiBase:
         :rtype: dict
         """
         pages = {}
-        for page in self.index():
-            value = getattr(page, key)
-            pre = pages.get(value, [])
-            pages[value] = pre.append(page)
+        for page in self.list_pages():
+            pages.setdefault(getattr(page, key), []).append(page)
         return pages
 
     def get_by_title(self, title):
-        """Get all page titles."""
-        pages = self.list_pages(attr="title")
-        return pages.get(title)
+        """Get the page carrying the given title, None if no page does.
+
+        :param str title: the title to look for
+        :rtype: Page
+        """
+        return next((page for page in self.list_pages() if page.title == title), None)
 
     def get_tags(self):
         """Get all tags."""
-        pages = self.list_pages()
         tags = {}
-        for page in pages:
-            pagetags = page.tags.split(",")
-            for tag in pagetags:
-                tag = tag.strip()  # noqa: PLW2901
-                if tag == "":
-                    continue
-                if tags.get(tag):
-                    tags[tag].append(page)
-                else:
-                    tags[tag] = [page]
+        for page in self.list_pages():
+            for tag in page.tag_list:
+                tags.setdefault(tag, []).append(page)
         return tags
 
     def list_tagged_pages(self, tag):
-        """Get a list of all pages that have a tag."""
-        pages = self.list_pages()
-        tagged = [page for page in pages if tag in page.tags]
+        """Get a list of all pages that carry the given tag."""
+        tagged = [page for page in self.list_pages() if tag in page.tag_list]
         return sorted(tagged, key=lambda x: x.title.lower())
 
     @property
