@@ -4,7 +4,6 @@
 """Click command-line interface for flask-wiki."""
 
 import click
-from flask import current_app
 from flask.cli import with_appcontext
 
 from .api import get_wiki
@@ -26,6 +25,4 @@ def init_index():
 @with_appcontext
 def index():
     """Index all wiki pages for whoosh search."""
-    # rendering a page builds the URL of its wikilinks, which needs a request
-    with current_app.test_request_context():
-        get_wiki().index_all_pages()
+    get_wiki().index_all_pages()

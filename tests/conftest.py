@@ -25,9 +25,12 @@ TINY_PNG = (
 )
 
 
-@pytest.fixture(scope="module")
-def app(tmp_path_factory):
-    """Create a Flask application for testing."""
+def make_app(tmp_path_factory, **config):
+    """Build a Flask application serving the test wiki.
+
+    :param tmp_path_factory: the pytest temporary directory factory
+    :param config: configuration overriding the defaults of the test wiki
+    """
     tmp = tmp_path_factory.mktemp("wiki")
     content_dir = tmp / "data"
     content_dir.mkdir()
@@ -43,6 +46,7 @@ def app(tmp_path_factory):
             shutil.copy2(src, content_dir / filename)
 
     app = Flask(__name__)
+    config.setdefault("SERVER_NAME", "localhost")
     app.config.update(
         TESTING=True,
         SECRET_KEY="test-secret",
@@ -54,8 +58,8 @@ def app(tmp_path_factory):
         WIKI_LANGUAGES={"en": "English", "fr": "French", "it": "Italian"},
         WIKI_FALLBACK_LANGUAGES=["en", "fr"],
         BOOTSTRAP_SERVE_LOCAL=True,
+        **config,
     )
-    app.config["SERVER_NAME"] = "localhost"
     Bootstrap4(app)
     Babel(app, default_locale="en")
     Wiki(app)
@@ -72,6 +76,12 @@ def app(tmp_path_factory):
         wiki.index_all_pages()
 
     return app
+
+
+@pytest.fixture(scope="module")
+def app(tmp_path_factory):
+    """Create a Flask application for testing."""
+    return make_app(tmp_path_factory)
 
 
 @pytest.fixture(scope="module")

@@ -12,6 +12,7 @@ from flask import (
     abort,
     current_app,
     flash,
+    g,
     redirect,
     render_template,
     request,
@@ -63,8 +64,12 @@ def can_edit_permission(func):
 # =======
 @blueprint.app_template_filter()
 def prune_url(path):
-    """Strip the wiki URL prefix and surrounding slashes from a path."""
-    return path.replace(current_app.config.get("WIKI_URL_PREFIX"), "").strip("/")
+    """Strip the wiki URL prefix and surrounding slashes from a path.
+
+    The prefix stripped is the one the reader came through, variable parts
+    included, so a pruned path stays usable to build a URL back into the wiki.
+    """
+    return path.removeprefix(url_for("wiki.index")).strip("/")
 
 
 @blueprint.app_template_filter()
@@ -101,6 +106,25 @@ def permission_processor():
         "can_edit_wiki": current_app.config.get("WIKI_EDIT_UI_PERMISSION")(),
         "can_read_wiki": current_app.config.get("WIKI_READ_UI_PERMISSION")(),
     }
+
+
+@blueprint.url_value_preprocessor
+def pull_prefix_values(_endpoint, values):
+    """Take the variable parts of the URL prefix out of the view arguments.
+
+    A prefix such as ``/<organisation>/help`` lets an application keep a reader
+    inside a section of its own: the views of the wiki never see the value, and
+    it is put back into every URL the wiki builds by :func:`push_prefix_values`.
+    """
+    names = current_app.extensions["flask-wiki"].prefix_variables
+    g._wiki_url_values = {name: values.pop(name) for name in names if name in values}  # noqa: SLF001
+
+
+@blueprint.url_defaults
+def push_prefix_values(_endpoint, values):
+    """Carry the variable parts of the URL prefix over to the URLs being built."""
+    for name, value in getattr(g, "_wiki_url_values", {}).items():
+        values.setdefault(name, value)
 
 
 # MISCS

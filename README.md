@@ -119,6 +119,33 @@ The `VIEW` permissions are enforced server-side via route decorators. The `UI` p
 | `WIKI_ALLOWED_EXTENSIONS` | `{'png','jpg','jpeg','gif','svg'}` | Allowed upload types |
 | `WIKI_INDEX_DIR` | `'./index'` | Whoosh search index directory |
 
+#### A prefix with a variable part
+
+`WIKI_URL_PREFIX` may carry variable parts, which is how an application keeps a
+reader inside a section of its own -- a tenant, an organisation, a language:
+
+```python
+app.config["WIKI_URL_PREFIX"] = "/<org_code>/help"
+```
+
+The wiki serves `/unifr/help/setup` without ever knowing what `org_code` means:
+its views never see the value, and every URL it builds carries it back. That
+holds for the links of its templates, for the wikilinks of a page body, and
+therefore for the whole navigation -- a reader who enters through one prefix
+stays there.
+
+Any URL rule syntax will do, a converter of your own included, as long as the
+name does not collide with an argument of the wiki views -- `url` and
+`filename`: `"/<org:org_code>/help"`.
+
+Building such a URL from outside the wiki, from a footer for instance, means
+passing the value: `url_for('wiki.index', org_code='unifr')`.
+
+The uploaded files hang from the static part of the prefix, `/help/files/` in
+the example above, whatever the prefix a reader came through. A WSGI mount
+point carries no variable, and neither does the URL of an image written in a
+page.
+
 ### Templates
 
 All templates can be overridden by setting these config values to your own template paths:

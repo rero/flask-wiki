@@ -99,18 +99,25 @@ class Processor:
             current = processor(current)
         self.final = current
 
-    def process(self):
+    def process(self, *, postprocess=True):
         """Run the full processing suite.
 
         Runs the full suite of processing on the given text, all
         pre and post processing, markdown rendering and meta data
         handling.
+
+        :param bool postprocess: if False, skip the postprocessors. They build
+            the URL of the wikilinks, which needs a request; the metadata and
+            the raw body, all the search index stores, do not.
         """
         self.process_pre()
         self.process_markdown()
         self.split_raw()
         self.process_meta()
-        self.process_post()
+        if postprocess:
+            self.process_post()
+        else:
+            self.final = self.html
 
         return self.final, self.markdown, self.meta, TOC(self.toc, self.md.toc_tokens)
 
@@ -137,7 +144,7 @@ class TOC:
 class Page:
     """A page of the wiki."""
 
-    def __init__(self, path, url, *, new=False, fallback_language=None):
+    def __init__(self, path, url, *, new=False, fallback_language=None, postprocess=True):
         """Initialize a wiki page.
 
         :param path: filesystem path to the page file
@@ -145,6 +152,8 @@ class Page:
         :param bool new: if True, skip loading and rendering (page does not exist yet)
         :param str fallback_language: language code of the variant served when the
             page does not exist in the current language, None otherwise
+        :param bool postprocess: if False, render without the postprocessors. Use it
+            outside a request, where the URL of a wikilink cannot be built.
         """
         self.path = path
         self.url = url
@@ -153,7 +162,7 @@ class Page:
         self.toc = None
         if not new:
             self.load()
-            self.render()
+            self.render(postprocess=postprocess)
 
     def __repr__(self):
         """Return a developer-readable string representation."""
@@ -164,10 +173,13 @@ class Page:
         with Path(self.path).open(encoding="utf-8") as f:
             self.content = f.read()
 
-    def render(self):
-        """Process and render a page."""
+    def render(self, *, postprocess=True):
+        """Process and render a page.
+
+        :param bool postprocess: if False, skip the postprocessors of the markdown
+        """
         processor = Processor(self.content)
-        self._html, self.body, self._meta, self.toc = processor.process()
+        self._html, self.body, self._meta, self.toc = processor.process(postprocess=postprocess)
 
         # Get creation and update times from file
         stat = Path(self.path).stat()
@@ -554,10 +566,13 @@ class WikiBase:
     def list_all_pages(self):
         """Build up a list of all the pages, one per file, language variants included.
 
+        The pages are rendered without the postprocessors, so their ``html`` carries
+        no wikilink: they are meant for indexing, not for display.
+
         :returns: a list of all the wiki pages
         :rtype: list
         """
-        pages = [Page(path, url) for path, url in self.list_files()]
+        pages = [Page(path, url, postprocess=False) for path, url in self.list_files()]
         return sorted(pages, key=lambda x: x.title.lower())
 
     def list_pages(self):
