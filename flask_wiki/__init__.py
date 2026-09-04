@@ -3,10 +3,15 @@
 
 """This extension create a wiki from a tree directory."""
 
+import re
+
 from werkzeug.middleware.shared_data import SharedDataMiddleware
 
 from . import config
 from .views import blueprint
+
+# a variable part of a URL rule: <name>, <converter:name> or <converter(arg):name>
+VARIABLE_PART = re.compile(r"/?<(?:[^<>:]+:)?([^<>:]+)>")
 
 
 class Wiki:
@@ -18,22 +23,29 @@ class Wiki:
         :param app: Flask application instance, or None for deferred initialization
         """
         self.app = app
+        self.prefix_variables = []
         if app is not None:
             self.init_app(app)
 
     def init_app(self, app):
         """Flask application initialization."""
         self.init_config(app)
-        app.register_blueprint(blueprint, url_prefix=app.config.get("WIKI_URL_PREFIX"))
+        prefix = app.config["WIKI_URL_PREFIX"]
+        self.prefix_variables = VARIABLE_PART.findall(prefix)
+        # the uploaded files hang from the static part of the prefix: a WSGI
+        # mount point carries no variable, and neither does the URL of an image
+        # written in a page
+        files_prefix = VARIABLE_PART.sub("", prefix)
+        app.register_blueprint(blueprint, url_prefix=prefix)
         app.add_url_rule(
-            app.config.get("WIKI_URL_PREFIX") + "/files/<filename>",
+            f"{files_prefix}/files/<filename>",
             "uploaded_files",
             build_only=True,
         )
 
         app.wsgi_app = SharedDataMiddleware(
             app.wsgi_app,
-            {app.config.get("WIKI_URL_PREFIX") + "/files": app.config["WIKI_UPLOAD_FOLDER"]},
+            {f"{files_prefix}/files": app.config["WIKI_UPLOAD_FOLDER"]},
         )
         app.extensions["flask-wiki"] = self
 
