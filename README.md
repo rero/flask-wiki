@@ -114,6 +114,7 @@ The `VIEW` permissions are enforced server-side via route decorators. The `UI` p
 |-----|---------|-------------|
 | `WIKI_HOME` | `'home'` | Default page for `/` |
 | `WIKI_URL_PREFIX` | `'/help'` | URL prefix for the wiki blueprint |
+| `WIKI_URL_PREFIX_DEFAULTS` | `{}` | Value each variable part of the prefix takes when left out |
 | `WIKI_CONTENT_DIR` | `'./data'` | Directory for Markdown files |
 | `WIKI_UPLOAD_FOLDER` | `'./data/files'` | Directory for uploaded images |
 | `WIKI_ALLOWED_EXTENSIONS` | `{'png','jpg','jpeg','gif','svg'}` | Allowed upload types |
@@ -140,6 +141,19 @@ name does not collide with an argument of the wiki views -- `url` and
 
 Building such a URL from outside the wiki, from a footer for instance, means
 passing the value: `url_for('wiki.index', org_code='unifr')`.
+
+One value may be left out of the URL altogether. Name it in
+`WIKI_URL_PREFIX_DEFAULTS` and the wiki serves its whole navigation under the
+prefix stripped of it as well -- any other variable part keeps its place:
+
+```python
+app.config["WIKI_URL_PREFIX"] = "/<org_code>/help"
+app.config["WIKI_URL_PREFIX_DEFAULTS"] = {"org_code": "global"}
+```
+
+`/help/setup` is then served, `url_for('wiki.index', org_code='global')` builds
+`/help/`, and `/global/help/setup` redirects to `/help/setup`. Any other value
+keeps its part of the prefix, `/unifr/help/setup`.
 
 The uploaded files hang from the static part of the prefix, `/help/files/` in
 the example above, whatever the prefix a reader came through. A WSGI mount

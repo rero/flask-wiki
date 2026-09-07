@@ -28,6 +28,8 @@ WIKI_LANGUAGES = {"en": "English", "fr": "French", "de": "German", "it": "Italia
 # None means every language of WIKI_LANGUAGES, in order; [] disables the cascade
 WIKI_FALLBACK_LANGUAGES = None
 WIKI_URL_PREFIX = "/help"
+# The value each variable part of the prefix takes when a reader leaves it out
+WIKI_URL_PREFIX_DEFAULTS = {}
 WIKI_CONTENT_DIR = "./data"
 WIKI_UPLOAD_FOLDER = os.path.join(WIKI_CONTENT_DIR, "files")
 WIKI_INDEX_DIR = "./index"
