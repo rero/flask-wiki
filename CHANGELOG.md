@@ -7,6 +7,14 @@ SPDX-License-Identifier: BSD-3-Clause
 
 <!-- version list -->
 
+## v4.1.0 (2026-09-07)
+
+### Features
+
+- Serve one value of the variable prefix without naming it
+  ([`90c7373`](https://github.com/rero/flask-wiki/commit/90c73738edfbfdc7af19796aa58344baec37861c))
+
+
 ## v4.0.0 (2026-09-04)
 
 ### Bug Fixes
