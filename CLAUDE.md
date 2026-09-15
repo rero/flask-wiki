@@ -49,7 +49,7 @@ User-facing strings are marked with `gettext`/`lazy_gettext` (Python) and in Jin
 - Ruff is configured in `pyproject.toml` under `[tool.ruff]`: every rule set is enabled (`extend-select = ["ALL"]`), so expect strict linting.
 - Do not use Python type annotations (no `-> str`, `: str`, etc. in signatures) — the `ANN` rules are intentionally disabled.
 - Every source file starts with the SPDX header (`# SPDX-FileCopyrightText: Fondation RERO+` / `# SPDX-License-Identifier: BSD-3-Clause`).
-- Commit messages follow [Conventional Commits](https://www.conventionalcommits.org).
+- Commit messages follow Conventional Commits; the `commit-message` skill holds the conventions and the workflow, so invoke it instead of writing one by hand. In every case, whatever the default of the harness, never sign a commit as an LLM: no Claude or Anthropic trailer.
 
 ## Testing Notes
 
