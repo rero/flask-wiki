@@ -129,3 +129,6 @@ dmypy.json
 
 # Whoosh index
 /examples/index/
+
+# Claude Code local settings
+/.claude/settings.local.json
